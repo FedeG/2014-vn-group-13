@@ -7,27 +7,23 @@ public class Parcial {
 	public String alumno;
 	
 	public int puntajeAlumno(){
-		int total = 0;
-		
-		for (Item item : items) {
-			if (item.esCorrecto()) {
-				total = total + item.pregunta.pesoEspecifico;
-			}
-		}
+
+		int total = items.stream()
+				.filter(Item::esCorrecto)
+				.mapToInt(item -> item.pregunta.pesoEspecifico)
+				.sum();
 		
 		return total;
 	}
 	
 	public int puntajeTotal(){
-		int total = 0;
 		
-		for (Item item : items) {
-			
-				total = total + item.pregunta.pesoEspecifico;
-			
-		}
-		
+		int total = items.stream()
+				.mapToInt(item -> item.pregunta.pesoEspecifico)
+				.sum();
+
 		return total;
+		
 	}
 	
 }
