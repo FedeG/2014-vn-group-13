@@ -5,7 +5,7 @@ public class Item {
 	public String respuestaAlumno;
 	
 	public boolean esCorrecto() {
-		return pregunta.respuestaCorrecta.compareTo(respuestaAlumno) == 0;
+		return pregunta.esRespuestaCorrecta(respuestaAlumno);
 	}
 	
 }
