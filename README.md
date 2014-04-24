@@ -55,5 +55,6 @@ Cambiar al brach fedeG por ejemplo
 `$ git checkout fedeG`   
 [Tenes que estar parado en la raiz de tu repo local]
 
+EXTRA: Si alguno quiere que git no este pidiendo todo el tiempo usuario y contraseña me dice y el viernes le configuro el ssh para no tener que escribirlo mas
+
 *.md por Ezequiel Ayzenberg y Federico Gonzalez*
-PD: Si alguno quiere que git no este pidiendo todo el tiempo usuario y contraseña me dice y el viernes le configuro el ssh para no tener que escribirlo mas
