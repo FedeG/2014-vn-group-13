@@ -56,4 +56,4 @@ Cambiar al brach fedeG por ejemplo
 [Tenes que estar parado en la raiz de tu repo local]
 
 *.md por Ezequiel Ayzenberg y Federico Gonzalez*
-PD: Si alguno quiere que git no este pidiendo todo el tiempo usuario y contraseña me dice y el viernes le configuro el ssh no tener que escribirlo mas
+PD: Si alguno quiere que git no este pidiendo todo el tiempo usuario y contraseña me dice y el viernes le configuro el ssh para no tener que escribirlo mas
