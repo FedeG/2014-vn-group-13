@@ -5,14 +5,7 @@ public class Item {
 	public String respuestaAlumno;
 	
 	public boolean esCorrecto() {
-		if (pregunta.respuestaCorrecta.compareTo(respuestaAlumno) == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return pregunta.respuestaCorrecta.compareTo(respuestaAlumno) == 0;
 	}
 	
 }
