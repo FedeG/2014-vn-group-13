@@ -1,4 +1,6 @@
-package com.corrector.app;
+package test.java.com.corrector.app;
+
+import main.java.com.corrector.app.*;
 
 import java.util.ArrayList;
 
