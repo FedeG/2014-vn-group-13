@@ -1,4 +1,4 @@
-package com.corrector.app;
+package main.java.com.corrector.app;
 
 
 public class Roboprof {
