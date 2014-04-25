@@ -1,154 +1,66 @@
-package com.corrector.app;
+package test.java.com.corrector.app;
+
+import main.java.com.corrector.app.*;
 
 import java.util.ArrayList;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestRoboprof {
+	
+	private Roboprof unRoboprof;
+	private Parcial unParcial;
+	
+	@Before
+	public void setUp() {
+		Pregunta unaPregunta = new Pregunta();
+		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
+		unaPregunta.respuestaCorrecta = "Roma";
+		unaPregunta.pesoEspecifico = 10;
+		Pregunta otraPregunta = new Pregunta();
+		otraPregunta.descripcion = "¿Cual es la capital de España?";
+		otraPregunta.respuestaCorrecta = "Madrid";
+		otraPregunta.pesoEspecifico = 5;
+		
+		Item unItem = new Item();
+		unItem.pregunta = unaPregunta;
+		unItem.respuestaAlumno = "Roma";
+		Item otroItem = new Item();
+		otroItem.pregunta = otraPregunta;
+		otroItem.respuestaAlumno = "Madrid";
+		
+		unRoboprof = new Roboprof();
+		
+		unParcial = new Parcial();
+		unParcial.items = new ArrayList<Item>();
+		unParcial.items.add(otroItem);
+		unParcial.items.add(unItem);
+	}
 
 	@Test
-	public void corrigePorRestaYSaca7() {
-		
-		Pregunta unaPregunta = new Pregunta();
-		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
-		unaPregunta.respuestaCorrecta = "Roma";
-		unaPregunta.pesoEspecifico = 7;
-		Pregunta otraPregunta = new Pregunta();
-		otraPregunta.descripcion = "¿Cual es la capital de España?";
-		otraPregunta.respuestaCorrecta = "Madrid";
-		otraPregunta.pesoEspecifico = 3;
-		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Roma";
-		Item otroItem = new Item();
-		otroItem.pregunta = otraPregunta;
-		otroItem.respuestaAlumno = "Madrid";
-		
-		Roboprof unRoboprof = new Roboprof();
-		
-		Parcial unParcial = new Parcial();
-		unParcial.items = new ArrayList<Item>();
-		unParcial.items.add(otroItem);
-		unParcial.items.add(unItem);
-		
-		Assert.assertEquals(7, unRoboprof.corregirConResta(unParcial, 3), 0);
+	public void testCorrigePorRestaYSaca12() {
+		Assert.assertEquals(12, unRoboprof.corregirConResta(unParcial, 3), 0);
 	}
 	
 	@Test
-	public void corrigePorReglaDeTresYSaca3() {
-		
-		Pregunta unaPregunta = new Pregunta();
-		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
-		unaPregunta.respuestaCorrecta = "Roma";
-		unaPregunta.pesoEspecifico = 10;
-		Pregunta otraPregunta = new Pregunta();
-		otraPregunta.descripcion = "¿Cual es la capital de España?";
-		otraPregunta.respuestaCorrecta = "Madrid";
-		otraPregunta.pesoEspecifico = 5;
-		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Romulo";
-		Item otroItem = new Item();
-		otroItem.pregunta = otraPregunta;
-		otroItem.respuestaAlumno = "Madrid";
-		
-		Roboprof unRoboprof = new Roboprof();
-		
-		Parcial unParcial = new Parcial();
-		unParcial.items = new ArrayList<Item>();
-		unParcial.items.add(otroItem);
-		unParcial.items.add(unItem);
-		
-		Assert.assertEquals(3, unRoboprof.corregirConReglaDeTres(unParcial), 0);
+	public void testCorrigePorReglaDeTresYSaca10() {
+		Assert.assertEquals(10, unRoboprof.corregirConReglaDeTres(unParcial), 0);
 	}
 	
 	@Test
-	public void corrigePorTablaYSaca5() {
-		
-		Pregunta unaPregunta = new Pregunta();
-		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
-		unaPregunta.respuestaCorrecta = "Roma";
-		unaPregunta.pesoEspecifico = 10;
-		Pregunta otraPregunta = new Pregunta();
-		otraPregunta.descripcion = "¿Cual es la capital de España?";
-		otraPregunta.respuestaCorrecta = "Madrid";
-		otraPregunta.pesoEspecifico = 5;
-		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Roma";
-		Item otroItem = new Item();
-		otroItem.pregunta = otraPregunta;
-		otroItem.respuestaAlumno = "Madrid";
-		
-		Roboprof unRoboprof = new Roboprof();
-		
-		Parcial unParcial = new Parcial();
-		unParcial.items = new ArrayList<Item>();
-		unParcial.items.add(otroItem);
-		unParcial.items.add(unItem);
-		
+	public void testCorrigePorTablaYSaca5() {
 		Assert.assertEquals(5, unRoboprof.corregirPorTabla(unParcial), 0);
 	}
 	
 	@Test
-	public void corrigeConNotaMasAltaYSaca() {
-		
-		Pregunta unaPregunta = new Pregunta();
-		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
-		unaPregunta.respuestaCorrecta = "Roma";
-		unaPregunta.pesoEspecifico = 10;
-		Pregunta otraPregunta = new Pregunta();
-		otraPregunta.descripcion = "¿Cual es la capital de España?";
-		otraPregunta.respuestaCorrecta = "Madrid";
-		otraPregunta.pesoEspecifico = 5;
-		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Roma";
-		Item otroItem = new Item();
-		otroItem.pregunta = otraPregunta;
-		otroItem.respuestaAlumno = "Madrid";
-		
-		Roboprof unRoboprof = new Roboprof();
-		
-		Parcial unParcial = new Parcial();
-		unParcial.items = new ArrayList<Item>();
-		unParcial.items.add(otroItem);
-		unParcial.items.add(unItem);
-		
+	public void testCorrigeConNotaMasAltaYSaca() {
 		Assert.assertEquals(10, unRoboprof.corregirTomandoNotaMasAlta(unParcial), 0);
 	}
 	
 	@Test
-	public void corrigeConPromedioYSaca8() {
-		
-		Pregunta unaPregunta = new Pregunta();
-		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
-		unaPregunta.respuestaCorrecta = "Roma";
-		unaPregunta.pesoEspecifico = 10;
-		Pregunta otraPregunta = new Pregunta();
-		otraPregunta.descripcion = "¿Cual es la capital de España?";
-		otraPregunta.respuestaCorrecta = "Madrid";
-		otraPregunta.pesoEspecifico = 5;
-		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Roma";
-		Item otroItem = new Item();
-		otroItem.pregunta = otraPregunta;
-		otroItem.respuestaAlumno = "Madrid";
-		
-		Roboprof unRoboprof = new Roboprof();
-		
-		Parcial unParcial = new Parcial();
-		unParcial.items = new ArrayList<Item>();
-		unParcial.items.add(otroItem);
-		unParcial.items.add(unItem);
-		
+	public void testCorrigeConPromedioYSaca8() {	
 		Assert.assertEquals(8, unRoboprof.corregirTomandoPromedio(unParcial), 0);
 	}
 
