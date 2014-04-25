@@ -1,42 +1,36 @@
-package tst;
-
-import java.util.ArrayList;
+package com.corrector.app;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import corrector.examenes.Item;
-import corrector.examenes.Pregunta;
 
 public class TestItem {
 	
-	private Item item;
+	//Test #1 - Corrector - Item Correcto
 	
-	@Before
-	public void setUp() {
+	@Test
+	public void ElItemEsCorrecto() {
 		Pregunta unaPregunta = new Pregunta();
 		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
 		unaPregunta.respuestaCorrecta = "Roma";
 		
-		item = new Item();
-		item.pregunta = unaPregunta;
-	}
-
-	//Test #1 - Corrector - Item Correcto
-	@Test
-	public void testElItemEsCorrecto() {
+		Item unItem = new Item();
+		unItem.pregunta = unaPregunta;
 		unItem.respuestaAlumno = "Roma";
-
+		
 		Assert.assertTrue(unItem.esCorrecto());
 	}
 
 	//Test #2 - Corrector - Item Incorrecto
 	@Test
-	public void testElItemEsIncorrecto() {
+	public void ElItemEsIncorrecto() {
+		Pregunta unaPregunta = new Pregunta();
+		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
+		unaPregunta.respuestaCorrecta = "Roma";
+		
+		Item unItem = new Item();
+		unItem.pregunta = unaPregunta;
 		unItem.respuestaAlumno = "Romulo";
-
+		
 		Assert.assertFalse(unItem.esCorrecto());
 	}
-
 }

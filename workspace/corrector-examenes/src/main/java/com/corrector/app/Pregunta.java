@@ -1,4 +1,4 @@
-package corrector.examenes;
+package com.corrector.app;
 
 public class Pregunta {
 	public int pesoEspecifico;
@@ -6,7 +6,7 @@ public class Pregunta {
 	public String descripcion;
 	
 	public boolean esRespuestaCorrecta(String respuestaAlumno){
-		return pregunta.respuestaCorrecta.equalsIgnoreCase(respuestaAlumno);
+		return respuestaCorrecta.equalsIgnoreCase(respuestaAlumno);
 	}
 }
 

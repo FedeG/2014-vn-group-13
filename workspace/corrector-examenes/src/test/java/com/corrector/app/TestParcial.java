@@ -1,14 +1,10 @@
-package tst;
+package com.corrector.app;
 
 import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import corrector.examenes.Item;
-import corrector.examenes.Parcial;
-import corrector.examenes.Pregunta;
 
 public class TestParcial {
 	

@@ -1,4 +1,4 @@
-package corrector.examenes;
+package com.corrector.app;
 
 
 public class Roboprof {
