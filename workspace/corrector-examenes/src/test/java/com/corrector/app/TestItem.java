@@ -1,36 +1,40 @@
-package com.corrector.app;
+package test.java.com.corrector.app;
+
+import main.java.com.corrector.app.Item;
+import main.java.com.corrector.app.Pregunta;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestItem {
 	
-	//Test #1 - Corrector - Item Correcto
+	private Item item;
 	
-	@Test
-	public void ElItemEsCorrecto() {
+	@Before
+	public void setUp() {
 		Pregunta unaPregunta = new Pregunta();
 		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
 		unaPregunta.respuestaCorrecta = "Roma";
 		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Roma";
-		
-		Assert.assertTrue(unItem.esCorrecto());
+		item = new Item();
+		item.pregunta = unaPregunta;
+	}
+
+	//Test #1 - Corrector - Item Correcto
+	@Test
+	public void testElItemEsCorrecto() {
+		item.respuestaAlumno = "Roma";
+
+		Assert.assertTrue(item.esCorrecto());
 	}
 
 	//Test #2 - Corrector - Item Incorrecto
 	@Test
-	public void ElItemEsIncorrecto() {
-		Pregunta unaPregunta = new Pregunta();
-		unaPregunta.descripcion = "¿Cual es la capital de Italia?";
-		unaPregunta.respuestaCorrecta = "Roma";
-		
-		Item unItem = new Item();
-		unItem.pregunta = unaPregunta;
-		unItem.respuestaAlumno = "Romulo";
-		
-		Assert.assertFalse(unItem.esCorrecto());
+	public void testElItemEsIncorrecto() {
+		item.respuestaAlumno = "Romulo";
+
+		Assert.assertFalse(item.esCorrecto());
 	}
+
 }
