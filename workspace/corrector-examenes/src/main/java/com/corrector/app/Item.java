@@ -1,11 +1,11 @@
-package corrector.examenes;
+package main.java.com.corrector.app;
 
 public class Item {
 	public Pregunta pregunta;
 	public String respuestaAlumno;
 	
 	public boolean esCorrecto() {
-		return pregunta.respuestaCorrecta.compareTo(respuestaAlumno) == 0;
+		return pregunta.esRespuestaCorrecta(respuestaAlumno);
 	}
 	
 }
