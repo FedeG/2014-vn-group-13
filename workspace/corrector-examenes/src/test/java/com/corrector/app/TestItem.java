@@ -1,7 +1,7 @@
-package test.java.com.corrector.app;
+package com.corrector.app;
 
-import main.java.com.corrector.app.Item;
-import main.java.com.corrector.app.Pregunta;
+import com.corrector.app.Item;
+import com.corrector.app.Pregunta;
 
 import org.junit.Assert;
 import org.junit.Before;

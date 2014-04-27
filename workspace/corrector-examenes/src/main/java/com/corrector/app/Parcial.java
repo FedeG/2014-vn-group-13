@@ -1,4 +1,4 @@
-package main.java.com.corrector.app;
+package com.corrector.app;
 import java.util.Collection;
 import java.util.function.Predicate;
 

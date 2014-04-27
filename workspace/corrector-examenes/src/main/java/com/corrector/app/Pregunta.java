@@ -1,4 +1,4 @@
-package main.java.com.corrector.app;
+package com.corrector.app;
 
 public class Pregunta {
 	public int pesoEspecifico;
