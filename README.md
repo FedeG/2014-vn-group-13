@@ -24,7 +24,7 @@ Establecer el usuario git en tu repo local (muy util)
 
 Para el uso mas amigable y copado de agregar y commitear pueden usar gitg (con graficos en linux)   
 `$ gitg --all`   
-[Tenes que estar parado en la raiz de tu repo local]
+(Es genial)[Tenes que estar parado en la raiz de tu repo local]
 
 Agregar un cambio local   
 `$ git add carpeta/archivo.java`   
