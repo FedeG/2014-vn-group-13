@@ -1,4 +1,4 @@
-Grupo 13 de los viernes-noche ENTREGA 1 (VIERNES 13)
+Grupo 13 de los viernes-noche ENTREGA 1
 ==========================================
 
 Diagrama de clases:
