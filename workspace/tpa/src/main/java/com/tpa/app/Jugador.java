@@ -1,13 +1,16 @@
 package com.tpa.app;
 
 public class Jugador {
-	private int partidosJugados = 0;
-	private int inasistencias = 0;
+	private int partidosJugados;
+	private int inasistencias;
 	private int edad;
 	private TipoJugador tipoJugador;
 
-	public Jugador(int edad) {
+	public Jugador(int edad, TipoJugador tipo) {
 		this.setEdad(edad);
+		this.partidosJugados = 0;
+		this.inasistencias = 0;
+		this.setTipoJugador(tipo);
 	}
 
 	public int getInasistencias() {

@@ -48,6 +48,14 @@ public class Partido {
 	}
 
 	public void inscribirJugador(Jugador jugador) {
+		if (getJugadoresInscriptos().contains(jugador))
+			throw new YaEstaInscriptoAlPartidoExcepcion();
+			
+		
+		if (getCantidadJugadoresInscriptos() >= getCupo())
+			throw new CupoMaximoSuperadoExcepcion();
+		
+		
 		this.getJugadoresInscriptos().add(jugador);
 	}
 
@@ -56,5 +64,11 @@ public class Partido {
 	}
 	public int getCantidadJugadoresInscriptos() {
 		return getJugadoresInscriptos().size();
+	}
+	public int getCantidadJugadoresInscriptosPorTipo(Class clase ) {
+		return (int) getJugadoresInscriptos()
+				.stream()
+				.filter(j -> j.getTipoJugador().getClass() == clase )
+				.count();
 	}
 }
