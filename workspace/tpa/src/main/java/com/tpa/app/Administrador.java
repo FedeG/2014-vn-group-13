@@ -1,11 +1,16 @@
 package com.tpa.app;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.time.LocalDateTime;
 
 public class Administrador {
 	private Collection<Partido> partidos;
-
+	
+	public Administrador() {
+		this.partidos = new ArrayList<Partido>();
+	}
+	
 	public Collection<Partido> getPartidos() {
 		return this.partidos;
 	}
