@@ -25,8 +25,7 @@ public class TestAdministrador {
 	public void testCrearUnPartido() {
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
 		admin.crearPartido(fecha_y_hora, "lugar", 10);
-		
-		Assert.fail("Aca no llega error con el LocalDateTime loco que queria usar");
+	
 		Assert.assertEquals("La cantidad de partidos es 1", 1, admin.getPartidos().size());
 	}
 
@@ -38,7 +37,6 @@ public class TestAdministrador {
 		int cupo = 10;
 		admin.crearPartido(fecha_y_hora, lugar, cupo);
 
-		Assert.fail("Aca no llega error con el LocalDateTime loco que queria usar");
 		Collection<Partido> partidos = admin.getPartidos();
 		Partido partido = (Partido) partidos.toArray()[0];
 		
