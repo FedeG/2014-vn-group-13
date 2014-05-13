@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Jugador {
 	private int edad;
-	private List<Infraccion> infrancciones;
+	private List<Infraccion> infracciones;
 	private List<Jugador> amigos;
 	
 
 	public Jugador(int edad) {
 		this.setEdad(edad);
-		this.infrancciones = new ArrayList<Infraccion>();
+		this.infracciones = new ArrayList<Infraccion>();
 		this.setAmigos(new ArrayList<Jugador>());
 	}
 
 	public List<Infraccion> getInfracciones() {
-		return this.infrancciones;
+		return this.infracciones;
 	}
 	public void agregarInfraccion(Infraccion infraccion)
 	{
