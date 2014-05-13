@@ -1,28 +1,26 @@
 package com.tpa.app;
 
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Jugador {
-	private int inasistencias = 0;
 	private int edad;
-	private Predicate<Partido> condicion;
+	private List<Infraccion> infrancciones;
+	private List<Jugador> amigos;
+	
 
 	public Jugador(int edad) {
-		this.setCondicion((Partido partido) -> true);
 		this.setEdad(edad);
+		this.infrancciones = new ArrayList<Infraccion>();
+		this.setAmigos(new ArrayList<Jugador>());
 	}
 
-	public Jugador(int edad, Predicate<Partido> condicion) {
-		this.setCondicion(condicion);
-		this.setEdad(edad);
+	public List<Infraccion> getInfracciones() {
+		return this.infrancciones;
 	}
-
-	public int getInasistencias() {
-		return this.inasistencias;
-	}
-
-	public Predicate<Partido> getCondicion() {
-		return this.condicion;
+	public void agregarInfraccion(Infraccion infraccion)
+	{
+		getInfracciones().add(infraccion);
 	}
 
 	public int getEdad() {
@@ -33,8 +31,16 @@ public class Jugador {
 		this.edad = edad;
 	}
 
-	public void setCondicion(Predicate<Partido> condicion) {
-		this.condicion = condicion;
+	public List<Jugador> getAmigos() {
+		return amigos;
 	}
-
+	
+	public void setAmigos(List<Jugador> amigos) {
+		this.amigos = amigos;
+	}
+	
+	public void avisarAmigos(Partido partido)
+	{
+		//TODO : enviar mail a todos los amigos		
+	}
 }
