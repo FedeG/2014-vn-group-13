@@ -7,15 +7,17 @@ import java.time.LocalDateTime;
 
 public class Administrador {
 	private Collection<Partido> partidos;
+	private MailSender mailSender;
 	
-	public Administrador() {
+	public Administrador(MailSender mailSender) {
+		this.mailSender = mailSender;
 		this.partidos = new ArrayList<Partido>();
 	}	
 	public Collection<Partido> getPartidos() {
 		return this.partidos;
 	}
 	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
-		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo);
+		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo, this.mailSender);
 		this.partidos.add(partidoNuevo);
 		return partidoNuevo;
 	}

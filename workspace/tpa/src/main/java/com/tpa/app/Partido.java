@@ -3,6 +3,7 @@ package com.tpa.app;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 import com.tpa.app.Inscripcion.PrioridadesInscripciones;
 
@@ -14,13 +15,22 @@ public class Partido {
 	private PriorityQueue<Inscripcion> inscripciones;
 	private List<Inscripcion> equipoA;
 	private List<Inscripcion> equipoB;
-
-	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
+	private MailSender mailSender;
+	
+	@Override
+	public String toString(){
+		return String.format("Partido {0} {1:dd/MM/yyyy HH:mm}", getLugar(), getFechaHora());
+	}
+	
+	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo, MailSender sender) {
+		this.mailSender = sender;
 		this.setFechaHora(fecha_y_hora);
 		this.setLugar(lugar);
 		this.setCupo(cupo);
 		this.inscripciones =  new PriorityQueue<Inscripcion>((x, y) -> x.dameTuPrioridad().compareTo(y.dameTuPrioridad()));
 	}
+	public MailSender getMailSender()
+	{ return mailSender; }
 
 	public String getLugar() {
 		return lugar;
@@ -65,16 +75,10 @@ public class Partido {
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador)
 	{
-		Inscripcion inscripcion = null;
-		for (Inscripcion inscr : getInscripciones())  
-		{
-			if( inscr.jugador.equals(jugador))
-			{
-				inscripcion = inscr;
-				break;
-			}
-		}
-		return inscripcion;
+		List<Inscripcion> inscrips = getInscripciones().stream().filter(i -> i.jugador.equals(jugador)).collect(Collectors.toList());
+		if (!inscrips.isEmpty())
+			return inscrips.get(0);
+		throw new RuntimeException("El jugador no está inscripto en este partido.");
 	}
 	public void darDeBaja(Jugador jugador, String motivo)
 	{
@@ -92,16 +96,17 @@ public class Partido {
 		if (inscripcion == null)
 			return;
 		inscripcion.setActivo(false);
+		
 		this.inscribir(new InscripcionEstandar(jugadorReemplaza));
 	}
 	public boolean verificarCupoCompleto()
 	{
 		int cantInscripcionesEstandar = (int) getInscripciones().stream().filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Estandar).count();
-		return cantInscripcionesEstandar > 10;
+		return cantInscripcionesEstandar >= 10;
 	}
 	
 	public void notificarAdministrador(String mensaje)
 	{
-		//TODO: aca debo enviar un mail al administrador 
+		getMailSender().enviarMail(new Mail("Notificación",mensaje,"","admin_partidos@dds.utn.frba"));
 	}
 }

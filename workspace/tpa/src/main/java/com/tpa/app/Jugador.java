@@ -3,10 +3,12 @@ package com.tpa.app;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Jugador {
 	private int edad;
 	private List<Infraccion> infracciones;
 	private List<Jugador> amigos;
+	private String email;
 	
 
 	public Jugador(int edad) {
@@ -31,6 +33,14 @@ public class Jugador {
 		this.edad = edad;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public List<Jugador> getAmigos() {
 		return amigos;
 	}
@@ -41,6 +51,6 @@ public class Jugador {
 	
 	public void avisarAmigos(Partido partido)
 	{
-		//TODO : enviar mail a todos los amigos		
+		this.getAmigos().forEach(a -> partido.getMailSender().enviarMail(new Mail("Se anotó tu amigo.","Te queremos avisar que tu amigo a este partido.","",a.getEmail())));
 	}
 }

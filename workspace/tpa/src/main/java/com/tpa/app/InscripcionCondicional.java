@@ -21,6 +21,6 @@ public class InscripcionCondicional extends Inscripcion{
 	@Override
 	public PrioridadesInscripciones dameTuPrioridad()
 	{
-		return PrioridadesInscripciones.Solidaria;
+		return PrioridadesInscripciones.Condicional;
 	}
 }
