@@ -1,5 +1,7 @@
 package com.tpa.app;
 
+import static org.mockito.Mockito.mock;
+
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Collection;
@@ -10,14 +12,18 @@ import com.tpa.app.Partido;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 public class TestAdministrador {
 	
 	private Administrador admin;
+	@Mock
+	MailSender mailSenderMock;
 	
 	@Before
 	public void setUp() {
-		admin = new Administrador();
+		mailSenderMock = mock(MailSender.class);
+		admin = new Administrador(mailSenderMock);
 	}
 
 	//Test #1 - Crear partido

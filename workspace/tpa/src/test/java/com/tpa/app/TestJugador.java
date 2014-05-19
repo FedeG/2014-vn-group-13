@@ -1,40 +1,90 @@
 package com.tpa.app;
 
+import static org.mockito.Mockito.mock;
+
 import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+
+import com.tpa.app.Inscripcion.PrioridadesInscripciones;
 
 public class TestJugador {
 
 	Partido partido;
 	Jugador jugador;
-	Jugador jugador_condicional;
+	InscripcionEstandar inscripcionEstandar;
+	InscripcionCondicional inscripcionCondicional;
+	InscripcionSolidaria inscripcionSolidaria;
+	@Mock
+	MailSender mailSenderMock;
 	
 	@Before
 	public void setUp() {
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
-		partido = new Partido(fecha_y_hora, "Parque patricios", 10);
+		mailSenderMock = mock(MailSender.class);
+		partido = new Partido(fecha_y_hora, "Parque patricios", 10, mailSenderMock);
 		jugador = new Jugador(20);
-		jugador_condicional = new Jugador(20, (Partido partido) -> partido.getLugar() == "Parque patricios");
+		inscripcionCondicional = new InscripcionCondicional(jugador,  (Partido partido) -> partido.getLugar() == "Parque patricios");
+		inscripcionEstandar = new InscripcionEstandar(jugador);
+		inscripcionSolidaria = new InscripcionSolidaria(jugador);
 	}
 	
 	@Test
 	public void testInscribirmeEstandarAUnPartido() {
-		partido.inscribirEstadar(jugador);
-		Assert.assertEquals("Se agrego un jugador estandar", 1, partido.getJugadoresEstandar().size());
+		partido.inscribir(inscripcionEstandar);
+		Assert.assertEquals("Hay 1 jugadores estandars", 1, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Estandar).count());
+		Assert.assertEquals("Hay 0 jugadores solidarios", 0, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria).count());
+		Assert.assertEquals("Hay 0 jugadores condicionales", 0, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Condicional).count());
 	}
 
 	@Test
 	public void testInscribirmeSolidarioAUnPartido() {
-		partido.inscribirSolidario(jugador);
-		Assert.assertEquals("Se agrego un jugador solidario", 1, partido.getJugadoresSolidarios().size());
+		partido.inscribir(inscripcionSolidaria);
+		Assert.assertEquals("Hay 0 jugadores estandars", 0, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Estandar).count());
+		Assert.assertEquals("Hay 1 jugadores solidarios", 1, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria).count());
+		Assert.assertEquals("Hay 0 jugadores condicionales", 0, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Condicional).count());
+	}
+
+	@Test
+	public void testInscribirmeCondicionalAUnPartido() {
+		partido.inscribir(inscripcionCondicional);
+		Assert.assertEquals("Hay 0 jugadores estandars", 0, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Estandar).count());
+		Assert.assertEquals("Hay 0 jugadores solidarios", 0, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria).count());
+		Assert.assertEquals("Hay 1 jugadores condicionales", 1, 
+				partido.getInscripciones().
+				stream().
+				filter(i ->i.getActivo() && i.dameTuPrioridad() == PrioridadesInscripciones.Condicional).count());
 	}
 	
 	@Test
-	public void testInscribirmeCondicionalAUnPartido() {
-		partido.inscribirCondicional(jugador_condicional);
-		Assert.assertEquals("Se agrego un jugador condicional", 1, partido.getJugadoresConCondicion().size());
+	public void testAvisarAmigosAlInscribirmeAPartido()	{
+		
 	}
 }
