@@ -3,54 +3,37 @@ package com.tpa.app;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Jugador {
-	private int edad;
-	private List<Infraccion> infracciones;
-	private List<Jugador> amigos;
-	private String email;
-	
 
-	public Jugador(int edad) {
-		this.setEdad(edad);
+	private List<Infraccion> infracciones;
+	private Persona persona;
+
+	public Jugador() {
 		this.infracciones = new ArrayList<Infraccion>();
-		this.setAmigos(new ArrayList<Jugador>());
 	}
 
 	public List<Infraccion> getInfracciones() {
 		return this.infracciones;
 	}
-	public void agregarInfraccion(Infraccion infraccion)
-	{
+
+	public void agregarInfraccion(Infraccion infraccion) {
 		getInfracciones().add(infraccion);
 	}
 
-	public int getEdad() {
-		return this.edad;
+	public void proponer(Persona persona, Partido partido, Administrador admin,
+			Inscripcion.PrioridadesInscripciones modalidad) {
+		Propuesta propuesta = new Propuesta(persona, modalidad, partido);
+		admin.agregarPropuesta(propuesta);
 	}
 
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public List<Jugador> getAmigos() {
-		return amigos;
+	public void avisarAmigos(Partido partido) {
+		this.persona.avisarAmigos(partido);
 	}
 	
-	public void setAmigos(List<Jugador> amigos) {
-		this.amigos = amigos;
+	public void calificar(Jugador jugador, Partido partido, int nota, String critica) {
+		Calificacion calificacion = new Calificacion(nota, jugador, critica);
+		partido.agregarCalificacion(calificacion);
+		
 	}
-	
-	public void avisarAmigos(Partido partido)
-	{
-		this.getAmigos().forEach(a -> partido.getMailSender().enviarMail(new Mail("Se anotó tu amigo.","Te queremos avisar que tu amigo a este partido.","",a.getEmail())));
-	}
+
 }

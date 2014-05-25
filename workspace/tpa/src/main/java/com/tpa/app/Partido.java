@@ -16,6 +16,7 @@ public class Partido {
 	private List<Inscripcion> equipoA;
 	private List<Inscripcion> equipoB;
 	private MailSender mailSender;
+	private List<Calificacion> calificaciones;
 	
 	@Override
 	public String toString(){
@@ -78,7 +79,7 @@ public class Partido {
 		List<Inscripcion> inscrips = getInscripciones().stream().filter(i -> i.jugador.equals(jugador)).collect(Collectors.toList());
 		if (!inscrips.isEmpty())
 			return inscrips.get(0);
-		throw new RuntimeException("El jugador no está inscripto en este partido.");
+		throw new RuntimeException("El jugador no estï¿½ inscripto en este partido.");
 	}
 	public void darDeBaja(Jugador jugador, String motivo)
 	{
@@ -107,6 +108,10 @@ public class Partido {
 	
 	public void notificarAdministrador(String mensaje)
 	{
-		getMailSender().enviarMail(new Mail("Notificación",mensaje,"","admin_partidos@dds.utn.frba"));
+		getMailSender().enviarMail(new Mail("Notificaciï¿½n",mensaje,"","admin_partidos@dds.utn.frba"));
+	}
+	
+	public void agregarCalificacion(Calificacion calificacion) {
+		this.calificaciones.add(calificacion);
 	}
 }
