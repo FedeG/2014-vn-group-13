@@ -8,8 +8,9 @@ public class Jugador {
 	private List<Infraccion> infracciones;
 	private Persona persona;
 
-	public Jugador() {
+	public Jugador(Persona persona) {
 		this.infracciones = new ArrayList<Infraccion>();
+		this.persona = persona;
 	}
 
 	public List<Infraccion> getInfracciones() {

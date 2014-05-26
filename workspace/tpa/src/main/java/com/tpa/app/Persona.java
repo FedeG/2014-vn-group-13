@@ -10,7 +10,6 @@ public class Persona {
 	private String email;
 	private String nombre;
 	private List<Persona> amigos;
-	
 
 	public Persona(LocalDateTime fechaNac, String email) {
 		this.setFechaNac(fechaNac);
@@ -49,10 +48,17 @@ public class Persona {
 	public void setAmigos(List<Persona> amigos) {
 		this.amigos = amigos;
 	}
-	
-	public void avisarAmigos(Partido partido)
-	{
-		this.getAmigos().forEach(a -> partido.getMailSender().enviarMail(new Mail("Se anot� tu amigo.","Te queremos avisar que tu amigo a este partido.","",a.getEmail())));
+
+	public void avisarAmigos(Partido partido) {
+		this.getAmigos()
+				.forEach(
+						a -> partido
+								.getMailSender()
+								.enviarMail(
+										new Mail(
+												"Se anot� tu amigo.",
+												"Te queremos avisar que tu amigo a este partido.",
+												"", a.getEmail())));
 	}
 
 }

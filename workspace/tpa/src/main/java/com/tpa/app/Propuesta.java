@@ -59,19 +59,20 @@ public class Propuesta {
 		this.persona = persona;
 	}
 
-	public Propuesta(Persona persona,Inscripcion.PrioridadesInscripciones modalidad, Partido partido) {
+	public Propuesta(Persona persona,
+			Inscripcion.PrioridadesInscripciones modalidad, Partido partido) {
 		this.modalidad = modalidad;
 		this.partido = partido;
 		this.persona = persona;
 	}
-	
+
 	public void estasAprobada() {
-		
-		Jugador jugador = new Jugador();
+
+		Jugador jugador = new Jugador(this.persona);
 		this.estado = true;
-		
-		//esto está muy feo, pero no se me ocurrió como hacerlo de otra forma
-			
+
+		// esto está muy feo, pero no se me ocurrió como hacerlo de otra forma
+
 		if (this.modalidad.name().equals("Solidario")) {
 			InscripcionSolidaria insc = new InscripcionSolidaria(jugador);
 			this.partido.inscribir(insc);
@@ -81,23 +82,21 @@ public class Propuesta {
 			InscripcionEstandar insc = new InscripcionEstandar(jugador);
 			this.partido.inscribir(insc);
 		}
-		
+
 		if (this.modalidad.name().equals("Condicional")) {
-			InscripcionCondicional insc = new InscripcionCondicional(jugador, null);
+			InscripcionCondicional insc = new InscripcionCondicional(jugador,
+					null);
 			this.partido.inscribir(insc);
-		}	
-		
-		
+		}
+
 	}
-	
+
 	public void estasRechazada(String motivo) {
-		
+
 		this.motivo = motivo;
 		this.estado = false;
 		this.fechaHoraRespuesta = LocalDateTime.now();
-		
+
 	}
-	
-	
 
 }
