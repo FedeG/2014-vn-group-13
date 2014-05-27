@@ -4,12 +4,24 @@ import java.time.LocalDateTime;
 
 public class Propuesta {
 
+	public enum EstadoPropuesta {
+		Pendiente, Aprobada, Rechazada
+	}
+
 	private Persona persona;
 	private Inscripcion.PrioridadesInscripciones modalidad;
 	private Partido partido;
-	private boolean estado;
+	private EstadoPropuesta estado;
 	private String motivo;
 	private LocalDateTime fechaHoraRespuesta;
+
+	public Propuesta(Persona persona,
+			Inscripcion.PrioridadesInscripciones modalidad, Partido partido) {
+		this.setEstado(EstadoPropuesta.Pendiente);
+		this.setModalidad(modalidad);
+		this.setPartido(partido);
+		this.setPersona(persona);
+	}
 
 	public LocalDateTime getFechaHoraRespuesta() {
 		return fechaHoraRespuesta;
@@ -27,11 +39,11 @@ public class Propuesta {
 		this.motivo = motivo;
 	}
 
-	public boolean isEstado() {
+	public EstadoPropuesta getEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	public void setEstado(EstadoPropuesta estado) {
 		this.estado = estado;
 	}
 
@@ -59,44 +71,18 @@ public class Propuesta {
 		this.persona = persona;
 	}
 
-	public Propuesta(Persona persona,
-			Inscripcion.PrioridadesInscripciones modalidad, Partido partido) {
-		this.modalidad = modalidad;
-		this.partido = partido;
-		this.persona = persona;
-	}
-
 	public void estasAprobada() {
-
 		Jugador jugador = new Jugador(this.persona);
-		this.estado = true;
-
-		// esto está muy feo, pero no se me ocurrió como hacerlo de otra forma
-
-		if (this.modalidad.name().equals("Solidario")) {
-			InscripcionSolidaria insc = new InscripcionSolidaria(jugador);
-			this.partido.inscribir(insc);
-		}
-
-		if (this.modalidad.name().equals("Estandar")) {
-			InscripcionEstandar insc = new InscripcionEstandar(jugador);
-			this.partido.inscribir(insc);
-		}
-
-		if (this.modalidad.name().equals("Condicional")) {
-			InscripcionCondicional insc = new InscripcionCondicional(jugador,
-					null);
-			this.partido.inscribir(insc);
-		}
-
+		this.estado = EstadoPropuesta.Aprobada;
+		this.fechaHoraRespuesta = LocalDateTime.now();
+		Inscripcion insc = FabricaInscripciones.crearInscripcion(
+				this.modalidad, jugador);
+		this.partido.inscribir(insc);
 	}
 
 	public void estasRechazada(String motivo) {
-
 		this.motivo = motivo;
-		this.estado = false;
+		this.estado = EstadoPropuesta.Rechazada;
 		this.fechaHoraRespuesta = LocalDateTime.now();
-
 	}
-
 }

@@ -51,14 +51,12 @@ public class Persona {
 
 	public void avisarAmigos(Partido partido) {
 		this.getAmigos()
-				.forEach(
-						a -> partido
-								.getMailSender()
-								.enviarMail(
-										new Mail(
-												"Se anot� tu amigo.",
-												"Te queremos avisar que tu amigo a este partido.",
-												"", a.getEmail())));
+			.forEach(amigo -> partido
+				.getMailSender()
+				.enviarMail(
+					new Mail("Se anot� tu amigo.","Te queremos avisar que tu amigo a este partido.","", amigo.getEmail())
+				)
+			);
 	}
 
 }
