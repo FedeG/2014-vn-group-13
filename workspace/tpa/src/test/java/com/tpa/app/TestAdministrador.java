@@ -27,6 +27,7 @@ public class TestAdministrador {
 	}
 
 	//Test #1 - Crear partido
+	//Test #1.1 - Con cualquier dato
 	@Test
 	public void testCrearUnPartido() {
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
@@ -35,7 +36,7 @@ public class TestAdministrador {
 		Assert.assertEquals("La cantidad de partidos es 1", 1, admin.getPartidos().size());
 	}
 
-	//Test #1 - Crear partido con los datos correctos
+	//Test #1.2 - Crear partido con los datos correctos
 	@Test
 	public void testCrearUnPartidoConLosDatosCompletosCorrectos() {
 		LocalDateTime fecha_y_hora = LocalDateTime.of(2014, Month.APRIL, 1, 10, 45);

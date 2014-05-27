@@ -30,11 +30,12 @@ public class Jugador {
 	public void avisarAmigos(Partido partido) {
 		this.persona.avisarAmigos(partido);
 	}
-	
-	public void calificar(Jugador jugador, Partido partido, int nota, String critica) {
+
+	public void calificar(Jugador jugador, Partido partido, int nota,
+			String critica) {
 		Calificacion calificacion = new Calificacion(nota, jugador, critica);
 		partido.agregarCalificacion(calificacion);
-		
+
 	}
 
 }

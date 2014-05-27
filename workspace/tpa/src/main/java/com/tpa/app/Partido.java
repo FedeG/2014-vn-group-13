@@ -124,7 +124,17 @@ public class Partido {
 				.filter(i -> i.getActivo()
 						&& i.dameTuPrioridad() == PrioridadesInscripciones.Estandar)
 				.count();
-		return cantInscripcionesEstandar >= 10;
+		int cantInscripcionesSolidarias = (int) getInscripciones()
+				.stream()
+				.filter(i -> i.getActivo()
+						&& i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria)
+				.count();
+		int cantInscripcionesCondicionales = (int) getInscripciones()
+				.stream()
+				.filter(i -> i.getActivo()
+						&& i.dameTuPrioridad() == PrioridadesInscripciones.Condicional)
+				.count();
+		return cantInscripcionesEstandar + cantInscripcionesSolidarias + cantInscripcionesCondicionales >= 10;
 	}
 
 	public void notificarAdministrador(String mensaje) {
