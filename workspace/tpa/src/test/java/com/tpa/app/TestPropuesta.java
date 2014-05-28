@@ -34,7 +34,7 @@ public class TestPropuesta {
 		admin = new Administrador(mailSenderMock);
 	}
 
-	// Test #2 - Aceptar una propuesta
+	// Test #1 - Aceptar una propuesta
 
 	@Test
 	public void testAceptarPropuesta() {
@@ -47,7 +47,7 @@ public class TestPropuesta {
 						.anyMatch(i -> i.jugador.getPersona().equals(persona)));
 	}
 
-	// Test #3 - Rechazar una propuesta
+	// Test #2 - Rechazar una propuesta
 
 	@Test
 	public void testRechazarPropuesta() {

@@ -171,9 +171,11 @@ public class TestJugador {
 	}
 
 	// Test #4 - Darse de baja con reemplazo
+	
 
-	// Test #5 - Darse de baja sin reemplazo
+	// Test #5 - Darse de baja sin reemplazo y quedan menos de 10 jugadores (debe notificarse al admin)
 
+	
 	// Test #6 - Calificar a un jugador correcto
 
 	@Test
