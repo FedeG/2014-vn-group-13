@@ -29,6 +29,7 @@ public class TestJugador {
 	InscripcionEstandar inscripcionEstandarConAmigos;
 	@Mock
 	MailSender mailSenderMock;
+	private int i;
 
 	@Before
 	public void setUp() {
@@ -50,6 +51,7 @@ public class TestJugador {
 		inscripcionEstandar = new InscripcionEstandar(jugador);
 		inscripcionSolidaria = new InscripcionSolidaria(jugador);
 		inscripcionEstandarConAmigos = new InscripcionEstandar(jugadorConAmigos);
+
 	}
 
 	// Test #1 - Inscribirse a un Partido
@@ -167,12 +169,36 @@ public class TestJugador {
 				PrioridadesInscripciones.Estandar);
 
 	}
-	
+
 	// Test #4 - Darse de baja con reemplazo
-	
-	
-	
+
 	// Test #5 - Darse de baja sin reemplazo
-	
-	
+
+	// Test #6 - Calificar a un jugador correcto
+
+	@Test
+	public void testCalificarJugadorCorrecto() {
+
+		partido.inscribir(inscripcionEstandar);
+		jugador.calificar(jugador, partido, 10, "soy el mejor del mundo");
+		Assert.assertEquals(partido.getCalificaciones().get(0).getNota(), 10);
+		Assert.assertEquals(partido.getCalificaciones().get(0).getJugador(),
+				jugador);
+		Assert.assertEquals(partido.getCalificaciones().get(0).getCritica(),
+				"soy el mejor del mundo");
+
+	}
+
+	// Test #7 - Calificar a un jugador incorrecto
+
+	@Test
+	public void testCalificarJugadorIncorrecto() {
+
+		i = jugador.calificar(jugador, partido, 3, "pésimo!!!!");
+		Assert.assertEquals(i, 1);
+		Assert.assertTrue(partido.getCalificaciones().stream()
+				.noneMatch(c -> c.getNota() == 3));
+
+	}
+
 }

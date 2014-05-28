@@ -31,10 +31,26 @@ public class Jugador {
 		this.getPersona().avisarAmigos(partido);
 	}
 
-	public void calificar(Jugador jugador, Partido partido, int nota,
+	public int calificar(Jugador jugador, Partido partido, int nota,
 			String critica) {
-		Calificacion calificacion = new Calificacion(nota, jugador, critica);
-		partido.agregarCalificacion(calificacion);
+
+		if (validarCombinacionPartidoJugadores(jugador, partido, this)) {
+			Calificacion calificacion = new Calificacion(nota, jugador, critica);
+			partido.agregarCalificacion(calificacion);
+			return 0;
+		} else {
+			return 1;
+		}
+
+	}
+
+	public boolean validarCombinacionPartidoJugadores(
+			Jugador jugadorACalificar, Partido partido,
+			Jugador jugadorCalificador) {
+		return (partido.getInscripciones().stream().anyMatch(i -> i.jugador
+				.equals(jugadorCalificador)))
+				&& (partido.getInscripciones().stream().anyMatch(i -> i.jugador
+						.equals(jugadorACalificar)));
 
 	}
 

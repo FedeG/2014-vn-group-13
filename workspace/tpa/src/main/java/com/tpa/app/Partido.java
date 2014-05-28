@@ -1,6 +1,7 @@
 package com.tpa.app;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ public class Partido {
 		this.setCupo(cupo);
 		this.inscripciones = new PriorityQueue<Inscripcion>((x, y) -> x
 				.dameTuPrioridad().compareTo(y.dameTuPrioridad()));
+		this.calificaciones = new ArrayList<Calificacion>();
 	}
 
 	public MailSender getMailSender() {
@@ -134,7 +136,8 @@ public class Partido {
 				.filter(i -> i.getActivo()
 						&& i.dameTuPrioridad() == PrioridadesInscripciones.Condicional)
 				.count();
-		return cantInscripcionesEstandar + cantInscripcionesSolidarias + cantInscripcionesCondicionales >= 10;
+		return cantInscripcionesEstandar + cantInscripcionesSolidarias
+				+ cantInscripcionesCondicionales >= 10;
 	}
 
 	public void notificarAdministrador(String mensaje) {
@@ -144,6 +147,14 @@ public class Partido {
 	}
 
 	public void agregarCalificacion(Calificacion calificacion) {
-		this.calificaciones.add(calificacion);
+		this.getCalificaciones().add(calificacion);
+	}
+
+	public List<Calificacion> getCalificaciones() {
+		return calificaciones;
+	}
+
+	public void setCalificaciones(List<Calificacion> calificaciones) {
+		this.calificaciones = calificaciones;
 	}
 }
