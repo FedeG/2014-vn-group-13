@@ -14,6 +14,7 @@ public class Administrador {
 	public Administrador(MailSender mailSender) {
 		this.mailSender = mailSender;
 		this.partidos = new ArrayList<Partido>();
+		this.propuestas = new ArrayList<Propuesta>();
 	}	
 	public Collection<Partido> getPartidos() {
 		return this.partidos;
@@ -29,6 +30,12 @@ public class Administrador {
 		partido.setEquipoB(partido.getInscripciones().stream().skip(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>())));
 	}
 	public void agregarPropuesta(Propuesta propuesta) {
-		this.propuestas.add(propuesta);		
+		this.getPropuestas().add(propuesta);		
+	}
+	public List<Propuesta> getPropuestas() {
+		return propuestas;
+	}
+	public void setPropuestas(List<Propuesta> propuestas) {
+		this.propuestas = propuestas;
 	}
 }

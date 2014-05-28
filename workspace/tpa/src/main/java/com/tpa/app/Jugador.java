@@ -10,7 +10,7 @@ public class Jugador {
 
 	public Jugador(Persona persona) {
 		this.infracciones = new ArrayList<Infraccion>();
-		this.persona = persona;
+		this.setPersona(persona);
 	}
 
 	public List<Infraccion> getInfracciones() {
@@ -28,7 +28,7 @@ public class Jugador {
 	}
 
 	public void avisarAmigos(Partido partido) {
-		this.persona.avisarAmigos(partido);
+		this.getPersona().avisarAmigos(partido);
 	}
 
 	public void calificar(Jugador jugador, Partido partido, int nota,
@@ -36,6 +36,14 @@ public class Jugador {
 		Calificacion calificacion = new Calificacion(nota, jugador, critica);
 		partido.agregarCalificacion(calificacion);
 
+	}
+
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
 }

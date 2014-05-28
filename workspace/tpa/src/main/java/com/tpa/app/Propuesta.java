@@ -85,4 +85,6 @@ public class Propuesta {
 		this.estado = EstadoPropuesta.Rechazada;
 		this.fechaHoraRespuesta = LocalDateTime.now();
 	}
+	
+	
 }

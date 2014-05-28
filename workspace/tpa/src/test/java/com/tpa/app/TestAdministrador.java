@@ -51,4 +51,6 @@ public class TestAdministrador {
 		Assert.assertEquals(partido.getCupo(), cupo);
 		Assert.assertEquals(partido.getFechaHora(), fecha_y_hora);
 	}
+	
+
 }
