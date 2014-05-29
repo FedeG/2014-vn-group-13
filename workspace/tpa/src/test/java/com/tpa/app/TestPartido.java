@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import com.tpa.app.Inscripcion.PrioridadesInscripciones;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -45,11 +47,11 @@ public class TestPartido {
 	@Test
 	public void testNotificarAlAdministrador() {
 		for (int i = 0; i < 10; i++)
-			partido.inscribir(new InscripcionEstandar(jugador));
+			partido.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null));
 		for (int i = 0; i < 5; i++)
-			partido.inscribir(new InscripcionSolidaria(jugador));
+			partido.inscribir(new Inscripcion(jugador,PrioridadesInscripciones.SOLIDARIA, null));
 		for (int i = 0; i < 8; i++)
-			partido.inscribir(new InscripcionCondicional(jugador, null));
+			partido.inscribir(new Inscripcion(jugador,PrioridadesInscripciones.CONDICIONAL, null));
 		verify(mailSenderMock, times(14)).enviarMail(any(Mail.class));
 	}
 
@@ -58,7 +60,7 @@ public class TestPartido {
 	@Test
 	public void testNoNotificarAlAdministrador() {
 		for (int i = 0; i < 8; i++)
-			partido2.inscribir(new InscripcionEstandar(jugador));
+			partido2.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null));
 		verify(mailSenderMock, times(0)).enviarMail(any(Mail.class));
 	}
 }

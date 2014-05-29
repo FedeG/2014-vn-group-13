@@ -8,14 +8,14 @@ public class FabricaInscripciones {
 			PrioridadesInscripciones modalidad, Jugador jugador) {
 		Inscripcion insc = null;
 		switch (modalidad) {
-		case Estandar:
-			insc = new InscripcionEstandar(jugador);
+		case ESTANDAR:
+			insc = new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null);
 			break;
-		case Condicional:
-			insc = new InscripcionCondicional(jugador, null);
+		case CONDICIONAL:
+			insc = new Inscripcion(jugador,PrioridadesInscripciones.CONDICIONAL, null);
 			break;
-		case Solidaria:
-			insc = new InscripcionSolidaria(jugador);
+		case SOLIDARIA:
+			insc = new Inscripcion(jugador, PrioridadesInscripciones.SOLIDARIA, null);
 			break;
 		}
 		return insc;
