@@ -43,8 +43,11 @@ public class TestPropuesta {
 		Assert.assertEquals(partido.getInscripciones().size(), 1);
 		Assert.assertEquals(
 				true,
-				partido.getInscripciones().stream()
-						.anyMatch(i -> i.getJugador().getPersona().equals(persona)));
+				partido.getInscripciones()
+						.stream()
+						.anyMatch(
+								i -> i.getJugador().getPersona()
+										.equals(persona)));
 	}
 
 	// Test #2 - Rechazar una propuesta

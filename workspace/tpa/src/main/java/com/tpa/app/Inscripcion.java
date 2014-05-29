@@ -33,6 +33,7 @@ public class Inscripcion {
 	public Inscripcion(Jugador jugador, PrioridadesInscripciones modalidad, Predicate<Partido> condicion) {
 		this.jugador = jugador;
 		this.setCondicion(condicion);
+		this.modalidad = modalidad;
 	}
 
 

@@ -2,6 +2,7 @@ package com.tpa.app;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
@@ -31,9 +32,19 @@ public class Partido {
 		this.setFechaHora(fecha_y_hora);
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.inscripciones = new PriorityQueue<Inscripcion>();
+		this.inscripciones = new PriorityQueue<Inscripcion>(10, comparator);
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
+
+	public static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
+
+		@Override
+		public int compare(Inscripcion i1, Inscripcion i2) {
+
+			return i1.getModalidad().dameTuPrioridad()
+					- i2.getModalidad().dameTuPrioridad();
+		}
+	};
 
 	public MailSender getMailSender() {
 		return mailSender;
@@ -116,7 +127,8 @@ public class Partido {
 			return;
 		inscripcion.setActivo(false);
 
-		this.inscribir(new Inscripcion(jugador,PrioridadesInscripciones.ESTANDAR, null));
+		this.inscribir(new Inscripcion(jugador,
+				PrioridadesInscripciones.ESTANDAR, null));
 	}
 
 	public boolean verificarCupoCompleto() {
@@ -140,5 +152,11 @@ public class Partido {
 
 	public void setCalificaciones(List<Calificacion> calificaciones) {
 		this.calificaciones = calificaciones;
+	}
+
+	public int contarInscripciones(PrioridadesInscripciones modalidad) {
+		return (int) this.getInscripciones().stream()
+				.filter(i -> i.getModalidad() == modalidad).count();
+
 	}
 }
