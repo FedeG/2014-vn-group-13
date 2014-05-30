@@ -1,6 +1,7 @@
 package com.tpa.app;
 
 import java.time.LocalDateTime;
+import java.util.function.Predicate;
 
 public class Propuesta {
 
@@ -14,6 +15,7 @@ public class Propuesta {
 	private EstadoPropuesta estado;
 	private String motivo;
 	private LocalDateTime fechaHoraRespuesta;
+	private Predicate<Partido> condicion;
 
 	public Propuesta(Persona persona,
 			Inscripcion.PrioridadesInscripciones modalidad, Partido partido) {
@@ -75,8 +77,7 @@ public class Propuesta {
 		Jugador jugador = new Jugador(this.persona);
 		this.estado = EstadoPropuesta.Aprobada;
 		this.fechaHoraRespuesta = LocalDateTime.now();
-		Inscripcion insc = FabricaInscripciones.crearInscripcion(
-				this.modalidad, jugador);
+		Inscripcion insc = new Inscripcion(jugador, this.modalidad, this.condicion);
 		this.partido.inscribir(insc);
 	}
 
@@ -84,6 +85,14 @@ public class Propuesta {
 		this.motivo = motivo;
 		this.estado = EstadoPropuesta.Rechazada;
 		this.fechaHoraRespuesta = LocalDateTime.now();
+	}
+
+	public Predicate<Partido> getCondicion() {
+		return condicion;
+	}
+
+	public void setCondicion(Predicate<Partido> condicion) {
+		this.condicion = condicion;
 	}
 
 }

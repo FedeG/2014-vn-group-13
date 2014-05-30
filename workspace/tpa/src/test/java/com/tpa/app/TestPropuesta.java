@@ -29,7 +29,7 @@ public class TestPropuesta {
 				mailSenderMock);
 		LocalDateTime fechaNac = LocalDateTime.of(1991, 9, 26, 23, 25);
 		persona = new Persona(fechaNac, "ceciliazgr@gmail.com");
-		propuesta = new Propuesta(persona, PrioridadesInscripciones.Estandar,
+		propuesta = new Propuesta(persona, PrioridadesInscripciones.ESTANDAR,
 				partido);
 		admin = new Administrador(mailSenderMock);
 	}
@@ -43,8 +43,11 @@ public class TestPropuesta {
 		Assert.assertEquals(partido.getInscripciones().size(), 1);
 		Assert.assertEquals(
 				true,
-				partido.getInscripciones().stream()
-						.anyMatch(i -> i.jugador.getPersona().equals(persona)));
+				partido.getInscripciones()
+						.stream()
+						.anyMatch(
+								i -> i.getJugador().getPersona()
+										.equals(persona)));
 	}
 
 	// Test #2 - Rechazar una propuesta

@@ -23,10 +23,10 @@ public class TestJugador {
 	Persona persona;
 	Persona personaConAmigos;
 	Administrador admin;
-	InscripcionEstandar inscripcionEstandar;
-	InscripcionCondicional inscripcionCondicional;
-	InscripcionSolidaria inscripcionSolidaria;
-	InscripcionEstandar inscripcionEstandarConAmigos;
+	Inscripcion inscripcionEstandar;
+	Inscripcion inscripcionCondicional;
+	Inscripcion inscripcionSolidaria;
+	Inscripcion inscripcionEstandarConAmigos;
 	@Mock
 	MailSender mailSenderMock;
 	private int i;
@@ -46,11 +46,15 @@ public class TestJugador {
 		personaConAmigos.setAmigos(amigos);
 		jugador = new Jugador(persona);
 		jugadorConAmigos = new Jugador(personaConAmigos);
-		inscripcionCondicional = new InscripcionCondicional(jugador, (
-				Partido partido) -> partido.getLugar() == "Parque patricios");
-		inscripcionEstandar = new InscripcionEstandar(jugador);
-		inscripcionSolidaria = new InscripcionSolidaria(jugador);
-		inscripcionEstandarConAmigos = new InscripcionEstandar(jugadorConAmigos);
+		inscripcionCondicional = new Inscripcion(jugador,
+				PrioridadesInscripciones.CONDICIONAL,
+				(Partido partido) -> partido.getLugar() == "Parque patricios");
+		inscripcionEstandar = new Inscripcion(jugador,
+				PrioridadesInscripciones.ESTANDAR, null);
+		inscripcionSolidaria = new Inscripcion(jugador,
+				PrioridadesInscripciones.SOLIDARIA, null);
+		inscripcionEstandarConAmigos = new Inscripcion(jugadorConAmigos,
+				PrioridadesInscripciones.ESTANDAR, null);
 
 	}
 
@@ -60,30 +64,17 @@ public class TestJugador {
 	public void testInscribirmeEstandarAUnPartido() {
 
 		partido.inscribir(inscripcionEstandar);
-		Assert.assertEquals(
-				"Hay 1 jugadores estandars",
-				1,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Estandar)
-						.count());
+		Assert.assertEquals("Hay 1 jugadores estandars", 1,
+				partido.contarInscripciones(PrioridadesInscripciones.ESTANDAR));
+
 		Assert.assertEquals(
 				"Hay 0 jugadores solidarios",
 				0,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.SOLIDARIA));
 		Assert.assertEquals(
 				"Hay 0 jugadores condicionales",
 				0,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Condicional)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.CONDICIONAL));
 	}
 
 	// Test #1.2 - Forma Solidaria
@@ -93,27 +84,15 @@ public class TestJugador {
 		Assert.assertEquals(
 				"Hay 0 jugadores estandars",
 				0,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Estandar)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.ESTANDAR));
 		Assert.assertEquals(
 				"Hay 1 jugadores solidarios",
 				1,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.SOLIDARIA));
 		Assert.assertEquals(
 				"Hay 0 jugadores condicionales",
 				0,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Condicional)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.CONDICIONAL));
 	}
 
 	// Test #1.3 - Forma Condicional
@@ -123,27 +102,15 @@ public class TestJugador {
 		Assert.assertEquals(
 				"Hay 0 jugadores estandars",
 				0,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Estandar)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.ESTANDAR));
 		Assert.assertEquals(
 				"Hay 0 jugadores solidarios",
 				0,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.SOLIDARIA));
 		Assert.assertEquals(
 				"Hay 1 jugadores condicionales",
 				1,
-				partido.getInscripciones()
-						.stream()
-						.filter(i -> i.getActivo()
-								&& i.dameTuPrioridad() == PrioridadesInscripciones.Condicional)
-						.count());
+				partido.contarInscripciones(PrioridadesInscripciones.CONDICIONAL));
 	}
 
 	// Test #2 - Notificar amigos al inscribirse a un Partido
@@ -159,23 +126,22 @@ public class TestJugador {
 	@Test
 	public void testProponerJugador() {
 		jugador.proponer(personaConAmigos, partido, admin,
-				PrioridadesInscripciones.Estandar);
+				PrioridadesInscripciones.ESTANDAR);
 		Assert.assertEquals("La cantidad de propuestas del admin es 1", 1,
 				admin.getPropuestas().size());
 		Assert.assertEquals(admin.getPropuestas().get(0).getPersona(),
 				personaConAmigos);
 		Assert.assertEquals(admin.getPropuestas().get(0).getPartido(), partido);
 		Assert.assertEquals(admin.getPropuestas().get(0).getModalidad(),
-				PrioridadesInscripciones.Estandar);
+				PrioridadesInscripciones.ESTANDAR);
 
 	}
 
 	// Test #4 - Darse de baja con reemplazo
-	
 
-	// Test #5 - Darse de baja sin reemplazo y quedan menos de 10 jugadores (debe notificarse al admin)
+	// Test #5 - Darse de baja sin reemplazo y quedan menos de 10 jugadores
+	// (debe notificarse al admin)
 
-	
 	// Test #6 - Calificar a un jugador correcto
 
 	@Test

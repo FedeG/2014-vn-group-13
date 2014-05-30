@@ -2,6 +2,7 @@ package com.tpa.app;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
@@ -31,10 +32,19 @@ public class Partido {
 		this.setFechaHora(fecha_y_hora);
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.inscripciones = new PriorityQueue<Inscripcion>((x, y) -> x
-				.dameTuPrioridad().compareTo(y.dameTuPrioridad()));
+		this.inscripciones = new PriorityQueue<Inscripcion>(10, comparator);
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
+
+	public static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
+
+		@Override
+		public int compare(Inscripcion i1, Inscripcion i2) {
+
+			return i1.getModalidad().dameTuPrioridad()
+					- i2.getModalidad().dameTuPrioridad();
+		}
+	};
 
 	public MailSender getMailSender() {
 		return mailSender;
@@ -86,14 +96,14 @@ public class Partido {
 
 	public void inscribir(Inscripcion inscripcion) {
 		this.getInscripciones().add(inscripcion);
-		inscripcion.jugador.avisarAmigos(this);
+		inscripcion.getJugador().avisarAmigos(this);
 		if (verificarCupoCompleto())
 			notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
 	}
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador) {
 		List<Inscripcion> inscrips = getInscripciones().stream()
-				.filter(i -> i.jugador.equals(jugador))
+				.filter(i -> i.getJugador().equals(jugador))
 				.collect(Collectors.toList());
 		if (!inscrips.isEmpty())
 			return inscrips.get(0);
@@ -117,27 +127,13 @@ public class Partido {
 			return;
 		inscripcion.setActivo(false);
 
-		this.inscribir(new InscripcionEstandar(jugadorReemplaza));
+		this.inscribir(new Inscripcion(jugador,
+				PrioridadesInscripciones.ESTANDAR, null));
 	}
 
 	public boolean verificarCupoCompleto() {
-		int cantInscripcionesEstandar = (int) getInscripciones()
-				.stream()
-				.filter(i -> i.getActivo()
-						&& i.dameTuPrioridad() == PrioridadesInscripciones.Estandar)
-				.count();
-		int cantInscripcionesSolidarias = (int) getInscripciones()
-				.stream()
-				.filter(i -> i.getActivo()
-						&& i.dameTuPrioridad() == PrioridadesInscripciones.Solidaria)
-				.count();
-		int cantInscripcionesCondicionales = (int) getInscripciones()
-				.stream()
-				.filter(i -> i.getActivo()
-						&& i.dameTuPrioridad() == PrioridadesInscripciones.Condicional)
-				.count();
-		return cantInscripcionesEstandar + cantInscripcionesSolidarias
-				+ cantInscripcionesCondicionales >= 10;
+		int cantInscripciones = (int) getInscripciones().size();
+		return cantInscripciones >= 10;
 	}
 
 	public void notificarAdministrador(String mensaje) {
@@ -156,5 +152,11 @@ public class Partido {
 
 	public void setCalificaciones(List<Calificacion> calificaciones) {
 		this.calificaciones = calificaciones;
+	}
+
+	public int contarInscripciones(PrioridadesInscripciones modalidad) {
+		return (int) this.getInscripciones().stream()
+				.filter(i -> i.getModalidad() == modalidad).count();
+
 	}
 }

@@ -47,9 +47,9 @@ public class Jugador {
 	private boolean validarCombinacionPartidoJugadores(
 			Jugador jugadorACalificar, Partido partido,
 			Jugador jugadorCalificador) {
-		return (partido.getInscripciones().stream().anyMatch(i -> i.jugador
+		return (partido.getInscripciones().stream().anyMatch(i -> i.getJugador()
 				.equals(jugadorCalificador)))
-				&& (partido.getInscripciones().stream().anyMatch(i -> i.jugador
+				&& (partido.getInscripciones().stream().anyMatch(i -> i.getJugador()
 						.equals(jugadorACalificar)));
 
 	}
