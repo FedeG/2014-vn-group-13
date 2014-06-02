@@ -24,10 +24,10 @@ public class Administrador {
 		this.partidos.add(partidoNuevo);
 		return partidoNuevo;
 	}
-	public void generarEquiposTentativos(Partido partido)
-	{
-		partido.setEquipoA(partido.getInscripciones().stream().limit(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>())));
-		partido.setEquipoB(partido.getInscripciones().stream().skip(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>())));
+	public void generarEquiposTentativos(Partido partido) {
+		List<Inscripcion> equipoA = partido.getInscripciones().stream().limit(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>()));
+		List<Inscripcion> equipoB = partido.getInscripciones().stream().skip(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>()));
+		partido.equiposAJugar(equipoA, equipoB);
 	}
 	public void agregarPropuesta(Propuesta propuesta) {
 		this.getPropuestas().add(propuesta);		

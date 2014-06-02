@@ -2,6 +2,7 @@ package com.tpa.app;
 
 import java.time.LocalDateTime;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -67,8 +68,28 @@ public class TestPartido {
 	@Test
 	public void testNoNotificarAlAdministrador() {
 		for (int i = 0; i < 8; i++)
-			partido2.inscribir(new Inscripcion(jugador,
-					PrioridadesInscripciones.ESTANDAR, null));
+			partido2.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null));
+
 		verify(mailSenderMock, times(0)).enviarMail(any(Mail.class));
+	}
+	
+	// Test #6 - Calificar a un jugador correcto
+
+	@Test
+	public void testCalificarJugadorCorrecto() {
+		Inscripcion inscripcionEstandar = new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null);
+		partido.inscribir(inscripcionEstandar);
+		partido.calificar(jugador, jugador, 10, "soy el mejor del mundo");
+
+		Assert.assertEquals(partido.getCalificaciones().get(0).getNota(), 10);
+		Assert.assertEquals(partido.getCalificaciones().get(0).getJugador(), jugador);
+		Assert.assertEquals(partido.getCalificaciones().get(0).getCritica(), "soy el mejor del mundo");
+	}
+
+	// Test #7 - Calificar a un jugador incorrecto
+
+	@Test(expected = Exception.class) 
+	public void testCalificarJugadorIncorrecto() {
+		partido.calificar(jugador, jugador, 3, "pésimo!!!!");
 	}
 }

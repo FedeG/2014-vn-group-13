@@ -31,29 +31,6 @@ public class Jugador {
 		this.getPersona().avisarAmigos(partido);
 	}
 
-	public int calificar(Jugador jugador, Partido partido, int nota,
-			String critica) {
-
-		if (validarCombinacionPartidoJugadores(jugador, partido, this)) {
-			Calificacion calificacion = new Calificacion(nota, jugador, critica);
-			partido.agregarCalificacion(calificacion);
-			return 0;
-		} else {
-			return 1;
-		}
-
-	}
-
-	private boolean validarCombinacionPartidoJugadores(
-			Jugador jugadorACalificar, Partido partido,
-			Jugador jugadorCalificador) {
-		return (partido.getInscripciones().stream().anyMatch(i -> i.getJugador()
-				.equals(jugadorCalificador)))
-				&& (partido.getInscripciones().stream().anyMatch(i -> i.getJugador()
-						.equals(jugadorACalificar)));
-
-	}
-
 	public Persona getPersona() {
 		return persona;
 	}

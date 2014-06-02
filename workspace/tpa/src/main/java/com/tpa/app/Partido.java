@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 import com.tpa.app.Inscripcion.PrioridadesInscripciones;
+import com.tpa.app.NoEstaInscriptoExcepcion;
 
 public class Partido {
 
@@ -22,27 +23,22 @@ public class Partido {
 
 	@Override
 	public String toString() {
-		return String.format("Partido {0} {1:dd/MM/yyyy HH:mm}", getLugar(),
-				getFechaHora());
+		return String.format("Partido {0} {1:dd/MM/yyyy HH:mm}", this.getLugar(), this.getFechaHora());
 	}
 
-	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo,
-			MailSender sender) {
+	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo, MailSender sender) {
 		this.mailSender = sender;
-		this.setFechaHora(fecha_y_hora);
+		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
 		this.inscripciones = new PriorityQueue<Inscripcion>(10, comparator);
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
 
-	public static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
-
+	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
 		@Override
 		public int compare(Inscripcion i1, Inscripcion i2) {
-
-			return i1.getModalidad().dameTuPrioridad()
-					- i2.getModalidad().dameTuPrioridad();
+			return i1.getModalidad().dameTuPrioridad() - i2.getModalidad().dameTuPrioridad();
 		}
 	};
 
@@ -58,20 +54,20 @@ public class Partido {
 		this.lugar = lugar;
 	}
 
-	public List<Inscripcion> getEquipoB() {
-		return equipoB;
-	}
-
-	public void setEquipoB(List<Inscripcion> equipoB) {
-		this.equipoB = equipoB;
-	}
-
 	public List<Inscripcion> getEquipoA() {
 		return equipoA;
 	}
 
-	public void setEquipoA(List<Inscripcion> equipoA) {
+	private void setEquipoA(List<Inscripcion> equipoA) {
 		this.equipoA = equipoA;
+	}
+
+	public List<Inscripcion> getEquipoB() {
+		return equipoB;
+	}
+
+	private void setEquipoB(List<Inscripcion> equipoB) {
+		this.equipoB = equipoB;
 	}
 
 	public int getCupo() {
@@ -86,10 +82,6 @@ public class Partido {
 		return fechaHora;
 	}
 
-	public void setFechaHora(LocalDateTime fechaHora) {
-		this.fechaHora = fechaHora;
-	}
-
 	public PriorityQueue<Inscripcion> getInscripciones() {
 		return this.inscripciones;
 	}
@@ -97,52 +89,43 @@ public class Partido {
 	public void inscribir(Inscripcion inscripcion) {
 		this.getInscripciones().add(inscripcion);
 		inscripcion.getJugador().avisarAmigos(this);
-		if (verificarCupoCompleto())
-			notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
+		if (this.verificarCupoCompleto())
+			this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
 	}
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador) {
-		List<Inscripcion> inscrips = getInscripciones().stream()
-				.filter(i -> i.getJugador().equals(jugador))
+		this.verificarJugadorIncripto(jugador);
+		List<Inscripcion> inscrips = this.getInscripciones()
+				.stream()
+				.filter(inscripcion -> inscripcion.getJugador().equals(jugador))
 				.collect(Collectors.toList());
-		if (!inscrips.isEmpty())
-			return inscrips.get(0);
-		throw new RuntimeException(
-				"El jugador no est� inscripto en este partido.");
+		return inscrips.get(0);
 	}
 
 	public void darDeBaja(Jugador jugador, String motivo) {
-		Inscripcion inscripcion = obtenerInscripcionDe(jugador);
-		if (inscripcion == null)
-			return;
+		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActivo(false);
 		jugador.agregarInfraccion(new Infraccion(motivo, LocalDateTime.now()));
-		if (!verificarCupoCompleto())
-			notificarAdministrador("Se dio de baja un jugador.");
+		if (!this.verificarCupoCompleto()) this.notificarAdministrador("Se dio de baja un jugador.");
 	}
 
 	public void darDeBaja(Jugador jugador, Jugador jugadorReemplaza) {
-		Inscripcion inscripcion = obtenerInscripcionDe(jugador);
-		if (inscripcion == null)
-			return;
+		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActivo(false);
-
-		this.inscribir(new Inscripcion(jugador,
-				PrioridadesInscripciones.ESTANDAR, null));
+		this.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null));
 	}
 
 	public boolean verificarCupoCompleto() {
-		int cantInscripciones = (int) getInscripciones().size();
+		int cantInscripciones = (int) this.getInscripciones().size();
 		return cantInscripciones >= 10;
 	}
 
-	public void notificarAdministrador(String mensaje) {
-		getMailSender().enviarMail(
-				new Mail("Notificaci�n", mensaje, "",
-						"admin_partidos@dds.utn.frba"));
+	private void notificarAdministrador(String mensaje) {
+		Mail mail = new Mail("Notificacion", mensaje, "", "admin_partidos@dds.utn.frba");
+		this.getMailSender().enviarMail(mail);
 	}
 
-	public void agregarCalificacion(Calificacion calificacion) {
+	private void agregarCalificacion(Calificacion calificacion) {
 		this.getCalificaciones().add(calificacion);
 	}
 
@@ -150,13 +133,33 @@ public class Partido {
 		return calificaciones;
 	}
 
-	public void setCalificaciones(List<Calificacion> calificaciones) {
-		this.calificaciones = calificaciones;
-	}
-
 	public int contarInscripciones(PrioridadesInscripciones modalidad) {
-		return (int) this.getInscripciones().stream()
-				.filter(i -> i.getModalidad() == modalidad).count();
-
+		return (int) this.getInscripciones()
+				.stream()
+				.filter(inscripcion -> inscripcion.getModalidad() == modalidad)
+				.count();
 	}
+
+	private boolean estaInscripto(Jugador jugador) {
+		return this.getInscripciones()
+					.stream()
+					.anyMatch(i -> i.getJugador().equals(jugador));
+	}
+
+	private void verificarJugadorIncripto(Jugador jugador){
+		if (!this.estaInscripto(jugador)) throw new NoEstaInscriptoExcepcion(jugador);
+	}
+
+	public void calificar(Jugador jugadorCalificador, Jugador jugadorACalificar, int nota, String critica) {
+		this.verificarJugadorIncripto(jugadorACalificar);
+		this.verificarJugadorIncripto(jugadorCalificador);
+		Calificacion calificacion = new Calificacion(nota, jugadorACalificar, critica);
+		this.agregarCalificacion(calificacion);
+	}
+
+	public void equiposAJugar(List<Inscripcion> equipoA, List<Inscripcion> equipoB) {
+		this.setEquipoA(equipoA);
+		this.setEquipoB(equipoB);
+	}
+
 }
