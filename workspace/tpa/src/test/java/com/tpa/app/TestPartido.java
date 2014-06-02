@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import com.tpa.app.Inscripcion.PrioridadesInscripciones;
+import com.tpa.app.NoEstaInscriptoExcepcion;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -88,7 +89,7 @@ public class TestPartido {
 
 	// Test #7 - Calificar a un jugador incorrecto
 
-	@Test(expected = Exception.class) 
+	@Test(expected = NoEstaInscriptoExcepcion.class) 
 	public void testCalificarJugadorIncorrecto() {
 		partido.calificar(jugador, jugador, 3, "pésimo!!!!");
 	}
