@@ -7,9 +7,11 @@ public class Jugador {
 
 	private List<Infraccion> infracciones;
 	private Persona persona;
+	private List<Partido> partidosJugados;
 
 	public Jugador(Persona persona) {
 		this.infracciones = new ArrayList<Infraccion>();
+		this.partidosJugados = new ArrayList<Partido>();
 		this.setPersona(persona);
 	}
 
@@ -21,8 +23,7 @@ public class Jugador {
 		getInfracciones().add(infraccion);
 	}
 
-	public void proponer(Persona persona, Partido partido, Administrador admin,
-			Inscripcion.PrioridadesInscripciones modalidad) {
+	public void proponer(Persona persona, Partido partido, Administrador admin, Inscripcion.PrioridadesInscripciones modalidad) {
 		Propuesta propuesta = new Propuesta(persona, modalidad, partido);
 		admin.agregarPropuesta(propuesta);
 	}
@@ -37,6 +38,14 @@ public class Jugador {
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	public List<Partido> getPartidosJugados() {
+		return partidosJugados;
+	}
+
+	public void agregarPartidoJugado(Partido partidoJugado) {
+		this.partidosJugados.add(partidoJugado);
 	}
 
 }
