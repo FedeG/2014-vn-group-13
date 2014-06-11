@@ -1,6 +1,8 @@
 package com.tpa.app;
 
 import java.util.Collection;
+import java.util.Optional;
+
 import javafx.util.Pair;
 
 public class PorHandicap implements Criterio {
@@ -34,8 +36,12 @@ public class PorHandicap implements Criterio {
 
 	@Override
 	public int dameTuValor(Inscripcion inscripcion) {
-		// falta magia
-		return 0;
+		Optional<Pair<Jugador, Integer>> pair_buscado;
+		pair_buscado = this.getValoresDeJugadores()
+						   .stream()
+						   .filter(pair -> pair.getKey() == inscripcion.getJugador())
+						   .findFirst();
+		return pair_buscado.get().getValue();
 	}
 
 }
