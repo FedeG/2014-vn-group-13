@@ -43,15 +43,17 @@ public class ByIndex implements Divisor {
 	}
 
 	@Override
-	public ArrayList<Inscripcion> generarEquipoA(Inscripcion inscipcion) {
-		// TODO magia faltante
-		return null;
+	public ArrayList<Inscripcion> generarEquipoA(ArrayList<Inscripcion> inscripciones) {
+		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
+		this.getIndicesEquipoA().forEach((numero) -> retorno.add(inscripciones.get(numero)));
+		return retorno;
 	}
 	
 	@Override
-	public ArrayList<Inscripcion> generarEquipoB(Inscripcion inscipcion) {
-		// TODO magia faltante
-		return null;
+	public ArrayList<Inscripcion> generarEquipoB(ArrayList<Inscripcion> inscripciones) {
+		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
+		this.getIndicesEquipoB().forEach((numero) -> retorno.add(inscripciones.get(numero)));
+		return retorno;
 	}
 
 }
