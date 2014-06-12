@@ -13,13 +13,13 @@ public class Administrador {
 	private GeneradorDeEquipos generadorDeEquipos;
 	private List<Criterio> criterios;
 	private List<Divisor> divisores;
-	
+
 	public Administrador(MailSender mailSender) {
 		this.mailSender = mailSender;
 		this.partidos = new ArrayList<Partido>();
 		this.propuestas = new ArrayList<Propuesta>();
 		this.divisores = new ArrayList<Divisor>();
-		this.criterios = new ArrayList<Criterio>();
+		this.setCriterios(new ArrayList<Criterio>());
 		this.generadorDeEquipos = new GeneradorDeEquipos();
 	}
 
@@ -27,20 +27,34 @@ public class Administrador {
 		return this.partidos;
 	}
 
-	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
-		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo, this.mailSender);
+	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar,
+			int cupo) {
+		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo,
+				this.mailSender);
 		this.partidos.add(partidoNuevo);
 		return partidoNuevo;
 	}
 
 	public void generarEquiposTentativos(Partido partido) {
-		List<Inscripcion> equipoA = partido.getInscripciones().stream().limit(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>()));
-		List<Inscripcion> equipoB = partido.getInscripciones().stream().skip(5).collect(Collectors.toCollection(()-> new ArrayList<Inscripcion>()));
+		List<Inscripcion> equipoA = partido
+				.getInscripciones()
+				.stream()
+				.limit(5)
+				.collect(
+						Collectors
+								.toCollection(() -> new ArrayList<Inscripcion>()));
+		List<Inscripcion> equipoB = partido
+				.getInscripciones()
+				.stream()
+				.skip(5)
+				.collect(
+						Collectors
+								.toCollection(() -> new ArrayList<Inscripcion>()));
 		partido.equiposAJugar(equipoA, equipoB);
 	}
 
 	public void agregarPropuesta(Propuesta propuesta) {
-		this.getPropuestas().add(propuesta);		
+		this.getPropuestas().add(propuesta);
 	}
 
 	public List<Propuesta> getPropuestas() {
@@ -69,5 +83,9 @@ public class Administrador {
 
 	public void agregarDivisor(Divisor divisor) {
 		this.getDivisores().add(divisor);
+	}
+
+	public void setCriterios(List<Criterio> criterios) {
+		this.criterios = criterios;
 	}
 }
