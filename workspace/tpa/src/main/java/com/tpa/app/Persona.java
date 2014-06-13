@@ -54,7 +54,7 @@ public class Persona {
 			.forEach(amigo -> partido
 				.getMailSender()
 				.enviarMail(
-					new Mail("Se anotï¿½ tu amigo.","Te queremos avisar que tu amigo a este partido.","", amigo.getEmail())
+					new Mail("Se anotó tu amigo.","Te queremos avisar que tu amigo se inscribió a este partido.","", amigo.getEmail())
 				)
 			);
 	}
