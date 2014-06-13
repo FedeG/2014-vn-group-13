@@ -19,6 +19,13 @@ public class Partido {
 	private List<Inscripcion> equipoB;
 	private MailSender mailSender;
 	private List<Calificacion> calificaciones;
+	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
+		@Override
+		public int compare(Inscripcion i1, Inscripcion i2) {
+			return i1.getModalidad().dameTuPrioridad()
+					- i2.getModalidad().dameTuPrioridad();
+		}
+	};
 
 	@Override
 	public String toString() {
@@ -32,18 +39,9 @@ public class Partido {
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.setInscripciones((new PriorityQueue<Inscripcion>(10, comparator)));
+		this.inscripciones =new PriorityQueue<Inscripcion>(cupo, comparator);
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
-
-	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
-		@Override
-		public int compare(Inscripcion i1, Inscripcion i2) {
-			return i1.getModalidad().dameTuPrioridad()
-					- i2.getModalidad().dameTuPrioridad();
-		}
-	};
-
 	public MailSender getMailSender() {
 		return mailSender;
 	}
@@ -117,7 +115,7 @@ public class Partido {
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActivo(false);
 		this.inscribir(new Inscripcion(jugador,
-				PrioridadesInscripciones.ESTANDAR, null));
+				inscripcion.getModalidad(), null)); //misma modalidad que el que se dio de baja
 	}
 
 	public boolean verificarCupoCompleto() {
@@ -169,9 +167,4 @@ public class Partido {
 		this.setEquipoA(equipoA);
 		this.setEquipoB(equipoB);
 	}
-
-	public void setInscripciones(PriorityQueue<Inscripcion> inscripciones) {
-		this.inscripciones = (PriorityQueue<Inscripcion>) inscripciones;
-	}
-
 }
