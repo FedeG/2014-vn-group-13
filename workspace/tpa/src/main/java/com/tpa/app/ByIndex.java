@@ -17,8 +17,7 @@ public class ByIndex implements Divisor {
 
 	public ByIndex(String nombre, ArrayList<Integer> indicesEquipoA,
 			ArrayList<Integer> indicesEquipoB) {
-		this.setIndicesEquipoA(indicesEquipoA);
-		this.setIndicesEquipoB(indicesEquipoB);
+		this(indicesEquipoA, indicesEquipoB);
 		this.setNombre(nombre);
 	}
 
@@ -46,26 +45,24 @@ public class ByIndex implements Divisor {
 		this.nombre = nombre;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Inscripcion> generarEquipoA(
 			PriorityQueue<Inscripcion> inscripciones) {
-		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
-		this.getIndicesEquipoA().forEach(
-				(numero) -> retorno.add(((List<Inscripcion>) inscripciones)
-						.get(numero)));
-		return retorno;
+		return generarEquipoConIndices(inscripciones, this.getIndicesEquipoA());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Inscripcion> generarEquipoB(
 			PriorityQueue<Inscripcion> inscripciones) {
-		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
-		this.getIndicesEquipoB().forEach(
-				(numero) -> retorno.add(((List<Inscripcion>) inscripciones)
-						.get(numero)));
-		return retorno;
+		return generarEquipoConIndices(inscripciones, this.getIndicesEquipoB());
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Inscripcion> generarEquipoConIndices(
+			PriorityQueue<Inscripcion> inscripciones, ArrayList<Integer> indices) {
+		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
+		indices.forEach((numero) -> retorno.add(((List<Inscripcion>) inscripciones)
+				.get(numero)));
+		return retorno;
+	}
 }
