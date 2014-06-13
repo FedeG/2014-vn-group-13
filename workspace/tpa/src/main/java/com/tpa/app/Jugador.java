@@ -7,10 +7,12 @@ public class Jugador {
 
 	private List<Infraccion> infracciones;
 	private Persona persona;
+	private List<Partido> partidosJugados;
 
 	public Jugador(Persona persona) {
 		this.infracciones = new ArrayList<Infraccion>();
-		this.setPersona(persona);
+		this.partidosJugados = new ArrayList<Partido>();
+		this.persona = persona;
 	}
 
 	public List<Infraccion> getInfracciones() {
@@ -31,35 +33,15 @@ public class Jugador {
 		this.getPersona().avisarAmigos(partido);
 	}
 
-	public int calificar(Jugador jugador, Partido partido, int nota,
-			String critica) {
-
-		if (validarCombinacionPartidoJugadores(jugador, partido, this)) {
-			Calificacion calificacion = new Calificacion(nota, jugador, critica);
-			partido.agregarCalificacion(calificacion);
-			return 0;
-		} else {
-			return 1;
-		}
-
-	}
-
-	private boolean validarCombinacionPartidoJugadores(
-			Jugador jugadorACalificar, Partido partido,
-			Jugador jugadorCalificador) {
-		return (partido.getInscripciones().stream().anyMatch(i -> i.getJugador()
-				.equals(jugadorCalificador)))
-				&& (partido.getInscripciones().stream().anyMatch(i -> i.getJugador()
-						.equals(jugadorACalificar)));
-
-	}
-
 	public Persona getPersona() {
 		return persona;
 	}
 
-	public void setPersona(Persona persona) {
-		this.persona = persona;
+	public List<Partido> getPartidosJugados() {
+		return partidosJugados;
 	}
 
+	public void agregarPartidoJugado(Partido partidoJugado) {
+		this.getPartidosJugados().add(partidoJugado);
+	}
 }

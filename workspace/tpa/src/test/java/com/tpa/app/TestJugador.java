@@ -29,7 +29,6 @@ public class TestJugador {
 	Inscripcion inscripcionEstandarConAmigos;
 	@Mock
 	MailSender mailSenderMock;
-	private int i;
 
 	@Before
 	public void setUp() {
@@ -141,32 +140,5 @@ public class TestJugador {
 
 	// Test #5 - Darse de baja sin reemplazo y quedan menos de 10 jugadores
 	// (debe notificarse al admin)
-
-	// Test #6 - Calificar a un jugador correcto
-
-	@Test
-	public void testCalificarJugadorCorrecto() {
-
-		partido.inscribir(inscripcionEstandar);
-		jugador.calificar(jugador, partido, 10, "soy el mejor del mundo");
-		Assert.assertEquals(partido.getCalificaciones().get(0).getNota(), 10);
-		Assert.assertEquals(partido.getCalificaciones().get(0).getJugador(),
-				jugador);
-		Assert.assertEquals(partido.getCalificaciones().get(0).getCritica(),
-				"soy el mejor del mundo");
-
-	}
-
-	// Test #7 - Calificar a un jugador incorrecto
-
-	@Test
-	public void testCalificarJugadorIncorrecto() {
-
-		i = jugador.calificar(jugador, partido, 3, "pésimo!!!!");
-		Assert.assertEquals(i, 1);
-		Assert.assertTrue(partido.getCalificaciones().stream()
-				.noneMatch(c -> c.getNota() == 3));
-
-	}
 
 }
