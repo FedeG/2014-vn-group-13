@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.OptionalDouble;
 
 public class GeneradorDeEquipos {
 
@@ -27,22 +28,14 @@ public class GeneradorDeEquipos {
 	public Comparator<Inscripcion> crearComparador(List<Criterio> list,
 			Partido partido) {
 
+		if(list.isEmpty()) 
+			throw new RuntimeException("No se han seleccionado criterios de ordenamiento.");
+		
 		Comparator<Inscripcion> comparator = (i1, i2) -> {
+			OptionalDouble promedio1 = list.stream().mapToInt(criterio->criterio.dameTuValor(i1)).average();
+			OptionalDouble promedio2 = list.stream().mapToInt(criterio->criterio.dameTuValor(i2)).average();
 
-			int total = 0, promedio1 = 0, promedio2 = 0;
-			for (Criterio i : list) {
-				total += +i.dameTuValor(i1);
-			}
-			;
-			promedio1 = total / list.size();
-			total = 0;
-			for (Criterio i : list) {
-				total += i.dameTuValor(i2);
-			}
-			;
-			promedio2 = total / list.size();
-
-			return promedio2 - promedio1;
+			return (int) (promedio2.getAsDouble() - promedio1.getAsDouble());
 		};
 		return comparator;
 	}
