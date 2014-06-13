@@ -11,8 +11,8 @@ public class PorCalificacion implements Criterio {
 	}
 
 	public PorCalificacion(String nombre, int cantidadDeCalificaciones) {
+		this(cantidadDeCalificaciones);
 		this.setNombre(nombre);
-		this.setCantidadDeCalificaciones(cantidadDeCalificaciones);
 	}
 
 	public String getNombre() {
