@@ -1,6 +1,8 @@
 package com.tpa.app;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PorCalificacion implements Criterio {
 	private String nombre = "Criterio Por Calificacion";
@@ -31,24 +33,43 @@ public class PorCalificacion implements Criterio {
 		this.cantidadDeCalificaciones = cantidadDeCalificaciones;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public int dameTuValor(Inscripcion inscripcion) {
-
-		ArrayList<Calificacion> calificacionesPartido = new ArrayList<Calificacion>();
-		ArrayList<Calificacion> calificacionesJugadorEnPartido = new ArrayList<Calificacion>();
-		calificacionesPartido = (ArrayList<Calificacion>) inscripcion
-				.getJugador().getPartidosJugados()
-				.get(inscripcion.getJugador().getPartidosJugados().size() - 1)
-				.getCalificaciones();
-		calificacionesJugadorEnPartido = (ArrayList<Calificacion>) calificacionesPartido
-				.stream().filter(
-						c -> c.getJugador().equals(inscripcion.getJugador()));
-		int total = 0;
-		for (Calificacion c : calificacionesJugadorEnPartido) {
-			total += c.getNota();
-		}
-		return total / calificacionesJugadorEnPartido.size();
+	public double dameTuValor(Inscripcion inscripcion) {
+		List<Calificacion> calificacionesJugadorEnPartido = this
+				.getUltimasNCalificacionesDelJugador(inscripcion.getJugador(),
+						this.getCantidadDeCalificaciones());
+		double valor = calificacionesJugadorEnPartido.stream()
+				.mapToInt(calificacion -> calificacion.getNota()).average()
+				.getAsDouble();
+		return valor;
 	}
 
+	private List<Calificacion> getUltimasNCalificacionesDelJugador(
+			Jugador jugador, int cantidadDeCalificacionesBuscadas) {
+		ArrayList<Calificacion> calificacionesJugadorEnPartido = new ArrayList<Calificacion>();
+		int calificacionesAgregadas = 0;
+		int cantidadPartidos = jugador.getPartidosJugados().size();
+		for (int numeroDePartido = 0; numeroDePartido < cantidadPartidos
+				&& calificacionesAgregadas < cantidadDeCalificacionesBuscadas; numeroDePartido++) {
+			ArrayList<Calificacion> calificaciones = this
+					.getCalificacionDelJugadorEnElPartido(jugador,
+							numeroDePartido);
+			calificacionesJugadorEnPartido.addAll(calificaciones);
+			calificacionesAgregadas += calificaciones.size();
+		}
+		return calificacionesJugadorEnPartido.subList(0,
+				cantidadDeCalificacionesBuscadas);
+	}
+
+	private ArrayList<Calificacion> getCalificacionDelJugadorEnElPartido(
+			Jugador jugador, int numeroDePartido) {
+		return (ArrayList<Calificacion>) jugador
+				.getPartidosJugados()
+				.get(numeroDePartido)
+				.getCalificaciones()
+				.stream()
+				.filter(calificacion -> calificacion.getJugador().equals(
+						jugador)).collect(Collectors.toList());
+
+	}
 }

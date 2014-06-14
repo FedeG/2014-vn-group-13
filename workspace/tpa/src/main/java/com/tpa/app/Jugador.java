@@ -42,6 +42,6 @@ public class Jugador {
 	}
 
 	public void agregarPartidoJugado(Partido partidoJugado) {
-		this.getPartidosJugados().add(partidoJugado);
+		this.getPartidosJugados().add(0, partidoJugado); //El ultimo partido jugado va a estar siempre al princio JOJO
 	}
 }

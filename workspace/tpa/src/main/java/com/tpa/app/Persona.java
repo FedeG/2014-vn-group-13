@@ -11,6 +11,10 @@ public class Persona {
 	private String nombre;
 	private List<Persona> amigos;
 
+	public Persona(LocalDateTime fechaNac, String email, String nombre) {
+		this(fechaNac, email);
+		this.nombre = nombre;
+	}
 	public Persona(LocalDateTime fechaNac, String email) {
 		this.setFechaNac(fechaNac);
 		this.setEmail(email);
@@ -35,10 +39,6 @@ public class Persona {
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public List<Persona> getAmigos() {

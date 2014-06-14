@@ -38,7 +38,7 @@ public class PorHandicap implements Criterio {
 	}
 
 	@Override
-	public int dameTuValor(Inscripcion inscripcion) {
+	public double dameTuValor(Inscripcion inscripcion) {
 		Optional<Pair<Jugador, Integer>> pair_buscado;
 		pair_buscado = this.getValoresDeJugadores().stream()
 				.filter(pair -> pair.getKey() == inscripcion.getJugador())

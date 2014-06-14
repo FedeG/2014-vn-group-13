@@ -19,7 +19,7 @@ public class Administrador {
 		this.partidos = new ArrayList<Partido>();
 		this.propuestas = new ArrayList<Propuesta>();
 		this.divisores = new ArrayList<Divisor>();
-		this.setCriterios(new ArrayList<Criterio>());
+		this.criterios = new ArrayList<Criterio>();
 		this.generadorDeEquipos = new GeneradorDeEquipos();
 	}
 
@@ -80,12 +80,7 @@ public class Administrador {
 	public List<Divisor> getDivisores() {
 		return divisores;
 	}
-
 	public void agregarDivisor(Divisor divisor) {
 		this.getDivisores().add(divisor);
-	}
-
-	public void setCriterios(List<Criterio> criterios) {
-		this.criterios = criterios;
 	}
 }
