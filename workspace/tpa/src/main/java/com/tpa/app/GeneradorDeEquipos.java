@@ -32,10 +32,10 @@ public class GeneradorDeEquipos {
 			throw new RuntimeException("No se han seleccionado criterios de ordenamiento.");
 		
 		Comparator<Inscripcion> comparator = (i1, i2) -> {
-			OptionalDouble promedio1 = list.stream().mapToInt(criterio->criterio.dameTuValor(i1)).average();
-			OptionalDouble promedio2 = list.stream().mapToInt(criterio->criterio.dameTuValor(i2)).average();
-
-			return (int) (promedio2.getAsDouble() - promedio1.getAsDouble());
+			OptionalDouble promedio1 = list.stream().mapToDouble(criterio->criterio.dameTuValor(i1)).average();
+			OptionalDouble promedio2 = list.stream().mapToDouble(criterio->criterio.dameTuValor(i2)).average();
+			
+			return Double.compare(promedio2.getAsDouble(), promedio1.getAsDouble());
 		};
 		return comparator;
 	}
