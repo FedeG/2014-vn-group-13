@@ -1,10 +1,6 @@
 Grupo 13 de los viernes-noche ENTREGA 1
 ==========================================
 
-Tests:
-------
-[![Build Status](https://drone.io/github.com/dds-utn/2014-vn-group-13/status.png)](https://drone.io/github.com/dds-utn/2014-vn-group-13/latest)
-
 Diagrama de clases:
 ----------------
 
@@ -44,5 +40,10 @@ Comandos útiles:
 
 Construir archivos para eclipse.   
 `$ mvn eclipse:eclipse -DdownloadSources=true -DdownloadJavadocs=true`
+
+
+Tests:
+------
+[![Build Status](https://drone.io/github.com/dds-utn/2014-vn-group-13/status.png)](https://drone.io/github.com/dds-utn/2014-vn-group-13/latest)
 
 *.md Federico Gonzalez*
