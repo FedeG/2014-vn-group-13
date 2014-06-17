@@ -55,15 +55,15 @@ public class TestPropuesta {
 	@Test
 	public void testRechazarPropuesta() {
 		propuesta
-				.estasRechazada("porque el jugador es malísimo y además le gustan las pantallas táctiles");
+				.estasRechazada("porque el jugador es malisimo y además le gustan las pantallas tactiles");
 		Assert.assertTrue("El estado es rechazado", propuesta.getEstado()
 				.equals(EstadoPropuesta.Rechazada));
 		Assert.assertTrue(
-				"El motivo es el que dí",
+				"El motivo es el que di",
 				propuesta
 						.getMotivo()
 						.compareTo(
-								"porque el jugador es malísimo y además le gustan las pantallas táctiles") == 0);
+								"porque el jugador es malisimo y además le gustan las pantallas tactiles") == 0);
 	}
 
 }
