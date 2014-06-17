@@ -99,6 +99,6 @@ public class TestPartido {
 
 	@Test(expected = NoEstaInscriptoExcepcion.class) 
 	public void testCalificarJugadorNoValido() {
-		partido.calificar(jugador, jugador, 3, "pésimo!!!!");
+		partido.calificar(jugador, jugador, 3, "pesimo!!!!");
 	}
 }
