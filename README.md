@@ -1,10 +1,6 @@
 Grupo 13 de los viernes-noche (VIERNES 13)
 ==========================================
 
-Tests:
-------
-[![Build Status](https://drone.io/github.com/dds-utn/2014-vn-group-13/status.png)](https://drone.io/github.com/dds-utn/2014-vn-group-13/latest)
-
 Comandos útiles:
 ----------------
 
@@ -60,5 +56,9 @@ Cambiar al brach fedeG por ejemplo
 [Tenes que estar parado en la raiz de tu repo local]
 
 EXTRA: Si alguno quiere que git no este pidiendo todo el tiempo usuario y contraseña me dice y el viernes le configuro el ssh para no tener que escribirlo mas
+
+Tests:
+------
+[![Build Status](https://drone.io/github.com/dds-utn/2014-vn-group-13/status.png)](https://drone.io/github.com/dds-utn/2014-vn-group-13/latest)
 
 *.md por Ezequiel Ayzenberg y Federico Gonzalez*
