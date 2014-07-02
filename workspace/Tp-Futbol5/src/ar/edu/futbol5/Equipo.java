@@ -2,6 +2,9 @@ package ar.edu.futbol5;
 
 import java.util.List;
 
+// Code Smell: "Data Class"
+// Lo único que tiene la clase es un atributo, su getter y su setter.
+
 class Equipo {
 	
 	private List<Jugador> jugadores;
@@ -16,3 +19,4 @@ class Equipo {
 	
 	
 }
+
