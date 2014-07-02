@@ -9,22 +9,8 @@ import java.util.stream.DoubleStream;
 import ar.edu.futbol5.Jugador;
 import ar.edu.futbol5.Partido;
 
-public class OrdenamientoCalificacionUltimos2Partidos implements CriterioOrdenamiento {
-	
-	
-	public List<Jugador> ordenar(Partido partido) {
-		Collections.sort(
-				partido.getInscriptos(), 
-				(jugador1, jugador2) -> 
-					calcularValor(jugador1).compareTo(calcularValor(jugador2)));
+public class OrdenamientoCalificacionUltimos2Partidos extends CriterioOrdenamiento {	
 
-		Collections.reverse(partido.getInscriptos());
-		
-		List<Jugador> jugadores=new ArrayList<Jugador>();
-		jugadores.addAll(partido.getInscriptos());
-		return jugadores;
-	}
-	
 	public Double calcularValor(Jugador jugador) {
 		List<Double> puntajes=jugador.getPuntajes();
 		List<Double> misPuntajes=new ArrayList<Double>(); 
