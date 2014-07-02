@@ -1,9 +1,9 @@
 package ar.edu.futbol5;
 
+import java.util.ArrayList;
 import java.util.List;
 
-// Code Smell: "Data Class"
-// Lo único que tiene la clase es un atributo, su getter y su setter.
+import ar.edu.futbol5.utilitarios.Lists;
 
 class Equipo {
 	
@@ -17,6 +17,11 @@ class Equipo {
 		this.jugadores = jugadores;
 	}
 	
+	public void distribuir (List<Jugador> jugadoresOrdenados, List<Integer> posiciones) {
+		jugadores = new ArrayList<Jugador>();
+		posiciones.forEach(p -> jugadores.add(jugadoresOrdenados.get(p)));	
+
+	}
+	
 	
 }
-

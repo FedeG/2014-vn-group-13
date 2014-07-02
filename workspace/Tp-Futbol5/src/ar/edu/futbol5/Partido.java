@@ -25,10 +25,28 @@ public class Partido {
 	}
 
 	public void generarEquipos() {
+		
 		if (this.validarInscripcion() == -1) {
 			throw new BusinessException("Hubo un error");
 		}
-		this.distribuirEquipos(this.ordenarEquipos());
+		
+		equipo1 = new Equipo();
+		equipo2 = new Equipo();
+		List<Integer> posiciones1 = new ArrayList<Integer>();
+		List<Integer> posiciones2 = new ArrayList<Integer>();
+		
+		if (distribucionEquipos == 5) {			
+			posiciones1.add(0);posiciones1.add(2);posiciones1.add(4);posiciones1.add(6);posiciones1.add(8);
+			posiciones2.add(1);posiciones2.add(3);posiciones2.add(5);posiciones2.add(7);posiciones2.add(9);
+		} else {
+			// distribucionEquipos == 16 que ordena de esta manera
+			posiciones1.add(0);posiciones1.add(3);posiciones1.add(4);posiciones1.add(7);posiciones1.add(8);
+			posiciones2.add(1);posiciones2.add(2);posiciones2.add(5);posiciones2.add(6);posiciones2.add(9);
+		}		
+		
+		equipo1.distribuir(this.ordenarEquipos(), posiciones1);
+		equipo2.distribuir(this.ordenarEquipos(), posiciones2);
+		
 		estado = "G";
 	}
 
@@ -43,21 +61,6 @@ public class Partido {
 			return -1;
 		}
 		return 0;
-	}
-
-	private void distribuirEquipos(List<Jugador> jugadores) {
-		equipo1 = new Equipo();
-		equipo2 = new Equipo();
-		if (distribucionEquipos == 5) {
-			equipo1.setJugadores(Lists.newArrayList(jugadores.get(0),jugadores.get(2),jugadores.get(4),jugadores.get(6),jugadores.get(8)));
-			
-			equipo2.setJugadores(Lists.newArrayList(jugadores.get(1),jugadores.get(3),jugadores.get(5),jugadores.get(7),jugadores.get(9)));
-		} else {
-			// distribucionEquipos == 16 que ordena de esta manera
-			equipo1.setJugadores(Lists.newArrayList(jugadores.get(0),jugadores.get(3),jugadores.get(4),jugadores.get(7),jugadores.get(8)));
-			
-			equipo2.setJugadores(Lists.newArrayList(jugadores.get(1),jugadores.get(2),jugadores.get(5),jugadores.get(6),jugadores.get(9)));
-		}
 	}
 
 	public List<Jugador> ordenarEquipos() {
