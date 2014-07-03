@@ -51,16 +51,14 @@ public class Partido {
 	}
 
 	private int validarInscripcion() {
-		if (inscriptos.size() < 10) {
+		if ( noCumpleInscripcion()) {
 			return -1;
-		}
-		if (estado.equalsIgnoreCase("A")) {
-			return -1;
-		}
-		if (estado.equalsIgnoreCase("G")) {
-			return -1;
-		}
+		} else
 		return 0;
+	}
+	
+	public boolean noCumpleInscripcion() {
+		return (inscriptos.size() < 10 || estado.equalsIgnoreCase("A") || estado.equalsIgnoreCase("G")  )
 	}
 
 	public List<Jugador> ordenarEquipos() {
