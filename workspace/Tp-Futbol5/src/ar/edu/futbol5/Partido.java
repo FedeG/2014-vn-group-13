@@ -58,7 +58,7 @@ public class Partido {
 	}
 	
 	public boolean noCumpleInscripcion() {
-		return (inscriptos.size() < 10 || estado.equalsIgnoreCase("A") || estado.equalsIgnoreCase("G")  )
+		return (inscriptos.size() < 10 || estado.equalsIgnoreCase("A") || estado.equalsIgnoreCase("G")  );
 	}
 
 	public List<Jugador> ordenarEquipos() {
