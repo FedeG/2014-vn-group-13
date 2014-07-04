@@ -14,35 +14,26 @@ public class Jugador {
 	private Double calificacion;
 	private List<Double> puntajes;
 	CriterioInscripcion criterioInscripcion;
-	
-	public Jugador() {
-		this.puntajes = new ArrayList<Double>();
-		this.calificacion = null;
-		this.criterioInscripcion = new ModoEstandar();
-		this.nombre = "";
+
+	public Jugador(CriterioInscripcion criterioInscripcion) {
+		this(criterioInscripcion,"", 0, new ArrayList<Double>() );
 	}
-	
-	public Jugador(String nombre, double calificacion, List<Double> puntajes) {
+
+	public Jugador(CriterioInscripcion criterioInscripcion, String nombre,
+			double calificacion, List<Double> puntajes) {
 		this.calificacion = calificacion;
 		this.puntajes = puntajes;
-		this.criterioInscripcion = new ModoEstandar();
+		this.criterioInscripcion = criterioInscripcion;
 		this.nombre = nombre;
 	}
-	
-	void modoSolidario() {
-		criterioInscripcion = new ModoSolidario();
-	}
-	
+
 	boolean dejaLugarAOtro() {
-		if(criterioInscripcion instanceof ModoSolidario){
-			return true;
-		} else {
-			return false;
-		}
+		return this.criterioInscripcion.dejaLugarAOtro();
 	}
 
 	public String toString() {
-		//"Jugador (" + calificacion + ") - modo " + criterioInscripcion.toString()
+		// "Jugador (" + calificacion + ") - modo " +
+		// criterioInscripcion.toString()
 		return nombre;
 	}
 
@@ -54,4 +45,3 @@ public class Jugador {
 		return puntajes;
 	}
 }
-

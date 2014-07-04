@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.futbol5.excepciones.BusinessException;
+import ar.edu.futbol5.inscripcion.ModoEstandar;
+import ar.edu.futbol5.inscripcion.ModoSolidario;
 import ar.edu.futbol5.ordenamiento.OrdenamientoCalificacionUltimos2Partidos;
 import ar.edu.futbol5.ordenamiento.OrdenamientoMix;
 import ar.edu.futbol5.ordenamiento.OrdenamientoPorHandicap;
@@ -35,25 +37,22 @@ public class TestGenerarEquipo {
 		partidoPocosJugadores = new Partido();
 		
 		for (int i = 0; i < 6; i++) {
-			inscribir(partidoPocosJugadores, new Jugador());
+			inscribir(partidoPocosJugadores, new Jugador(new ModoEstandar()));
 		}
 		
 		partidoOk = new Partido();
 		partido1 = new Partido();
-		sytek = new Jugador("sytek", 3d,Lists.newArrayList(5d,8d) );
-		chicho = new Jugador("chicho", 5d, Lists.newArrayList(6d, 8d, 6d));
-		pato = new Jugador("pato", 8d, Lists.newArrayList(9d, 8d));
-		lechu = new Jugador("lechu", 6d, Lists.newArrayList(7d, 9d));
-		rodri = new Jugador("rodri", 4d, Lists.newArrayList(5d, 8d));
-		mike = new Jugador("mike", 1d, Lists.newArrayList(4d, 10d, 6d, 8d));
-		dodi = new Jugador("dodi", 7d, Lists.newArrayList(6d, 7d));
-		roly = new Jugador("roly", 9d, Lists.newArrayList(6d, 6d, 9d));
-		eric = new Jugador("eric", 6d, Lists.newArrayList(9d, 4d, 3d, 10d));
-		eric.modoSolidario();
-		leo = new Jugador("leo", 2d, Lists.newArrayList(6d, 6d, 6d));
-		leo.modoSolidario();
-		ferme = new Jugador("ferme", 10d, Lists.newArrayList(9d, 10d, 7d));
-		ferme.modoSolidario();
+		sytek = new Jugador(new ModoEstandar(), "sytek", 3d,Lists.newArrayList(5d,8d) );
+		chicho = new Jugador(new ModoEstandar(), "chicho", 5d, Lists.newArrayList(6d, 8d, 6d));
+		pato = new Jugador(new ModoEstandar(), "pato", 8d, Lists.newArrayList(9d, 8d));
+		lechu = new Jugador(new ModoEstandar(), "lechu", 6d, Lists.newArrayList(7d, 9d));
+		rodri = new Jugador(new ModoEstandar(), "rodri", 4d, Lists.newArrayList(5d, 8d));
+		mike = new Jugador(new ModoEstandar(), "mike", 1d, Lists.newArrayList(4d, 10d, 6d, 8d));
+		dodi = new Jugador(new ModoEstandar(), "dodi", 7d, Lists.newArrayList(6d, 7d));
+		roly = new Jugador(new ModoEstandar(), "roly", 9d, Lists.newArrayList(6d, 6d, 9d));
+		eric = new Jugador(new ModoSolidario(), "eric", 6d, Lists.newArrayList(9d, 4d, 3d, 10d));
+		leo = new Jugador(new ModoSolidario(), "leo", 2d, Lists.newArrayList(6d, 6d, 6d));
+		ferme = new Jugador(new ModoSolidario(), "ferme", 10d, Lists.newArrayList(9d, 10d, 7d));
 		inscribir(partidoOk, sytek);
 		inscribir(partidoOk, chicho);
 		inscribir(partidoOk, pato);
@@ -85,7 +84,7 @@ public class TestGenerarEquipo {
 	@Test(expected=BusinessException.class)
 	public void partidoSinIniciarNoPuedeGenerarEquipos() {
 		for (int i = 0; i < 3; i++) {
-			inscribir(partidoPocosJugadores, new Jugador());
+			inscribir(partidoPocosJugadores, new Jugador(new ModoEstandar()));
 		}
 		partidoPocosJugadores.generarEquipos();
 	}

@@ -7,5 +7,10 @@ public class ModoSolidario implements CriterioInscripcion {
 	public String toString() {
 		return "Solidario";
 	}
+
+	@Override
+	public boolean dejaLugarAOtro() {
+		return true;
+	}
 	
 }
