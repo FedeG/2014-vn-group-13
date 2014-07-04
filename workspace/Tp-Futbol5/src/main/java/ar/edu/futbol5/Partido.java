@@ -13,13 +13,19 @@ public class Partido {
 	private List<Jugador> inscriptos;
 	private Equipo equipo1;
 	private Equipo equipo2;
-	private String estado;
+	private EstadoPartido estado;
 	private CriterioOrdenamiento criterioOrdenamiento;
 	private int distribucionEquipos; // 5 es par/impar, 16 = 1,4,5,8,9 vs. 2,3,6,7,10
-
+	
+	public enum EstadoPartido {
+		Abierto,
+		EquiposGenerados,
+		Cerrado
+	}
+	
 	public Partido() {
 		inscriptos = new ArrayList<Jugador>();
-		estado = "A";
+		estado = EstadoPartido.Abierto;
 		distribucionEquipos = 5; // par/impar
 		criterioOrdenamiento = new OrdenamientoPorHandicap();
 	}
@@ -47,7 +53,7 @@ public class Partido {
 		equipo1.distribuir(this.ordenarEquipos(), posiciones1);
 		equipo2.distribuir(this.ordenarEquipos(), posiciones2);
 		
-		estado = "G";
+		estado = EstadoPartido.EquiposGenerados;
 	}
 
 	private int validarInscripcion() {
@@ -58,7 +64,7 @@ public class Partido {
 	}
 	
 	public boolean noCumpleInscripcion() {
-		return (inscriptos.size() < 10 || estado.equalsIgnoreCase("A") || estado.equalsIgnoreCase("G")  );
+		return (inscriptos.size() < 10 || estado == EstadoPartido.Abierto || estado == EstadoPartido.EquiposGenerados  );
 	}
 
 	public List<Jugador> ordenarEquipos() {
@@ -103,7 +109,7 @@ public class Partido {
 	}
 
 	public void cerrar() {
-		estado = "C";
+		estado = EstadoPartido.Cerrado;
 	}
 
 	public List<Jugador> getInscriptos() {
