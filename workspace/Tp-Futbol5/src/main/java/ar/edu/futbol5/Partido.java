@@ -15,14 +15,13 @@ public class Partido {
 	private Equipo equipo2;
 	private EstadoPartido estado;
 	private CriterioOrdenamiento criterioOrdenamiento;
-	private int distribucionEquipos; // 5 es par/impar, 16 = 1,4,5,8,9 vs. 2,3,6,7,10
-	
+	private int distribucionEquipos; // 5 es par/impar, 16 = 1,4,5,8,9 vs.
+										// 2,3,6,7,10
+
 	public enum EstadoPartido {
-		Abierto,
-		EquiposGenerados,
-		Cerrado
+		Abierto, EquiposGenerados, Cerrado
 	}
-	
+
 	public Partido() {
 		inscriptos = new ArrayList<Jugador>();
 		estado = EstadoPartido.Abierto;
@@ -31,40 +30,52 @@ public class Partido {
 	}
 
 	public void generarEquipos() {
-		
-		if (this.validarInscripcion() == -1) {
-			throw new BusinessException("Hubo un error");
-		}
-		
+
+		this.validarInscripcion();
+
 		equipo1 = new Equipo();
 		equipo2 = new Equipo();
 		List<Integer> posiciones1 = new ArrayList<Integer>();
 		List<Integer> posiciones2 = new ArrayList<Integer>();
-		
-		if (distribucionEquipos == 5) {			
-			posiciones1.add(0);posiciones1.add(2);posiciones1.add(4);posiciones1.add(6);posiciones1.add(8);
-			posiciones2.add(1);posiciones2.add(3);posiciones2.add(5);posiciones2.add(7);posiciones2.add(9);
+
+		if (distribucionEquipos == 5) {
+			posiciones1.add(0);
+			posiciones1.add(2);
+			posiciones1.add(4);
+			posiciones1.add(6);
+			posiciones1.add(8);
+			posiciones2.add(1);
+			posiciones2.add(3);
+			posiciones2.add(5);
+			posiciones2.add(7);
+			posiciones2.add(9);
 		} else {
 			// distribucionEquipos == 16 que ordena de esta manera
-			posiciones1.add(0);posiciones1.add(3);posiciones1.add(4);posiciones1.add(7);posiciones1.add(8);
-			posiciones2.add(1);posiciones2.add(2);posiciones2.add(5);posiciones2.add(6);posiciones2.add(9);
-		}		
-		
+			posiciones1.add(0);
+			posiciones1.add(3);
+			posiciones1.add(4);
+			posiciones1.add(7);
+			posiciones1.add(8);
+			posiciones2.add(1);
+			posiciones2.add(2);
+			posiciones2.add(5);
+			posiciones2.add(6);
+			posiciones2.add(9);
+		}
+
 		equipo1.distribuir(this.ordenarEquipos(), posiciones1);
 		equipo2.distribuir(this.ordenarEquipos(), posiciones2);
-		
+
 		estado = EstadoPartido.EquiposGenerados;
 	}
 
-	private int validarInscripcion() {
-		if ( noCumpleInscripcion()) {
-			return -1;
-		} else
-		return 0;
-	}
-	
-	public boolean noCumpleInscripcion() {
-		return (inscriptos.size() < 10 || estado == EstadoPartido.Abierto || estado == EstadoPartido.EquiposGenerados  );
+	private void validarInscripcion() {
+		if (inscriptos.size() < 10)
+			throw new BusinessException("No hay suficientes jugadores para generar los equipos.");
+		if (estado == EstadoPartido.Abierto)
+			throw new BusinessException("El partido aún está abierto, no se pueden generar equipos.");
+		if ( estado == EstadoPartido.EquiposGenerados)
+			throw new BusinessException("Ya se han generado los equipos anteriormente.");
 	}
 
 	public List<Jugador> ordenarEquipos() {
@@ -84,9 +95,10 @@ public class Partido {
 			}
 		}
 	}
+
 	private Jugador jugadorQueCedeLugar() {
 		for (Jugador inscripto : inscriptos) {
-			if(inscripto.dejaLugarAOtro()){
+			if (inscripto.dejaLugarAOtro()) {
 				return inscripto;
 			}
 		}
@@ -101,7 +113,8 @@ public class Partido {
 		return inscriptos;
 	}
 
-	public void setCriterioOrdenamiento(CriterioOrdenamiento criterioOrdenamiento) {
+	public void setCriterioOrdenamiento(
+			CriterioOrdenamiento criterioOrdenamiento) {
 		this.criterioOrdenamiento = criterioOrdenamiento;
 	}
 
@@ -116,5 +129,5 @@ public class Partido {
 	public Equipo getEquipo2() {
 		return equipo2;
 	}
-	
+
 }
