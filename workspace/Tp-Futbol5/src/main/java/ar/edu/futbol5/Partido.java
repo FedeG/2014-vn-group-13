@@ -75,37 +75,22 @@ public class Partido {
 		if (inscriptos.size() < 10) {
 			this.inscriptos.add(jugador);
 		} else {
-			if (this.hayAlgunJugadorQueCedaLugar()) {
-				this.inscriptos.remove(this.jugadorQueCedeLugar());
+			Jugador jugadorQueCedeLugar = jugadorQueCedeLugar();
+			if (jugadorQueCedeLugar != null) {
+				this.inscriptos.remove(jugadorQueCedeLugar);
 				this.inscriptos.add(jugador);
 			} else {
-				throw new BusinessException("No hay mÃ¡s lugar");
+				throw new BusinessException("No hay más lugar");
 			}
 		}
 	}
-
-	private boolean hayAlgunJugadorQueCedaLugar() {
-		for (Jugador inscripto : inscriptos) {
-			if(inscripto.dejaLugarAOtro()){
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private Jugador jugadorQueCedeLugar() {
-		if (!hayAlgunJugadorQueCedaLugar()) {
-			return null;
-		}
-		
-		List<Jugador> jugadores=new ArrayList<Jugador>();
 		for (Jugador inscripto : inscriptos) {
 			if(inscripto.dejaLugarAOtro()){
-				jugadores.add(inscripto);
+				return inscripto;
 			}
 		}
-		
-		return jugadores.get(0);
+		return null;
 	}
 
 	public void cerrar() {
