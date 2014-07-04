@@ -158,16 +158,17 @@ public class TestGenerarEquipo {
 	public void distribuirEquiposParEImpar() {
 		partido1.cerrar();
 		partido1.generarEquipos();
-		Assert.assertEquals(Lists.newArrayList(ferme, pato, lechu, rodri, leo), partido1.getEquipo1().getJugadores());
-		Assert.assertEquals(Lists.newArrayList(roly, dodi, chicho, sytek, mike), partido1.getEquipo2().getJugadores());
+		Assert.assertEquals(Lists.newArrayList(ferme, pato, lechu, rodri, leo), partido1.getEquipo1());
+		Assert.assertEquals(Lists.newArrayList(roly, dodi, chicho, sytek, mike), partido1.getEquipo2());
 	}
+
 	@Test
 	public void distribuirEquipos14589() {
 		partido1.setDistribucionEquipos(new DistribucionMix()); // ordenamiento
 		partido1.cerrar();
 		partido1.generarEquipos();
-		Assert.assertEquals(Lists.newArrayList(ferme, dodi, lechu, sytek, leo), partido1.getEquipo1().getJugadores());
-		Assert.assertEquals(Lists.newArrayList(roly, pato, chicho, rodri, mike), partido1.getEquipo2().getJugadores());
+		Assert.assertEquals(Lists.newArrayList(ferme, dodi, lechu, sytek, leo), partido1.getEquipo1());
+		Assert.assertEquals(Lists.newArrayList(roly, pato, chicho, rodri, mike), partido1.getEquipo2());
 	}
 	
 	@Test(expected=BusinessException.class)
