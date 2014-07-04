@@ -48,7 +48,7 @@ public class Partido {
 	}
 
 	public List<Jugador> ordenarEquipos() {
-		return criterioOrdenamiento.ordenar(this);
+		return criterioOrdenamiento.ordenar(this.getInscriptos());
 	}
 
 	public void distribuirEquipos(){
