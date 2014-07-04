@@ -52,8 +52,8 @@ public class Partido {
 	}
 
 	public void distribuirEquipos(){
-		this.equipo1 = distribucionEquipos.ObtenerEquipo1(this);
-		this.equipo2 = distribucionEquipos.ObtenerEquipo2(this);
+		this.equipo1 = distribucionEquipos.ObtenerEquipo(this.getInscriptos(), distribucionEquipos.posicionesEquipo1);
+		this.equipo2 = distribucionEquipos.ObtenerEquipo(this.getInscriptos(), distribucionEquipos.posicionesEquipo2);
 	}
 
 	void inscribir(Jugador jugador) {
