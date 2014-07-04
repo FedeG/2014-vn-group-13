@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.futbol5.distribucion.DistribucionMix;
+import ar.edu.futbol5.distribucion.CriterioDistribucion;
 import ar.edu.futbol5.excepciones.BusinessException;
 import ar.edu.futbol5.inscripcion.ModoEstandar;
 import ar.edu.futbol5.inscripcion.ModoSolidario;
@@ -163,7 +163,7 @@ public class TestGenerarEquipo {
 
 	@Test
 	public void distribuirEquipos14589() {
-		partido1.setDistribucionEquipos(new DistribucionMix()); // ordenamiento
+		partido1.setDistribucionEquipos(crearCriterioDistribucionMix()); // ordenamiento
 		partido1.cerrar();
 		partido1.generarEquipos();
 		Assert.assertEquals(Lists.newArrayList(ferme, dodi, lechu, sytek, leo), partido1.getEquipo1());
@@ -172,7 +172,7 @@ public class TestGenerarEquipo {
 	
 	@Test(expected=BusinessException.class)
 	public void generarEquiposCuandoSeCierra() {
-		partido1.setDistribucionEquipos(new DistribucionMix()); // ordenamiento
+		partido1.setDistribucionEquipos(crearCriterioDistribucionMix()); // ordenamiento
 		partido1.cerrar();
 		partido1.generarEquipos();
 		partido1.generarEquipos();
@@ -183,6 +183,22 @@ public class TestGenerarEquipo {
 	 ****************************************************************************/
 	public void inscribir(Partido partido, Jugador jugador) {
 		partido.inscribir(jugador);
+	}
+	public CriterioDistribucion crearCriterioDistribucionMix()
+	{
+		List<Integer> posicionesEquipo1 = new ArrayList<Integer>();
+		List<Integer> posicionesEquipo2 = new ArrayList<Integer>();
+		posicionesEquipo1.add(0);
+		posicionesEquipo1.add(2);
+		posicionesEquipo1.add(4);
+		posicionesEquipo1.add(6);
+		posicionesEquipo1.add(8);
+		posicionesEquipo2.add(1);
+		posicionesEquipo2.add(3);
+		posicionesEquipo2.add(5);
+		posicionesEquipo2.add(7);
+		posicionesEquipo2.add(9);
+		return new CriterioDistribucion(posicionesEquipo1, posicionesEquipo2);
 	}
 
 }
