@@ -13,8 +13,8 @@ import java.util.List;
 public class Partido {
 
 	private List<Jugador> inscriptos;
-	private Equipo equipo1;
-	private Equipo equipo2;
+	private List<Jugador> equipo1;
+	private List<Jugador> equipo2;
 	private EstadoPartido estado;
 	private CriterioOrdenamiento criterioOrdenamiento;
 	private CriterioDistribucion distribucionEquipos;
@@ -31,15 +31,11 @@ public class Partido {
 	}
 
 	public void generarEquipos() {
-
 		this.validarInscripcion();
-
-		equipo1 = new Equipo();
-		equipo2 = new Equipo();
-		
+		equipo1 = new ArrayList<Jugador>();
+		equipo2 = new ArrayList<Jugador>();
 		this.ordenarEquipos();
 		this.distribuirEquipos();
-
 		estado = EstadoPartido.EquiposGenerados;
 	}
 
@@ -47,7 +43,7 @@ public class Partido {
 		if (inscriptos.size() < 10)
 			throw new BusinessException("No hay suficientes jugadores para generar los equipos.");
 		if (estado == EstadoPartido.Abierto)
-			throw new BusinessException("El partido aún está abierto, no se pueden generar equipos.");
+			throw new BusinessException("El partido aun esta abierto, no se pueden generar equipos.");
 		if ( estado == EstadoPartido.EquiposGenerados)
 			throw new BusinessException("Ya se han generado los equipos anteriormente.");
 	}
@@ -55,9 +51,10 @@ public class Partido {
 	public List<Jugador> ordenarEquipos() {
 		return criterioOrdenamiento.ordenar(this);
 	}
+
 	public void distribuirEquipos(){
-		this.equipo1.setJugadores(distribucionEquipos.ObtenerEquipo1(this));
-		this.equipo2.setJugadores(distribucionEquipos.ObtenerEquipo2(this));
+		this.equipo1 = distribucionEquipos.ObtenerEquipo1(this);
+		this.equipo2 = distribucionEquipos.ObtenerEquipo2(this);
 	}
 
 	void inscribir(Jugador jugador) {
@@ -69,7 +66,7 @@ public class Partido {
 				this.inscriptos.remove(jugadorQueCedeLugar);
 				this.inscriptos.add(jugador);
 			} else {
-				throw new BusinessException("No hay más lugar");
+				throw new BusinessException("No hay mï¿½s lugar");
 			}
 		}
 	}
@@ -100,11 +97,11 @@ public class Partido {
 		this.distribucionEquipos = distribucionEquipos;
 	}
 
-	public Equipo getEquipo1() {
+	public List<Jugador> getEquipo1() {
 		return equipo1;
 	}
 
-	public Equipo getEquipo2() {
+	public List<Jugador> getEquipo2() {
 		return equipo2;
 	}
 
