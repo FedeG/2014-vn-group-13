@@ -16,12 +16,4 @@ class Equipo {
 	public void setJugadores(List<Jugador> jugadores) {
 		this.jugadores = jugadores;
 	}
-	
-	public void distribuir (List<Jugador> jugadoresOrdenados, List<Integer> posiciones) {
-		jugadores = new ArrayList<Jugador>();
-		posiciones.forEach(p -> jugadores.add(jugadoresOrdenados.get(p)));	
-
-	}
-	
-	
 }
