@@ -45,7 +45,7 @@ public class Partido {
 	}
 
 	public void generarEquipos() {
-		this.validarInscripcion();
+		this.validarInscripcionTerminada();
 		equipo1 = new ArrayList<Jugador>();
 		equipo2 = new ArrayList<Jugador>();
 		this.ordenarEquipos();
@@ -53,25 +53,40 @@ public class Partido {
 		estado = EstadoPartido.EquiposGenerados;
 	}
 
-	private void validarInscripcion() {
+	private void validarInscripcionTerminada() {
+		this.validaEquiposSinGenerar();
+		this.validaPartidoCerrado();
+		this.validarSuficientesJugadores();
+	}
+
+	private void validarSuficientesJugadores() {
 		if (inscriptos.size() < 10)
 			throw new BusinessException("No hay suficientes jugadores para generar los equipos.");
-		if (estado == EstadoPartido.Abierto)
-			throw new BusinessException("El partido aun esta abierto, no se pueden generar equipos.");
+	}
+	
+	private void validaEquiposSinGenerar(){
 		if ( estado == EstadoPartido.EquiposGenerados)
 			throw new BusinessException("Ya se han generado los equipos anteriormente.");
 	}
+	
+	private void validaPartidoCerrado(){
+		if (estado == EstadoPartido.Abierto)
+			throw new BusinessException("El partido aun esta abierto, no se pueden generar equipos.");
+	}
 
 	public List<Jugador> ordenarEquipos() {
+		this.validarInscripcionTerminada();
 		return criterioOrdenamiento.ordenar(this.getInscriptos());
 	}
 
 	public void distribuirEquipos(){
+		this.validarInscripcionTerminada();
 		this.equipo1 = distribucionEquipos.ObtenerEquipo(this.getInscriptos(), distribucionEquipos.posicionesEquipo1);
 		this.equipo2 = distribucionEquipos.ObtenerEquipo(this.getInscriptos(), distribucionEquipos.posicionesEquipo2);
 	}
 
 	void inscribir(Jugador jugador) {
+		this.validaEquiposSinGenerar();
 		if (inscriptos.size() < 10) {
 			this.inscriptos.add(jugador);
 		} else {
@@ -80,7 +95,7 @@ public class Partido {
 				this.inscriptos.remove(jugadorQueCedeLugar);
 				this.inscriptos.add(jugador);
 			} else {
-				throw new BusinessException("No hay m�s lugar");
+				throw new BusinessException("No hay mas lugar");
 			}
 		}
 	}
@@ -102,8 +117,7 @@ public class Partido {
 		return inscriptos;
 	}
 
-	public void setCriterioOrdenamiento(
-			CriterioOrdenamiento criterioOrdenamiento) {
+	public void setCriterioOrdenamiento(CriterioOrdenamiento criterioOrdenamiento) {
 		this.criterioOrdenamiento = criterioOrdenamiento;
 	}
 
