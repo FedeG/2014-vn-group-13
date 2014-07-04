@@ -5,7 +5,6 @@ import ar.edu.futbol5.distribucion.DistribucionParImpar;
 import ar.edu.futbol5.excepciones.BusinessException;
 import ar.edu.futbol5.ordenamiento.CriterioOrdenamiento;
 import ar.edu.futbol5.ordenamiento.OrdenamientoPorHandicap;
-import ar.edu.futbol5.utilitarios.Lists;
 
 import java.util.ArrayList;
 import java.util.List;

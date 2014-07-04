@@ -1,12 +1,8 @@
 package ar.edu.futbol5;
 
 import ar.edu.futbol5.inscripcion.CriterioInscripcion;
-import ar.edu.futbol5.inscripcion.ModoSolidario;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import ar.edu.futbol5.inscripcion.ModoEstandar;
 
 public class Jugador {
 
@@ -19,8 +15,7 @@ public class Jugador {
 		this(criterioInscripcion,"", 0, new ArrayList<Double>() );
 	}
 
-	public Jugador(CriterioInscripcion criterioInscripcion, String nombre,
-			double calificacion, List<Double> puntajes) {
+	public Jugador(CriterioInscripcion criterioInscripcion, String nombre, double calificacion, List<Double> puntajes) {
 		this.calificacion = calificacion;
 		this.puntajes = puntajes;
 		this.criterioInscripcion = criterioInscripcion;
@@ -32,8 +27,6 @@ public class Jugador {
 	}
 
 	public String toString() {
-		// "Jugador (" + calificacion + ") - modo " +
-		// criterioInscripcion.toString()
 		return nombre;
 	}
 
