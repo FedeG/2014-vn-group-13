@@ -101,6 +101,7 @@ public class TestGenerarEquipo {
 	public void generarEquiposPorHandicap() {
 		System.out.println("******************************************");
 		System.out.println("ordenamiento por handicap");
+		partido1.cerrar();
 		List<Jugador> jugadores=partido1.ordenarEquipos();
 		for (Jugador jugador : jugadores) {
 			System.out.println("Jugador: " + jugador + " - calificacion: " + jugador.getCalificacion());
@@ -114,6 +115,7 @@ public class TestGenerarEquipo {
 		partido1.setCriterioOrdenamiento(new OrdenamientoCalificacionUltimos2Partidos());
 		System.out.println("******************************************");
 		System.out.println("ordenamiento por ultimas 2 calificaciones");
+		partido1.cerrar();
 		List<Jugador> jugadores=partido1.ordenarEquipos();
 		for (Jugador jugador : jugadores) {
 			//Tomando los 2 últimos puntajes
@@ -147,6 +149,7 @@ public class TestGenerarEquipo {
 		partido1.setCriterioOrdenamiento(ordenamientoMix);
 		System.out.println("******************************************");
 		System.out.println("ordenamiento por mix");
+		partido1.cerrar();
 		List<Jugador> jugadores=partido1.ordenarEquipos();
 		System.out.println(jugadores);
 		Assert.assertEquals(Lists.newArrayList(ferme, roly, pato, lechu, dodi, chicho, rodri, sytek, leo, mike),
@@ -163,7 +166,7 @@ public class TestGenerarEquipo {
 
 	@Test
 	public void distribuirEquipos14589() {
-		partido1.setDistribucionEquipos(crearCriterioDistribucionMix()); // ordenamiento
+		partido1.setDistribucionEquipos(new CriterioDistribucion(Lists.newArrayList(0,3,4,7,8), Lists.newArrayList(1,2,5,6,9)));
 		partido1.cerrar();
 		partido1.generarEquipos();
 		Assert.assertEquals(Lists.newArrayList(ferme, dodi, lechu, sytek, leo), partido1.getEquipo1());
@@ -172,7 +175,7 @@ public class TestGenerarEquipo {
 	
 	@Test(expected=BusinessException.class)
 	public void generarEquiposCuandoSeCierra() {
-		partido1.setDistribucionEquipos(crearCriterioDistribucionMix()); // ordenamiento
+		partido1.setDistribucionEquipos(new CriterioDistribucion(Lists.newArrayList(0,3,4,7,8), Lists.newArrayList(1,2,5,6,9))); // ordenamiento
 		partido1.cerrar();
 		partido1.generarEquipos();
 		partido1.generarEquipos();
@@ -183,22 +186,6 @@ public class TestGenerarEquipo {
 	 ****************************************************************************/
 	public void inscribir(Partido partido, Jugador jugador) {
 		partido.inscribir(jugador);
-	}
-	public CriterioDistribucion crearCriterioDistribucionMix()
-	{
-		List<Integer> posicionesEquipo1 = new ArrayList<Integer>();
-		List<Integer> posicionesEquipo2 = new ArrayList<Integer>();
-		posicionesEquipo1.add(0);
-		posicionesEquipo1.add(2);
-		posicionesEquipo1.add(4);
-		posicionesEquipo1.add(6);
-		posicionesEquipo1.add(8);
-		posicionesEquipo2.add(1);
-		posicionesEquipo2.add(3);
-		posicionesEquipo2.add(5);
-		posicionesEquipo2.add(7);
-		posicionesEquipo2.add(9);
-		return new CriterioDistribucion(posicionesEquipo1, posicionesEquipo2);
 	}
 
 }

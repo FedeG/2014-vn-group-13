@@ -4,6 +4,7 @@ import ar.edu.futbol5.distribucion.CriterioDistribucion;
 import ar.edu.futbol5.excepciones.BusinessException;
 import ar.edu.futbol5.ordenamiento.CriterioOrdenamiento;
 import ar.edu.futbol5.ordenamiento.OrdenamientoPorHandicap;
+import ar.edu.futbol5.utilitarios.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +25,8 @@ public class Partido {
 	public Partido() {
 		inscriptos = new ArrayList<Jugador>();
 		estado = EstadoPartido.Abierto;
-		distribucionEquipos = crearCriterioDistribucionParesImpares();
+		distribucionEquipos = new CriterioDistribucion(Lists.newArrayList(0,2,4,6,8), Lists.newArrayList(1,3,5,7,9));
 		criterioOrdenamiento = new OrdenamientoPorHandicap();
-	}
-	public CriterioDistribucion crearCriterioDistribucionParesImpares()
-	{
-		List<Integer> posicionesEquipo1 = new ArrayList<Integer>();
-		List<Integer> posicionesEquipo2 = new ArrayList<Integer>();
-		posicionesEquipo1.add(0);
-		posicionesEquipo1.add(2);
-		posicionesEquipo1.add(4);
-		posicionesEquipo1.add(6);
-		posicionesEquipo1.add(8);
-		posicionesEquipo2.add(1);
-		posicionesEquipo2.add(3);
-		posicionesEquipo2.add(5);
-		posicionesEquipo2.add(7);
-		posicionesEquipo2.add(9);
-		return new CriterioDistribucion(posicionesEquipo1, posicionesEquipo2);
 	}
 
 	public void generarEquipos() {
