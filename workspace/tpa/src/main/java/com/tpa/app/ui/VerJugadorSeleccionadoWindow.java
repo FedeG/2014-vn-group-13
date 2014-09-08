@@ -20,7 +20,7 @@ public class VerJugadorSeleccionadoWindow extends  SimpleWindow<PantallaPrincipa
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
-		this.setTitle("Ver Equipos Generados");
+		this.setTitle("Ver Jugador Seleccionado");
 		super.createMainTemplate(mainPanel);
 
 	}
