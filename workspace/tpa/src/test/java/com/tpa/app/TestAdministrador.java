@@ -19,7 +19,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-@SuppressWarnings("restriction")
 public class TestAdministrador {
 
 	private Administrador admin;

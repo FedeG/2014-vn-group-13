@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javafx.util.Pair;
 
-@SuppressWarnings("restriction")
 public class PorHandicap implements Criterio {
 	private Collection<Pair<Jugador, Integer>> valoresDeJugadores;
 	private String nombre = "Criterio Por Handicap";
