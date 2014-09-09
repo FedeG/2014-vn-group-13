@@ -37,16 +37,16 @@ public class RepositorioJugadores implements Serializable {
 		
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
 		
-		Persona cecilia = new Persona(fecha_y_hora, "cecilia", "cecilia");
-		Persona ezequiel = new Persona(fecha_y_hora, "ezequiel", "ezequiel");
-		Persona jorge = new Persona(fecha_y_hora, "jorge", "jorge");
-		Persona pablo = new Persona(fecha_y_hora, "pablo", "pablo");
-		Persona federico = new Persona(fecha_y_hora, "federico", "federico");
-		Persona sofia = new Persona(fecha_y_hora, "sofia", "sofia");
-		Persona martin = new Persona(fecha_y_hora, "martin", "martin");
-		Persona matias = new Persona(fecha_y_hora, "matias", "matias");
-		Persona mariano = new Persona(fecha_y_hora, "mariano", "mariano");
-		Persona juana = new Persona(fecha_y_hora, "juana", "juana");
+		Persona cecilia = new Persona(fecha_y_hora, "cecilia", "cecilia", "chechu");
+		Persona ezequiel = new Persona(fecha_y_hora, "ezequiel", "ezequiel", "pantalla tactil");
+		Persona jorge = new Persona(fecha_y_hora, "jorge", "jorge", "pollerudo");
+		Persona pablo = new Persona(fecha_y_hora, "pablo", "pablo", "baby on board");
+		Persona federico = new Persona(fecha_y_hora, "federico", "federico", "tux");
+		Persona sofia = new Persona(fecha_y_hora, "sofia", "sofia", "linda");
+		Persona martin = new Persona(fecha_y_hora, "martin", "martin", "tincho");
+		Persona matias = new Persona(fecha_y_hora, "matias", "matias", "forro");
+		Persona mariano = new Persona(fecha_y_hora, "mariano", "mariano", "bueno");
+		Persona juana = new Persona(fecha_y_hora, "juana", "juana", "la loca");
 		
 		Jugador jugadorcecilia = new Jugador(cecilia);
 		Jugador jugadorezequiel = new Jugador(ezequiel);

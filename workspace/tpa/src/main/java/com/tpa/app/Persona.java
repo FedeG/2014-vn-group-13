@@ -9,6 +9,7 @@ public class Persona {
 	private LocalDateTime fechaNac;
 	private String email;
 	private String nombre;
+	private String apodo;
 	private List<Persona> amigos;
 
 	public Persona(LocalDateTime fechaNac, String email, String nombre) {
@@ -19,6 +20,11 @@ public class Persona {
 		this.setFechaNac(fechaNac);
 		this.setEmail(email);
 		this.setAmigos(new ArrayList<Persona>());
+	}
+	public Persona(LocalDateTime fechaNac, String email, String nombre, String apodo) {
+		this(fechaNac, email);
+		this.nombre = nombre;
+		this.apodo = apodo;
 	}
 
 	public LocalDateTime getFechaNac() {
@@ -57,6 +63,12 @@ public class Persona {
 					new Mail("Se anoto tu amigo.","Te queremos avisar que tu amigo se inscribio a este partido.","", amigo.getEmail())
 				)
 			);
+	}
+	public String getApodo() {
+		return apodo;
+	}
+	public void setApodo(String apodo) {
+		this.apodo = apodo;
 	}
 
 }

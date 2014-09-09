@@ -54,8 +54,12 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		searchFormPanel.setLayout(new ColumnLayout(2));
 		
 		new Label(searchFormPanel).setText("Nombre").setForeground(Color.BLUE);
+		//new TextBox(searchFormPanel).bindValueToProperty(modelProperty);
 		// este text box deberia bidear contra el transformer a nombre
 		//new TextBox(searchFormPanel).bind (???);
+		
+		new Label(searchFormPanel).setText("Apodo").setForeground(Color.BLUE);
+		// pasa lo mismo con el transformer aca
 
 		
 	}
@@ -99,25 +103,24 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
 		ingresoColumn.setTitle("Nombre");
-		ingresoColumn.setFixedSize(50);
+		ingresoColumn.setFixedSize(100);
 		ingresoColumn.bindContentsToTransformer(new NombreTransformer());
 		
-
-//		new Column<Jugador>(table) //
-//			.setTitle("Número")
-//			.setFixedSize(100);
-		//	.bindContentsToProperty("numero");
-
-//		Column<Jugador> modeloColumn = new Column<Jugador>(table);
-//		modeloColumn.setTitle("Modelo");
-//		modeloColumn.setFixedSize(150);
-//		//modeloColumn.bindContentsToProperty("modeloCelular");
-//
-//		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
-//		ingresoColumn.setTitle("Recibe resumen de cuenta");
-//		ingresoColumn.setFixedSize(50);
-		//ingresoColumn.bindContentsToTransformer(new BooleanToSiNoTransformer());
+		Column<Jugador> ingresoColumn2 = new Column<Jugador>(table);
+		ingresoColumn2.setTitle("Apodo");
+		ingresoColumn2.setFixedSize(100);
+		ingresoColumn2.bindContentsToTransformer(new ApodoTransformer());
 		
+		// para poner el handicap hay que hacer que sea atributo de jugador y hoy no esta asi, primero hay que modificar eso
+		
+		// para poner promedio pasa lo mismo salvo que usemos un trasnformer que tome al jugador y devuelva un int como promedio, pero me paece medio choto
+		
+		Column<Jugador> ingresoColumn3 = new Column<Jugador>(table);
+		ingresoColumn3.setTitle("Promedio");
+		ingresoColumn3.setFixedSize(100);
+		ingresoColumn3.bindContentsToTransformer(new PromedioTransformer());
+		
+	
 	}
 	
 }
