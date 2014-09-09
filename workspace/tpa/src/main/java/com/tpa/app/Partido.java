@@ -12,6 +12,7 @@ import com.tpa.app.NoEstaInscriptoExcepcion;
 public class Partido {
 
 	private int cupo;
+	
 	private LocalDateTime fechaHora;
 	private String lugar;
 	private PriorityQueue<Inscripcion> inscripciones;
@@ -42,6 +43,15 @@ public class Partido {
 		this.inscripciones =new PriorityQueue<Inscripcion>(cupo, comparator);
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
+	
+	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
+		this.fechaHora = fecha_y_hora;
+		this.setLugar(lugar);
+		this.setCupo(cupo);
+		this.inscripciones =new PriorityQueue<Inscripcion>(cupo, comparator);
+		this.calificaciones = new ArrayList<Calificacion>();
+	}
+	
 	public MailSender getMailSender() {
 		return mailSender;
 	}

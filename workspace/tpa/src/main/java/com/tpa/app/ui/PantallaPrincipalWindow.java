@@ -7,6 +7,7 @@ import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.bindings.Transformer;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -34,15 +35,15 @@ public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 	protected void createMainTemplate(Panel mainPanel) {
 		
 		this.setTitle("Operaciones");
+		this.setTaskDescription("Elija una operación a realizar");
 		super.createMainTemplate(mainPanel);
-
+		
 	}
 
 
 	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		Panel searchFormPanel = new Panel(mainPanel);
-
+	protected void createFormPanel(Panel mainPanel) {		
+		//Panel searchFormPanel = new Panel(mainPanel);
 	}
 
 	
