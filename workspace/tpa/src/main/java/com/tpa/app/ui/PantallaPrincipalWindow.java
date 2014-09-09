@@ -57,7 +57,6 @@ public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 		new Button(actionsPanel) //
 			.setCaption("Buscar Jugadores")
 			.onClick(new MessageSend(this, "buscarJugadores"));
-
 	}
 	
 	public void generarEquipos() {
@@ -71,13 +70,6 @@ public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 
 
 	public void buscarJugadores() {
-		this.openDialog(new BuscarJugadoresWindow(this));
+		(new BuscarJugadoresWindow(this)).open();
 	}
-	
-	private void openDialog(BuscarJugadoresWindow buscarJugadoresWindow) {
-		buscarJugadoresWindow.open();
-	}
-
-
-
 }

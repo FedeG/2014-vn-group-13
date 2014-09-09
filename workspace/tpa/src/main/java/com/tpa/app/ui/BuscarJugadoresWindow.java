@@ -1,10 +1,17 @@
 package com.tpa.app.ui;
 
+import java.util.Arrays;
+
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
+import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
+import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.RadioSelector;
+import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.tables.Column;
@@ -17,86 +24,106 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 
 	public BuscarJugadoresWindow(WindowOwner parent) {
 		super(parent, new BuscadorJugadores());
-
 	}
-
 	
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
+		/* Desde ya esto es un code smell Long Method, pero hay que admitir
+		 * que hace a la instanciacion de la ventana mucho mas entendible
+		 */
+		
 		this.setTitle("Buscar Jugadores");
+		mainPanel.setLayout(new VerticalLayout());
 		super.createMainTemplate(mainPanel);
-		this.createResultsGrid(mainPanel);
-		this.createGridActions(mainPanel);
-
-	}
-
-
-	@Override
-	protected void addActions(Panel actionsPanel) {
-		new Button(actionsPanel)
+		
+		/* Controles de formulario de busqueda */
+		
+		Panel opcionesDeBusqueda = new Panel(mainPanel); 
+		opcionesDeBusqueda.setLayout(new ColumnLayout(4));
+		
+		new Label(opcionesDeBusqueda).setText("Comienza con:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new Label(opcionesDeBusqueda).setText("Contiene:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		
+		new Label(opcionesDeBusqueda).setText("Handicap desde:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new Label(opcionesDeBusqueda).setText("Handicap hasta:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		
+		new Label(opcionesDeBusqueda).setText("Promedio desde:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new Label(opcionesDeBusqueda).setText("Promedio hasta:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		
+		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
+		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No"), "infraccion");
+		new Label(opcionesDeBusqueda).setText("Anterior a:");
+		new TextBox(opcionesDeBusqueda).setWidth(80);
+		
+		new Button(mainPanel)
 		.setCaption("Buscar")
 		.onClick(new MessageSend(this.getModelObject(), "buscar"));
 		
+		/* Create Grid */
+		
+		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
+		table.setHeigth(200);
+		table.setWidth(600);
+		//table.bindItemsToProperty("resultados");
+		//table.bindValueToProperty("celularSeleccionado");
+		
+		/* Grid Description */
+		
+		new Column<Jugador>(table) //
+		.setTitle("Nombre")
+		.setFixedSize(225);
+	//	.bindContentsToProperty("nombre");
+
+		new Column<Jugador>(table) //
+		.setTitle("Apodo")
+		.setFixedSize(225);
+	//	.bindContentsToProperty("numero");
+
+		Column<Jugador> modeloColumn = new Column<Jugador>(table);
+		modeloColumn.setTitle("Handicap");
+		modeloColumn.setFixedSize(75);
+		//modeloColumn.bindContentsToProperty("modeloCelular");
+	
+		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
+		ingresoColumn.setTitle("Promedio");
+		ingresoColumn.setFixedSize(75);
+		//ingresoColumn.bindContentsToTransformer(new BooleanToSiNoTransformer());
+		
+		/* Grid Actions */
+
+		Button verJugador = new Button(mainPanel);
+		verJugador.setCaption("Ver Jugador Seleccionado");
+		verJugador.onClick(new MessageSend(this, "verJugadorSeleccionado"));
+
+		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
+		//NotNullObservable elementSelected = new NotNullObservable("verJugadorSeleccionado");
+		//verJugador.bindEnabled(elementSelected);
+	}
+
+	@Override
+	protected void addActions(Panel actionsPanel) {
+		/*new Button(actionsPanel)
+		.setCaption("Buscar")
+		.onClick(new MessageSend(this.getModelObject(), "buscar"));
+		*/
 	}
 
 	@Override
 	protected void createFormPanel(Panel mainPanel) {		
 	}
-	
-	protected void createResultsGrid(Panel mainPanel) {
-		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
-		table.setHeigth(200);
-		table.setWidth(450);
-
-		//table.bindItemsToProperty("resultados");
-		//table.bindValueToProperty("celularSeleccionado");
-
-		this.describeResultsGrid(table);
-	}
-	
-	protected void createGridActions(Panel mainPanel) {
-		Panel actionsPanel = new Panel(mainPanel);
-		actionsPanel.setLayout(new HorizontalLayout());
-
-		Button remove = new Button(actionsPanel);
-		remove.setCaption("Ver Jugador Seleccionado");
-		remove.onClick(new MessageSend(this, "verJugadorSeleccionado"));
-
-		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
-		//NotNullObservable elementSelected = new NotNullObservable("celularSeleccionado");
-		//remove.bindEnabled(elementSelected);
-		//edit.bindEnabled(elementSelected);
-	}
-	
+		
 	public void verJugadorSeleccionado() {
 		this.openDialog(new VerJugadorSeleccionadoWindow(this, this.getModelObject().getJugadorSeleccionado()));
 	}
 	
 	private void openDialog(VerJugadorSeleccionadoWindow verJugadorSeleccionadoWindow) {
 		verJugadorSeleccionadoWindow.open();
-	}
-
-	protected void describeResultsGrid(Table<Jugador> table) {
-		new Column<Jugador>(table) //
-			.setTitle("Nombre")
-			.setFixedSize(150);
-		//	.bindContentsToProperty("nombre");
-
-		new Column<Jugador>(table) //
-			.setTitle("Número")
-			.setFixedSize(100);
-		//	.bindContentsToProperty("numero");
-
-		Column<Jugador> modeloColumn = new Column<Jugador>(table);
-		modeloColumn.setTitle("Modelo");
-		modeloColumn.setFixedSize(150);
-		//modeloColumn.bindContentsToProperty("modeloCelular");
-
-		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
-		ingresoColumn.setTitle("Recibe resumen de cuenta");
-		ingresoColumn.setFixedSize(50);
-		//ingresoColumn.bindContentsToTransformer(new BooleanToSiNoTransformer());
-	}
-	
+	}	
 }
