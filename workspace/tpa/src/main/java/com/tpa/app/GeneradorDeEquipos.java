@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.PriorityQueue;
 
 public class GeneradorDeEquipos {
 

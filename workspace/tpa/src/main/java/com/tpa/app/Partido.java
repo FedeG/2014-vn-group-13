@@ -40,7 +40,7 @@ public class Partido {
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.inscripciones =new PriorityQueue<Inscripcion>(cupo, comparator);
+		this.setInscripciones(new PriorityQueue<Inscripcion>(cupo, comparator));
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
 	
@@ -48,7 +48,7 @@ public class Partido {
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.inscripciones =new PriorityQueue<Inscripcion>(cupo, comparator);
+		this.setInscripciones(new PriorityQueue<Inscripcion>(cupo, comparator));
 		this.calificaciones = new ArrayList<Calificacion>();
 	}
 	
@@ -99,8 +99,8 @@ public class Partido {
 	public void inscribir(Inscripcion inscripcion) {
 		this.getInscripciones().add(inscripcion);
 		inscripcion.getJugador().avisarAmigos(this);
-		if (this.verificarCupoCompleto())
-			this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
+		//if (this.verificarCupoCompleto())
+			//this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
 	}
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador) {
@@ -176,5 +176,9 @@ public class Partido {
 			List<Inscripcion> equipoB) {
 		this.setEquipoA(equipoA);
 		this.setEquipoB(equipoB);
+	}
+
+	public void setInscripciones(PriorityQueue<Inscripcion> inscripciones) {
+		this.inscripciones = inscripciones;
 	}
 }

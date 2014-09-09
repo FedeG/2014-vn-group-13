@@ -8,12 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
+import com.tpa.app.Inscripcion;
+import com.tpa.app.Jugador;
 import com.tpa.app.MailSender;
 import com.tpa.app.Partido;
 import com.tpa.app.PartidoMailSender;
+import com.tpa.app.Persona;
+import com.tpa.app.Inscripcion.PrioridadesInscripciones;
 
 @Observable
 public class RepositorioPartidos implements Serializable {
@@ -31,10 +36,80 @@ public class RepositorioPartidos implements Serializable {
 	private RepositorioPartidos() {
 
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
+		Partido partido1 = new Partido(fecha_y_hora, "Parque Patricios", 10);
 		
-		this.create(new Partido(fecha_y_hora, "Parque Patricios", 10));
-		this.create(new Partido(fecha_y_hora, "Adrogue", 10));
-		this.create(new Partido(fecha_y_hora, "Lugano", 10));
+		
+		Persona cecilia = new Persona(fecha_y_hora, "cecilia");
+		Persona ezequiel = new Persona(fecha_y_hora, "ezequiel");
+		Persona jorge = new Persona(fecha_y_hora, "jorge");
+		Persona pablo = new Persona(fecha_y_hora, "pablo");
+		Persona federico = new Persona(fecha_y_hora, "federico");
+		Persona sofia = new Persona(fecha_y_hora, "sofia");
+		Persona martin = new Persona(fecha_y_hora, "martin");
+		Persona matias = new Persona(fecha_y_hora, "matias");
+		Persona mariano = new Persona(fecha_y_hora, "mariano");
+		Persona juana = new Persona(fecha_y_hora, "juana");
+		Jugador jugadorcecilia = new Jugador(cecilia);
+		Jugador jugadorezequiel = new Jugador(ezequiel);
+		Jugador jugadorjorge = new Jugador(jorge);
+		Jugador jugadorpablo = new Jugador(pablo);
+		Jugador jugadorfederico = new Jugador(federico);
+		Jugador jugadorsofia = new Jugador(sofia);
+		Jugador jugadormartin = new Jugador(martin);
+		Jugador jugadormatias = new Jugador(matias);
+		Jugador jugadormariano = new Jugador(mariano);
+		Jugador jugadorjuana = new Jugador(juana);
+		Inscripcion insc1 = new Inscripcion(jugadorcecilia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc2 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc3 = new Inscripcion(jugadorjorge, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc4 = new Inscripcion(jugadorpablo, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc5 = new Inscripcion(jugadorfederico, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc6 = new Inscripcion(jugadorsofia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc7 = new Inscripcion(jugadormartin, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc8 = new Inscripcion(jugadormatias, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc9 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc10 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		partido1.inscribir(insc1);
+		partido1.inscribir(insc2);
+		partido1.inscribir(insc3);
+		partido1.inscribir(insc4);
+		partido1.inscribir(insc5);
+		partido1.inscribir(insc6);
+		partido1.inscribir(insc7);
+		partido1.inscribir(insc8);
+		partido1.inscribir(insc9);
+		partido1.inscribir(insc10);
+		
+			
+		Partido partido2 = new Partido(fecha_y_hora, "Adrogue", 10);
+		Partido partido3 = new Partido(fecha_y_hora, "Lugano", 10);
+		
+		partido2.inscribir(insc1);
+		partido2.inscribir(insc2);
+		partido2.inscribir(insc3);
+		partido2.inscribir(insc4);
+		partido2.inscribir(insc5);
+		partido2.inscribir(insc6);
+		partido2.inscribir(insc7);
+		partido2.inscribir(insc8);
+		partido2.inscribir(insc9);
+		partido2.inscribir(insc10);
+		
+		partido3.inscribir(insc1);
+		partido3.inscribir(insc2);
+		partido3.inscribir(insc3);
+		partido3.inscribir(insc4);
+		partido3.inscribir(insc5);
+		partido3.inscribir(insc6);
+		partido3.inscribir(insc7);
+		partido3.inscribir(insc8);
+		partido3.inscribir(insc9);
+		partido3.inscribir(insc10);
+		
+		
+		this.create(partido1);
+		this.create(partido2);
+		this.create(partido3);
 		
 	}
 
@@ -60,6 +135,29 @@ public class RepositorioPartidos implements Serializable {
 			}
 		return resultados;
 		
+	}
+
+	public List<Persona> searchJugadoresEquipoA(Partido partidoSeleccionado) {
+		List<Persona> resultados = new ArrayList<Persona>();
+		if (partidoSeleccionado != null) {
+		for (Inscripcion ins : partidoSeleccionado.getEquipoA())
+		{
+			resultados.add(ins.getJugador().getPersona());
+		}
+		}
+		
+		return resultados;
+	}
+	
+	public List<Persona> searchJugadoresEquipoB(Partido partidoSeleccionado) {
+		List<Persona> resultados = new ArrayList<Persona>();
+		if (partidoSeleccionado != null) {
+		for (Inscripcion ins : partidoSeleccionado.getEquipoB())
+		{
+			resultados.add(ins.getJugador().getPersona());
+		}
+		}
+		return resultados;
 	}
 
 
