@@ -8,26 +8,24 @@ import org.uqbar.commons.utils.Observable;
 
 
 
+
 import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
+import com.tpa.app.repo.RepositorioJugadores;
 import com.tpa.app.repo.RepositorioPartidos;
-
-
 
 @Observable
 public class BuscadorJugadores implements Serializable {
 	
 	private Jugador jugadorSeleccionado;
 	private List<Jugador> resultados;
+	private String nombre;
+
 	
 	public void search() {
-		//this.setResultados(RepositorioPartidos.getInstance().searchJugadoresEquipoA());
+		this.resultados = RepositorioJugadores.getInstance().search();
 	}
 	
-	public void buscar() {
-		//this.resultados = RepositorioCelulares.getInstance().search(this.numero, this.nombre);
-	}
-
 	public void verJugadorSeleccionado() {
 		//this.resultados = RepositorioCelulares.getInstance().search(this.numero, this.nombre);
 	}
@@ -47,4 +45,14 @@ public class BuscadorJugadores implements Serializable {
 	public void setResultados(List<Jugador> resultados) {
 		this.resultados = resultados;
 	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
 }

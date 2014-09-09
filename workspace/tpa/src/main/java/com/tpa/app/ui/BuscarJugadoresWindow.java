@@ -1,7 +1,8 @@
 package com.tpa.app.ui;
 
-import java.util.Arrays;
 
+import java.util.Arrays;
+import java.awt.Color;
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
@@ -17,6 +18,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 
+
 import com.tpa.app.Jugador;
 import com.tpa.app.domain.BuscadorJugadores;
 
@@ -24,6 +26,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 
 	public BuscarJugadoresWindow(WindowOwner parent) {
 		super(parent, new BuscadorJugadores());
+		this.getModelObject().search();
 	}
 	
 	@Override
@@ -78,13 +81,13 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		new Column<Jugador>(table) //
 		.setTitle("Nombre")
-		.setFixedSize(225);
-	//	.bindContentsToProperty("nombre");
+		.setFixedSize(225)
+		.bindContentsToTransformer(new NombreTransformer());
 
 		new Column<Jugador>(table) //
 		.setTitle("Apodo")
-		.setFixedSize(225);
-	//	.bindContentsToProperty("numero");
+		.setFixedSize(225)
+		.bindContentsToTransformer(new ApodoTransformer());
 
 		Column<Jugador> modeloColumn = new Column<Jugador>(table);
 		modeloColumn.setTitle("Handicap");
@@ -94,9 +97,10 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
 		ingresoColumn.setTitle("Promedio");
 		ingresoColumn.setFixedSize(75);
-		//ingresoColumn.bindContentsToTransformer(new BooleanToSiNoTransformer());
+		ingresoColumn.bindContentsToTransformer(new PromedioTransformer());
 		
 		/* Grid Actions */
+
 
 		Button verJugador = new Button(mainPanel);
 		verJugador.setCaption("Ver Jugador Seleccionado");
@@ -125,5 +129,6 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 	
 	private void openDialog(VerJugadorSeleccionadoWindow verJugadorSeleccionadoWindow) {
 		verJugadorSeleccionadoWindow.open();
+
 	}	
 }
