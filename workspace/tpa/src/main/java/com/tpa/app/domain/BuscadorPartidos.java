@@ -17,13 +17,9 @@ import com.tpa.app.repo.RepositorioPartidos;
 public class BuscadorPartidos implements Serializable {
 	
 	private Partido partidoSeleccionado;
-	private Jugador jugadorSeleccionado;
 	private List<Partido> resultados;
-	private List<Persona> resultadosJugadoresA;
-	private List<Persona> resultadosJugadoresB;
 	private LocalDateTime fechaHora;
 	private String lugar;
-	private String nombre;
 	public List<String> ordenamientos;
 	private String ordenamientoSeleccionado;
 	public List<String> selecciones;
@@ -32,8 +28,6 @@ public class BuscadorPartidos implements Serializable {
 	
 	public void search() {
 		this.setResultados(RepositorioPartidos.getInstance().search());
-		this.setResultadosJugadoresA(RepositorioPartidos.getInstance().searchJugadoresEquipoA(partidoSeleccionado));
-		this.setResultadosJugadoresB(RepositorioPartidos.getInstance().searchJugadoresEquipoB(partidoSeleccionado));
 	}
 
 	
@@ -94,46 +88,6 @@ public class BuscadorPartidos implements Serializable {
 	{
 	 return Arrays.asList("Par/Impar", "1,4,5,8,9");
 	}
-
-	public List<Persona> getResultadosJugadoresA() {
-		return resultadosJugadoresA;
-	}
-
-	public void setResultadosJugadoresA(List<Persona> list) {
-		this.resultadosJugadoresA = list;
-	}
-
-
-	public List<Persona> getResultadosJugadoresB() {
-		return resultadosJugadoresB;
-	}
-
-
-	public void setResultadosJugadoresB(List<Persona> resultadosJugadoresB) {
-		this.resultadosJugadoresB = resultadosJugadoresB;
-	}
-
-
-	public Jugador getJugadorSeleccionado() {
-		return jugadorSeleccionado;
-	}
-
-
-	public void setJugadorSeleccionado(Jugador jugadorSeleccionado) {
-		this.jugadorSeleccionado = jugadorSeleccionado;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
 
 
 }

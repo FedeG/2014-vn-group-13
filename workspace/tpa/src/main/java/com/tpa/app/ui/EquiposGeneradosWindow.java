@@ -15,10 +15,10 @@ import com.tpa.app.Partido;
 import com.tpa.app.Persona;
 import com.tpa.app.domain.PantallaPrincipal;
 
-public class EquiposGeneradosWindow extends  SimpleWindow<Partido> {
+public class EquiposGeneradosWindow extends  SimpleWindow<Jugador> {
 
-	public EquiposGeneradosWindow(WindowOwner parent, Partido partido) {
-		super(parent, partido);
+	public EquiposGeneradosWindow(WindowOwner parent) {
+		super(parent, null);
 
 	}
 	
@@ -40,8 +40,8 @@ public class EquiposGeneradosWindow extends  SimpleWindow<Partido> {
 		table.setHeigth(200);
 		table.setWidth(450);
 
-		table.bindItemsToProperty("resultadosJugadoresA");
-		table.bindValueToProperty("jugadorSeleccionado");
+		//table.bindItemsToProperty("resultadosJugadoresA");
+		//table.bindValueToProperty("jugadorSeleccionado");
 
 		this.describeResultsGrid(table);
 	}

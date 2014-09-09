@@ -38,7 +38,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 	protected void createMainTemplate(Panel mainPanel) {
 		
 		this.setTitle("Generar Equipos");
-		this.setTaskDescription("Elija una operación a realizar");
+		//this.setTaskDescription("Elija una operación a realizar");
 		super.createMainTemplate(mainPanel);
 		
 		this.createResultsGrid(mainPanel);
@@ -110,7 +110,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 		ByIndex divisor = crearDivisorSegunRadioButton();
 		generador.dividirEquipos(divisor, this.getModelObject().getPartidoSeleccionado());
 		
-		this.openDialog(new EquiposGeneradosWindow(this, this.getModelObject().getPartidoSeleccionado()));
+		this.openDialog(new EquiposGeneradosWindow(this));
 		
 	}
 	
