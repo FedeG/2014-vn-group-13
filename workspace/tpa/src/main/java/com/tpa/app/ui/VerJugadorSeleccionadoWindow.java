@@ -45,7 +45,18 @@ public class VerJugadorSeleccionadoWindow extends  TransactionalDialog<Jugador> 
 		form.setLayout(new ColumnLayout(2));
 
 		new Label(form).setText("Nombre");
-		new TextBox(form).bindEnabledToProperty("nombre");
+		new TextBox(form).bindValueToProperty("nombre");
+		
+		new Label(form).setText("Apodo");
+		new TextBox(form).bindValueToProperty("apodo");
+		
+		new Label(form).setText("Handicap");
+		new TextBox(form).bindValueToProperty("handicap");
+		
+		new Label(form).setText("Promedio");
+		new TextBox(form).bindValueToProperty("promedio");
+		
+		
 
 //		new Label(form).setText("Nombre del cliente");
 //		new TextBox(form).bindValueToProperty("nombre");

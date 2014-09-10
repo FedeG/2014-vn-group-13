@@ -15,7 +15,7 @@ import com.tpa.app.Partido;
 import com.tpa.app.Persona;
 import com.tpa.app.domain.PantallaPrincipal;
 
-public class EquiposGeneradosWindow extends  SimpleWindow<Jugador> {
+public class EquiposGeneradosWindow extends  SimpleWindow<Partido> {
 
 	public EquiposGeneradosWindow(WindowOwner parent) {
 		super(parent, null);
