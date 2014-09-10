@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.oval.constraint.Length;
+
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.uqbar.commons.model.UserException;
@@ -19,6 +21,8 @@ import com.tpa.app.Partido;
 import com.tpa.app.PartidoMailSender;
 import com.tpa.app.Persona;
 import com.tpa.app.Inscripcion.PrioridadesInscripciones;
+import com.tpa.app.ui.ApodoTransformer;
+import com.tpa.app.ui.NombreTransformer;
 
 @Observable
 public class RepositorioJugadores implements Serializable {
@@ -85,18 +89,32 @@ public class RepositorioJugadores implements Serializable {
 	// ********************************************************
 
 
-	public List<Jugador> search() {
+	public List<Jugador> search(String comienzaCon, String contiene, Integer handicapDesde, Integer handicapHasta) {
 		
 		List<Jugador> resultados = new ArrayList<Jugador>();
+		NombreTransformer nombreTrans = new NombreTransformer();
+		ApodoTransformer apodoTrans = new ApodoTransformer();
 
 		for (Jugador jugador : this.data) {
-			
+			if(startsWith(comienzaCon, nombreTrans.transform(jugador)) 
+			   && match(contiene, apodoTrans.transform(jugador)) 
+	//		   && esMayorOIgual(handicapDesde, jugador.getHandicap()) &&
+					)
 				resultados.add(jugador);
 			}
 		
 		return resultados;
 		
 	}
-
-
+	
+	protected boolean startsWith(String iniciales, String nombre){
+		if (iniciales == null) return true;
+		if (iniciales.length() > nombre.length()) return false;
+		return match(iniciales, nombre.substring(0, iniciales.length()));
+	}
+	
+	protected boolean match(Object expectedValue, Object realValue) {
+		return expectedValue == null
+			|| realValue.toString().toLowerCase().contains(expectedValue.toString().toLowerCase());
+	}
 }

@@ -2,7 +2,9 @@ package com.tpa.app;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.uqbar.commons.utils.Observable;
 
+@Observable
 public class Jugador {
 
 	private List<Infraccion> infracciones;
@@ -49,12 +51,6 @@ public class Jugador {
 
 	/* Ezequiel estuvo aqui: Getters y setters para arena*/
 	
-	public String getNombre(){ return this.persona.getNombre();	}
-	public void setNombre(String unNombre){ this.persona.setNombre(unNombre); }
-	public String getApodo(){ return this.persona.getApodo();	}
-	public void setApodo(String unNombre){ this.persona.setApodo(unNombre); }
 	public Integer getHandicap(){ return 0; }
-	public void setHandicap(Integer unNumero){ }
-	public Integer getPromedio(){ return 0; }
-	public void setPromedio(Integer unNumero){ }
+	public void setHandicap(Integer unNumero){  }
 }

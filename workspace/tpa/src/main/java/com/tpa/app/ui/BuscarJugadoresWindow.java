@@ -45,15 +45,15 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		Panel opcionesDeBusqueda = new Panel(mainPanel); 
 		opcionesDeBusqueda.setLayout(new ColumnLayout(4));
 		
-		new Label(opcionesDeBusqueda).setText("Comienza con:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("nombre");
-		new Label(opcionesDeBusqueda).setText("Contiene:");
-		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new Label(opcionesDeBusqueda).setText("Nombre comienza con:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("comienzaCon");
+		new Label(opcionesDeBusqueda).setText("Apodo contiene:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("contiene");
 		
 		new Label(opcionesDeBusqueda).setText("Handicap desde:");
-		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("handicapDesde");
 		new Label(opcionesDeBusqueda).setText("Handicap hasta:");
-		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("handicapHasta");
 		
 		new Label(opcionesDeBusqueda).setText("Promedio desde:");
 		new TextBox(opcionesDeBusqueda).setWidth(80);
@@ -62,7 +62,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
 		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No"), "infraccion");
-		new Label(opcionesDeBusqueda).setText("Anterior a:");
+		new Label(opcionesDeBusqueda).setText("Fecha nacimiento anterior a:");
 		new TextBox(opcionesDeBusqueda).setWidth(80);
 		
 		new Button(mainPanel)
@@ -106,14 +106,18 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		Button verJugador = new Button(botonera);
 		verJugador.setCaption("Ver Jugador Seleccionado");
-		verJugador.setWidth(300);
+		verJugador.setWidth(200);
 		verJugador.onClick(new MessageSend(this, "verJugadorSeleccionado"));
+		
+		Button borrar = new Button(botonera);
+		borrar.setCaption("Borrar campos busqueda");
+		borrar.setWidth(200);
 		
 		Button volver = new Button(botonera);
 		volver.setCaption("Volver");
-		volver.setWidth(300);
+		volver.setWidth(200);
 		volver.onClick(new MessageSend(this, "volverAtras"));
-
+		
 		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
 		verJugador.bindEnabled(elementSelected);
