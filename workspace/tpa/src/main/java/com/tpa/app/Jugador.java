@@ -47,8 +47,14 @@ public class Jugador {
 		this.getPartidosJugados().add(0, partidoJugado); //El ultimo partido jugado va a estar siempre al princio JOJO
 	}
 
-
-
-
-
+	/* Ezequiel estuvo aqui: Getters y setters para arena*/
+	
+	public String getNombre(){ return this.persona.getNombre();	}
+	public void setNombre(String unNombre){ this.persona.setNombre(unNombre); }
+	public String getApodo(){ return this.persona.getApodo();	}
+	public void setApodo(String unNombre){ this.persona.setApodo(unNombre); }
+	public Integer getHandicap(){ return 0; }
+	public void setHandicap(Integer unNumero){ }
+	public Integer getPromedio(){ return 0; }
+	public void setPromedio(Integer unNumero){ }
 }

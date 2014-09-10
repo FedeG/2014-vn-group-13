@@ -33,7 +33,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 	protected void createMainTemplate(Panel mainPanel) {
 		
 		/* Desde ya esto es un code smell Long Method, pero hay que admitir
-		 * que hace a la instanciacion de la ventana mucho mas entendible
+		 * que hace a la instanciacion de la ventana mucho mas entendible y amigable
 		 */
 		
 		this.setTitle("Buscar Jugadores");
@@ -67,14 +67,14 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		new Button(mainPanel)
 		.setCaption("Buscar")
-		.onClick(new MessageSend(this.getModelObject(), "buscar"));
+		.onClick(new MessageSend(this.getModelObject(), "search"));
 		
 		/* Create Grid */
 		
 		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
 		table.setHeigth(200);
 		table.setWidth(600);
-		//table.bindItemsToProperty("resultados");
+		table.bindItemsToProperty("resultados");
 		//table.bindValueToProperty("celularSeleccionado");
 		
 		/* Grid Description */
@@ -92,7 +92,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		Column<Jugador> modeloColumn = new Column<Jugador>(table);
 		modeloColumn.setTitle("Handicap");
 		modeloColumn.setFixedSize(75);
-		//modeloColumn.bindContentsToProperty("modeloCelular");
+		modeloColumn.bindContentsToProperty("handicap");
 	
 		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
 		ingresoColumn.setTitle("Promedio");
@@ -100,11 +100,19 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		ingresoColumn.bindContentsToTransformer(new PromedioTransformer());
 		
 		/* Grid Actions */
-
-
-		Button verJugador = new Button(mainPanel);
+		
+		Panel botonera = new Panel(mainPanel);
+		botonera.setLayout(new HorizontalLayout());
+		
+		Button verJugador = new Button(botonera);
 		verJugador.setCaption("Ver Jugador Seleccionado");
+		verJugador.setWidth(300);
 		verJugador.onClick(new MessageSend(this, "verJugadorSeleccionado"));
+		
+		Button volver = new Button(botonera);
+		volver.setCaption("Volver");
+		volver.setWidth(300);
+		volver.onClick(new MessageSend(this, "volverAtras"));
 
 		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		//NotNullObservable elementSelected = new NotNullObservable("verJugadorSeleccionado");
@@ -113,10 +121,6 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 
 	@Override
 	protected void addActions(Panel actionsPanel) {
-		/*new Button(actionsPanel)
-		.setCaption("Buscar")
-		.onClick(new MessageSend(this.getModelObject(), "buscar"));
-		*/
 	}
 
 	@Override
@@ -127,8 +131,11 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		this.openDialog(new VerJugadorSeleccionadoWindow(this, this.getModelObject().getJugadorSeleccionado()));
 	}
 	
-	private void openDialog(VerJugadorSeleccionadoWindow verJugadorSeleccionadoWindow) {
-		verJugadorSeleccionadoWindow.open();
-
-	}	
+	private void openDialog(VerJugadorSeleccionadoWindow nuevaVentana) {
+		nuevaVentana.open();
+	}
+	
+	public void volverAtras(){
+		this.close();
+	}
 }
