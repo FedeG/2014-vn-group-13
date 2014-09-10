@@ -46,7 +46,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		opcionesDeBusqueda.setLayout(new ColumnLayout(4));
 		
 		new Label(opcionesDeBusqueda).setText("Comienza con:");
-		new TextBox(opcionesDeBusqueda).setWidth(80);
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("nombre");
 		new Label(opcionesDeBusqueda).setText("Contiene:");
 		new TextBox(opcionesDeBusqueda).setWidth(80);
 		
@@ -115,8 +115,8 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		volver.onClick(new MessageSend(this, "volverAtras"));
 
 		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
-		//NotNullObservable elementSelected = new NotNullObservable("verJugadorSeleccionado");
-		//verJugador.bindEnabled(elementSelected);
+		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
+		verJugador.bindEnabled(elementSelected);
 	}
 
 	@Override
