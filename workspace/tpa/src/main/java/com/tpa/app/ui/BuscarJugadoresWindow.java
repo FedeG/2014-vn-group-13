@@ -75,7 +75,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		table.setHeigth(200);
 		table.setWidth(600);
 		table.bindItemsToProperty("resultados");
-		//table.bindValueToProperty("celularSeleccionado");
+		table.bindValueToProperty("jugadorSeleccionado");
 		
 		/* Grid Description */
 		

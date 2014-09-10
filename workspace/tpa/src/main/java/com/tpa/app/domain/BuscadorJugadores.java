@@ -26,10 +26,6 @@ public class BuscadorJugadores implements Serializable {
 		this.resultados = RepositorioJugadores.getInstance().search();
 	}
 	
-	public void verJugadorSeleccionado() {
-		//this.resultados = RepositorioCelulares.getInstance().search(this.numero, this.nombre);
-	}
-	
 	public Jugador getJugadorSeleccionado() {
 		return this.jugadorSeleccionado;
 	}
