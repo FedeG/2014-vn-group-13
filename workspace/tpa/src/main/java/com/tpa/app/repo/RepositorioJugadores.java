@@ -4,7 +4,9 @@ import static org.mockito.Mockito.mock;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.sf.oval.constraint.Length;
@@ -14,6 +16,7 @@ import org.mockito.Mockito;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
+import com.tpa.app.Infraccion;
 import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
 import com.tpa.app.MailSender;
@@ -23,6 +26,7 @@ import com.tpa.app.Persona;
 import com.tpa.app.Inscripcion.PrioridadesInscripciones;
 import com.tpa.app.ui.ApodoTransformer;
 import com.tpa.app.ui.NombreTransformer;
+import com.tpa.app.ui.PromedioTransformer;
 
 @Observable
 public class RepositorioJugadores implements Serializable {
@@ -63,6 +67,8 @@ public class RepositorioJugadores implements Serializable {
 		Jugador jugadormariano = new Jugador(mariano);
 		Jugador jugadorjuana = new Jugador(juana);			
 		
+		jugadormatias.agregarInfraccion(new Infraccion("por forro", fecha_y_hora));
+		
 		this.create(jugadorcecilia);
 		this.create(jugadorezequiel);
 		this.create(jugadorjorge);
@@ -89,24 +95,47 @@ public class RepositorioJugadores implements Serializable {
 	// ********************************************************
 
 
-	public List<Jugador> search(String comienzaCon, String contiene, Integer handicapDesde, Integer handicapHasta) {
+	public List<Jugador> search(JugadorSearchParameter datosBusqueda) {
 		
 		List<Jugador> resultados = new ArrayList<Jugador>();
 		NombreTransformer nombreTrans = new NombreTransformer();
 		ApodoTransformer apodoTrans = new ApodoTransformer();
+		PromedioTransformer promedioTrans = new PromedioTransformer();
 
 		for (Jugador jugador : this.data) {
-			if(startsWith(comienzaCon, nombreTrans.transform(jugador)) 
-			   && match(contiene, apodoTrans.transform(jugador)) 
-	//		   && esMayorOIgual(handicapDesde, jugador.getHandicap()) &&
-					)
+			if(startsWith(datosBusqueda.getComienzaCon(), nombreTrans.transform(jugador)) 
+			   && match(datosBusqueda.getContiene(), apodoTrans.transform(jugador)) 
+			   && esMayorOIgual(datosBusqueda.getHandicapDesde(), jugador.getHandicap()) 
+			   && esMenorOIgual(datosBusqueda.getHandicapHasta(), jugador.getHandicap())
+			   && esMayorOIgual(datosBusqueda.getPromedioDesde(), promedioTrans.transform(jugador))
+			   && esMenorOIgual(datosBusqueda.getPromedioHasta(), promedioTrans.transform(jugador))
+			   && compararBooleanoConListaVacia(datosBusqueda.getTuvoInfraccion(), jugador.getInfracciones())
+			   && esMenorFecha(jugador.getPersona().getFechaNac(), datosBusqueda.getAntesDe())
+			)
 				resultados.add(jugador);
 			}
-		
 		return resultados;
-		
 	}
-	
+
+	private boolean esMenorFecha(LocalDateTime ldt, Date fechaTope) {
+		if (fechaTope == null) return true;
+		Date fecha = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+		return fecha.before(fechaTope);
+	}
+
+	private boolean compararBooleanoConListaVacia(String SiNo, List<?> lista) {
+		if (SiNo.equals("")) return true;
+		return SiNo.equals("No") == lista.isEmpty();
+	}
+
+	private boolean esMenorOIgual(Double tope, Double valor) {
+		return tope == null || valor <= tope;
+	}
+
+	private boolean esMayorOIgual(Double base, Double valor) {
+		return base == null || valor >= base;
+	}
+
 	protected boolean startsWith(String iniciales, String nombre){
 		if (iniciales == null) return true;
 		if (iniciales.length() > nombre.length()) return false;

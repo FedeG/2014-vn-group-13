@@ -1,9 +1,13 @@
 package com.tpa.app.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+
 import org.uqbar.commons.utils.Observable;
+
 import com.tpa.app.Jugador;
+import com.tpa.app.repo.JugadorSearchParameter;
 import com.tpa.app.repo.RepositorioJugadores;
 
 @Observable
@@ -11,13 +15,16 @@ public class BuscadorJugadores implements Serializable {
 	
 	private Jugador jugadorSeleccionado;
 	private List<Jugador> resultados;
-	private String comienzaCon = "", contiene = "";
-	private Integer handicapDesde = null, handicapHasta = null;
+	private String comienzaCon = "", contiene = "", tuvoInfraccion = "";
+	private Double handicapDesde = null, handicapHasta = null, promedioDesde = null, promedioHasta = null;
+	private Date antesDe;
 
 	public void search() 
 	{ 
 		this.resultados = RepositorioJugadores.getInstance().search(
-				this.comienzaCon, this.contiene, this.handicapDesde, this.handicapHasta
+				new JugadorSearchParameter(this.comienzaCon, this.contiene,
+						this.handicapDesde, this.handicapHasta, this.promedioDesde,
+						this.promedioHasta, this.tuvoInfraccion, this.antesDe)
 		); 
 	}
 	
@@ -33,9 +40,21 @@ public class BuscadorJugadores implements Serializable {
 	public String getContiene() {return this.contiene;}
 	public void setContiene(String letras) {this.contiene = letras;	}
 	
-	public Integer getHandicapDesde() {return this.handicapDesde;}
-	public void setHandicapDesde(Integer handicap) {this.handicapDesde = handicap;}
+	public Double getHandicapDesde() {return this.handicapDesde;}
+	public void setHandicapDesde(Double handicap) {this.handicapDesde = handicap;}
 	
-	public Integer getHandicapHasta() {return this.handicapHasta;}
-	public void setHandicapHasta(Integer handicap) {this.handicapHasta = handicap;}
+	public Double getHandicapHasta() {return this.handicapHasta;}
+	public void setHandicapHasta(Double handicap) {this.handicapHasta = handicap;}
+	
+	public Double getPromedioDesde() {return this.promedioDesde;}
+	public void setPromedioDesde(Double promedio) {this.promedioDesde = promedio;}
+	
+	public Double getPromedioHasta() {return this.promedioHasta;}
+	public void setPromedioHasta(Double promedio) {this.promedioHasta = promedio;}
+	
+	public String getTuvoInfraccion() {return this.tuvoInfraccion;}
+	public void setTuvoInfraccion(String opcion) {this.tuvoInfraccion = opcion;}
+	
+	public Date getAntesDe() {return this.antesDe;}
+	public void setAntesDe(Date unaFecha) {this.antesDe = unaFecha;}
 }

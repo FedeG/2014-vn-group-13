@@ -2,6 +2,7 @@ package com.tpa.app;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -51,6 +52,6 @@ public class Jugador {
 
 	/* Ezequiel estuvo aqui: Getters y setters para arena*/
 	
-	public Integer getHandicap(){ return 0; }
-	public void setHandicap(Integer unNumero){  }
+	public Double getHandicap(){ return 0.0; }
+	public void setHandicap(Double unNumero){  }
 }
