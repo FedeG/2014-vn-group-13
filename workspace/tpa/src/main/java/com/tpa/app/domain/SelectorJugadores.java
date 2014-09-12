@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.uqbar.commons.utils.Observable;
 
+import com.tpa.app.Inscripcion;
 import com.tpa.app.Partido;
 import com.tpa.app.Jugador;
 
@@ -13,38 +14,24 @@ import com.tpa.app.Jugador;
 public class SelectorJugadores implements Serializable {
 
 	private Jugador jugadorSeleccionado;
-	private List<Jugador> equipoA;
-	private List<Jugador> equipoB;
+	private Partido partido;
 
 	public SelectorJugadores(Partido partido) {
-		List<Jugador> equipoA = (List<Jugador>)
-			partido.getEquipoA()
-				.stream()
-				.map(inscripcion -> inscripcion.getJugador())
-				.collect(Collectors.toList());
-		List<Jugador> equipoB = (List<Jugador>) 
-			partido.getEquipoB()
-				.stream()
-				.map(inscripcion -> inscripcion.getJugador())
-				.collect(Collectors.toList());
-		this.setEquipoA(equipoA);
-		this.setEquipoB(equipoB);
+		this.partido = partido;
 	}
 
 	public List<Jugador> getEquipoA() {
-		return equipoA;
-	}
-
-	public void setEquipoA(List<Jugador> equipoA) {
-		this.equipoA = equipoA;
+		return get_jugadores(this.partido.getEquipoA());
 	}
 
 	public List<Jugador> getEquipoB() {
-		return equipoB;
+		return get_jugadores(this.partido.getEquipoB());
 	}
-
-	public void setEquipoB(List<Jugador> equipoB) {
-		this.equipoB = equipoB;
+	
+	private List<Jugador> get_jugadores(List<Inscripcion> inscripciones){
+		return inscripciones.stream()
+		.map(inscripcion -> inscripcion.getJugador())
+		.collect(Collectors.toList());
 	}
 
 	public Jugador getJugadorSeleccionado() {
