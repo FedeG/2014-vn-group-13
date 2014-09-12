@@ -146,12 +146,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 		List<Criterio> critOrden = new ArrayList<Criterio>();
 		if (this.getModelObject().getOrdenamientoSeleccionado() == "Por Handicap")
 		{
-			//aca habria que ordenar por handicap pero no me copa el hecho de que tenga que
-			//recibir por parametro los jugadores y los handicap
-			//mepa que deberia ser atributo de los jugadores inscriptos y que el
-			//criterio se arregle
-			
-			//critOrden.add(new PorHandicap());
+			critOrden.add(new PorHandicap());
 			critOrden.add(new PorPromedio());
 		}
 		if (this.getModelObject().getOrdenamientoSeleccionado() == "Por Promedio")
@@ -160,7 +155,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 		}
 		if (this.getModelObject().getOrdenamientoSeleccionado() == "Mixto")
 		{
-			//critOrden.add(new PorHandicap());
+			critOrden.add(new PorHandicap());
 			critOrden.add(new PorPromedio());
 		}
 		return critOrden;

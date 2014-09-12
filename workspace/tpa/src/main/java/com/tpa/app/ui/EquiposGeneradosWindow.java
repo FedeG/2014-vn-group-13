@@ -26,7 +26,6 @@ public class EquiposGeneradosWindow extends  SimpleWindow<Partido> {
 	protected void createMainTemplate(Panel mainPanel) {
 		
 		this.setTitle("Ver Equipos Generados");
-		//this.setTaskDescription("Elija una operación a realizar");
 		super.createMainTemplate(mainPanel);
 		
 		this.createResultsGrid(mainPanel);

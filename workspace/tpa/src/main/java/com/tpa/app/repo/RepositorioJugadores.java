@@ -94,7 +94,10 @@ public class RepositorioJugadores implements Serializable {
 	// ** Búsquedas
 	// ********************************************************
 
-
+	
+	//solamente comento para dejar asentado que te dije que ibas a tener que modificar el 
+	// search, VISTE EZE :P jajajajajajj toca pantallas tactiles
+	
 	public List<Jugador> search(JugadorSearchParameter datosBusqueda) {
 		
 		List<Jugador> resultados = new ArrayList<Jugador>();

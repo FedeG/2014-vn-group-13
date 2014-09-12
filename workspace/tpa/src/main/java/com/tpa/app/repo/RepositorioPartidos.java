@@ -81,8 +81,8 @@ public class RepositorioPartidos implements Serializable {
 		partido1.inscribir(insc10);
 		
 			
-		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5), "Adrogue", 10);
-		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15), "Lugano", 10);
+		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
+		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
 		
 		partido2.inscribir(insc1);
 		partido2.inscribir(insc2);
