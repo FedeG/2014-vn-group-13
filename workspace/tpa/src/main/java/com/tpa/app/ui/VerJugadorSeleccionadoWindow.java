@@ -1,92 +1,44 @@
 package com.tpa.app.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.aop.windows.TransactionalDialog;
-import org.uqbar.arena.bindings.ObservableProperty;
-import org.uqbar.arena.bindings.PropertyAdapter;
-import org.uqbar.arena.layout.ColumnLayout;
+import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.CheckBox;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.Selector;
-import org.uqbar.arena.widgets.TextBox;
-import org.uqbar.arena.widgets.tables.Column;
-import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
-import org.uqbar.lacar.ui.model.ListBuilder;
-import org.uqbar.lacar.ui.model.bindings.Binding;
 
 import com.tpa.app.Jugador;
-import com.tpa.app.domain.PantallaPrincipal;
+import com.tpa.app.domain.JugadorSelecionado;
 
 @Observable
-public class VerJugadorSeleccionadoWindow extends TransactionalDialog<Jugador> {
-
-	private List<Jugador> listaJugadores; 
+public class VerJugadorSeleccionadoWindow extends TransactionalDialog<JugadorSelecionado> {
 	
 	public VerJugadorSeleccionadoWindow(WindowOwner parent, Jugador jugador) {
-		super(parent, jugador);
-		this.listaJugadores  = new ArrayList<Jugador>();
-		this.listaJugadores.add(jugador);
+		super(parent, new JugadorSelecionado(jugador));
 	}
 
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
-		this.setTitle("Ver Jugador Seleccionado");
+		this.setTitle("Jugador Seleccionado");
+		this.setTaskDescription("                     Datos del jugador                     ");
 		super.createMainTemplate(mainPanel);
 	}
-	
+
+	private void createHorizontalPanel(Panel mainPanel, String key, String value){
+		Panel horizontal_panel1 = new Panel(mainPanel);
+		horizontal_panel1.setLayout(new HorizontalLayout());
+		new Label(horizontal_panel1).setText(key);
+		new Label(horizontal_panel1).bindValueToProperty(value);
+	}
+
 	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		
-		Panel form = new Panel(mainPanel);
-		form.setLayout(new ColumnLayout(4));
-
-		new Label(form).setText("Nombre");
-		new Label(form).bindValueToProperty("persona.nombre");
-
-		new Label(form).setText("Apodo");
-		new Label(form).bindValueToProperty("persona.apodo");
-		
-		new Label(form).setText("Handicap");
-		new Label(form).bindValueToProperty("handicap");
-		
-		new Label(form).setText("Promedio");
-		new Label(form).bindValueToProperty("promedio");
-		
-//		new Label(form).setText("Nombre del cliente");
-//		new TextBox(form).bindValueToProperty("nombre");
-//
-//		new Label(form).setText("Modelo del aparato");
-//		
-//		Selector<ModeloCelular> selector = new Selector<ModeloCelular>(form) //
-//			.allowNull(false);
-//		selector.bindValueToProperty("modeloCelular");
-//
-//		Binding<ListBuilder<ModeloCelular>> itemsBinding = selector.bindItems( //
-//			new ObservableProperty(RepositorioModelos.getInstance(), "modelos"));
-//
-//		itemsBinding.setAdapter( //
-//			new PropertyAdapter(ModeloCelular.class, "descripcionEntera"));
-//
-//		
-//		new Label(form).setText("Recibe resumen cuenta en domicilio");
-//		new CheckBox(form).bindValueToProperty("recibeResumenCuenta");
-
-	}
-
-	public List<Jugador> getListaJugadores() {
-		return listaJugadores;
-	}
-
-	public void setListaJugadores(List<Jugador> listaJugadores) {
-		this.listaJugadores = listaJugadores;
+	protected void createFormPanel(Panel mainPanel) {		
+		this.createHorizontalPanel(mainPanel, "Nombre", "jugador.persona.nombre");
+		this.createHorizontalPanel(mainPanel, "Apodo", "jugador.persona.apodo");
+		this.createHorizontalPanel(mainPanel, "Handicap", "jugador.handicap");
+		this.createHorizontalPanel(mainPanel, "Promedio", "promedio");
 	}
 
 	@Override
@@ -99,6 +51,5 @@ public class VerJugadorSeleccionadoWindow extends TransactionalDialog<Jugador> {
 	public void volver() {
 		this.close();
 	}
-
 
 }
