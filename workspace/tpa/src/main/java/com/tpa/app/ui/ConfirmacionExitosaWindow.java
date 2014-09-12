@@ -20,11 +20,9 @@ public class ConfirmacionExitosaWindow extends SimpleWindow<PantallaPrincipal> {
 	}
 
 	@Override
-	protected void addActions(Panel arg0) {
-	}
+	protected void addActions(Panel mainPanel) {}
 
 	@Override
-	protected void createFormPanel(Panel arg0) {
-	}
+	protected void createFormPanel(Panel mainPanel) {}
 
 }

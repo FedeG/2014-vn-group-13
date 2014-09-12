@@ -31,7 +31,7 @@ public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 			.setCaption("Generar Equipos")
 			.onClick(new MessageSend(this, "generarEquipos"));
 	
-		new Button(actionsPanel) //
+		new Button(actionsPanel)
 			.setCaption("Buscar Jugadores")
 			.onClick(new MessageSend(this, "buscarJugadores"));
 	}
