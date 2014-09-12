@@ -24,6 +24,7 @@ import com.tpa.app.Partido;
 import com.tpa.app.PorHandicap;
 import com.tpa.app.PorPromedio;
 import com.tpa.app.domain.BuscadorPartidos;
+import com.tpa.app.domain.SelectorJugadores;
 
 
 public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
@@ -110,7 +111,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 		ByIndex divisor = crearDivisorSegunRadioButton();
 		generador.dividirEquipos(divisor, this.getModelObject().getPartidoSeleccionado());
 		
-		this.openDialog(new EquiposGeneradosWindow(this));
+		this.openDialog(new EquiposGeneradosWindow(this, new SelectorJugadores(this.getModelObject().getPartidoSeleccionado())));
 		
 	}
 	
