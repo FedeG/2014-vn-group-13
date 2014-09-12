@@ -2,30 +2,26 @@ package com.tpa.app.repo;
 
 import java.util.Date;
 
+import org.uqbar.commons.utils.Observable;
+
+@Observable
 public class JugadorSearchParameter {
-	private String comienzaCon;
-	private String contiene;
-	private Double handicapDesde;
-	private Double handicapHasta;
-	private Double promedioDesde;
-	private Double promedioHasta;
-	private String tuvoInfraccion;
-	private Date antesDe;
+	private String comienzaCon = "";
+	private String contiene = "";
+	private Double handicapDesde = null;
+	private Double handicapHasta = null;
+	private Double promedioDesde = null;
+	private Double promedioHasta = null;
+	private String tuvoInfraccion = "Todos";
+	private Date antesDe = null;
 
-	public JugadorSearchParameter(String comienzaCon, String contiene,
-			Double handicapDesde, Double handicapHasta,
-			Double promedioDesde, Double promedioHasta,
-			String tuvoInfraccion, Date antesDe) {
-		this.comienzaCon = comienzaCon;
-		this.contiene = contiene;
-		this.handicapDesde = handicapDesde;
-		this.handicapHasta = handicapHasta;
-		this.promedioDesde = promedioDesde;
-		this.promedioHasta = promedioHasta;
-		this.tuvoInfraccion = tuvoInfraccion;
-		this.antesDe = antesDe;
+	public void borrarParametros()
+	{
+		this.comienzaCon = this.contiene = "";
+		this.tuvoInfraccion = "Todos";
+		this.handicapDesde = this.handicapHasta = this.promedioDesde = this.promedioHasta = null;
+		this.antesDe = null;
 	}
-
 	public String getComienzaCon() {
 		return comienzaCon;
 	}

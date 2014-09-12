@@ -127,7 +127,7 @@ public class RepositorioJugadores implements Serializable {
 	}
 
 	private boolean compararBooleanoConListaVacia(String SiNo, List<?> lista) {
-		if (SiNo.equals("")) return true;
+		if (SiNo.equals("Todos")) return true;
 		return SiNo.equals("No") == lista.isEmpty();
 	}
 

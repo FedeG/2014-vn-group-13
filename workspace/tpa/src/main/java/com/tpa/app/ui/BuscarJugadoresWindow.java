@@ -2,7 +2,6 @@ package com.tpa.app.ui;
 
 
 import java.util.Arrays;
-import java.awt.Color;
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
@@ -17,8 +16,6 @@ import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-
-
 import com.tpa.app.Jugador;
 import com.tpa.app.domain.BuscadorJugadores;
 
@@ -42,35 +39,8 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		/* Controles de formulario de busqueda */
 		
-		Panel opcionesDeBusqueda = new Panel(mainPanel); 
-		opcionesDeBusqueda.setLayout(new ColumnLayout(4));
-		
-		new Label(opcionesDeBusqueda).setText("Nombre comienza con:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("comienzaCon");
-		new Label(opcionesDeBusqueda).setText("Apodo contiene:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("contiene");
-		
-		new Label(opcionesDeBusqueda).setText("Handicap desde:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("handicapDesde");
-		new Label(opcionesDeBusqueda).setText("Handicap hasta:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("handicapHasta");
-		
-		new Label(opcionesDeBusqueda).setText("Promedio desde:");
-		new TextBox(opcionesDeBusqueda).setWidth(80);
-		new Label(opcionesDeBusqueda).setText("Promedio hasta:");
-		new TextBox(opcionesDeBusqueda).setWidth(80);
-		
-		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
-		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No"), "infraccion")
-		.bindValueToProperty("tuvoInfraccion");
-		new Label(opcionesDeBusqueda).setText("Fecha nacimiento anterior a:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("antesDe");
-		
-		new Button(mainPanel)
-		.setCaption("Buscar")
-		.onClick(new MessageSend(this.getModelObject(), "search"))
-		.disableOnError();
-		
+		crearPanelDeBusqueda(mainPanel);
+
 		/* Create Grid */
 		
 		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
@@ -125,6 +95,38 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
 		verJugador.bindEnabled(elementSelected);
+	}
+	protected void crearPanelDeBusqueda(Panel mainPanel)
+	{
+		Panel opcionesDeBusqueda = new Panel(mainPanel); 
+		opcionesDeBusqueda.setLayout(new ColumnLayout(4));
+		
+		new Label(opcionesDeBusqueda).setText("Nombre comienza con:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.comienzaCon");
+		new Label(opcionesDeBusqueda).setText("Apodo contiene:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.contiene");
+		
+		new Label(opcionesDeBusqueda).setText("Handicap desde:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.handicapDesde");
+		new Label(opcionesDeBusqueda).setText("Handicap hasta:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.handicapHasta");
+
+		new Label(opcionesDeBusqueda).setText("Promedio desde:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.promedioDesde");;
+		new Label(opcionesDeBusqueda).setText("Promedio hasta:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.promedioHasta");;
+		
+		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
+		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No","Todos"), "infraccion")
+		.bindValueToProperty("jugadorSearchParameter.tuvoInfraccion");
+		new Label(opcionesDeBusqueda).setText("Fecha nacimiento anterior a:");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.antesDe");
+		
+		new Button(mainPanel)
+		.setCaption("Buscar")
+		.onClick(new MessageSend(this.getModelObject(), "search"))
+		.disableOnError();
+		
 	}
 
 	@Override
