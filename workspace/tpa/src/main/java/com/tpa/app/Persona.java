@@ -18,16 +18,19 @@ public class Persona {
 	public Persona(LocalDateTime fechaNac, String email, String nombre) {
 		this(fechaNac, email);
 		this.nombre = nombre;
+		this.setAmigos(new ArrayList<Persona>());
 	}
 	public Persona(LocalDateTime fechaNac, String email) {
 		this.setFechaNac(fechaNac);
 		this.setEmail(email);
 		this.setAmigos(new ArrayList<Persona>());
 	}
+
 	public Persona(LocalDateTime fechaNac, String email, String nombre, String apodo) {
 		this(fechaNac, email);
 		this.nombre = nombre;
 		this.apodo = apodo;
+		this.setAmigos(new ArrayList<Persona>());
 	}
 
 	public LocalDateTime getFechaNac() {
@@ -62,14 +65,18 @@ public class Persona {
 		this.amigos = amigos;
 	}
 
+	public void addAmigo(Persona amigo) {
+		this.amigos.add(amigo);
+	}
+
 	public void avisarAmigos(Partido partido) {
-		this.getAmigos()
-			.forEach(amigo -> partido
-				.getMailSender()
-				.enviarMail(
-					new Mail("Se anoto tu amigo.","Te queremos avisar que tu amigo se inscribio a este partido.","", amigo.getEmail())
-				)
-			);
+		//this.getAmigos()
+		//	.forEach(amigo -> partido
+		//		.getMailSender()
+		//		.enviarMail(
+		//			new Mail("Se anoto tu amigo.","Te queremos avisar que tu amigo se inscribio a este partido.","", amigo.getEmail())
+		//		)
+		//	);
 	}
 	public String getApodo() {
 		return apodo;
