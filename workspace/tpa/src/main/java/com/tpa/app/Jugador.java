@@ -11,6 +11,7 @@ public class Jugador {
 	private List<Infraccion> infracciones;
 	private Persona persona;
 	private List<Partido> partidosJugados;
+	private Double handicap;
 
 
 
@@ -18,6 +19,13 @@ public class Jugador {
 		this.infracciones = new ArrayList<Infraccion>();
 		this.partidosJugados = new ArrayList<Partido>();
 		this.persona = persona;
+	}
+	
+	public Jugador(Persona persona, Double handicap) {
+		this.infracciones = new ArrayList<Infraccion>();
+		this.partidosJugados = new ArrayList<Partido>();
+		this.persona = persona;
+		this.handicap = handicap;
 	}
 
 	public List<Infraccion> getInfracciones() {
@@ -50,8 +58,13 @@ public class Jugador {
 		this.getPartidosJugados().add(0, partidoJugado); //El ultimo partido jugado va a estar siempre al princio JOJO
 	}
 
-	/* Ezequiel estuvo aqui: Getters y setters para arena*/
-	
-	public Double getHandicap(){ return 0.0; }
-	public void setHandicap(Double unNumero){  }
+	public Double getHandicap() {
+		return handicap;
+	}
+
+	public void setHandicap(Double handicap) {
+		this.handicap = handicap;
+	}
+
+
 }

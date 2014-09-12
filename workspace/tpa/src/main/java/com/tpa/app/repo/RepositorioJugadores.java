@@ -56,16 +56,16 @@ public class RepositorioJugadores implements Serializable {
 		Persona mariano = new Persona(fecha_y_hora, "mariano", "mariano", "bueno");
 		Persona juana = new Persona(fecha_y_hora, "juana", "juana", "la loca");
 		
-		Jugador jugadorcecilia = new Jugador(cecilia);
-		Jugador jugadorezequiel = new Jugador(ezequiel);
-		Jugador jugadorjorge = new Jugador(jorge);
-		Jugador jugadorpablo = new Jugador(pablo);
-		Jugador jugadorfederico = new Jugador(federico);
-		Jugador jugadorsofia = new Jugador(sofia);
-		Jugador jugadormartin = new Jugador(martin);
-		Jugador jugadormatias = new Jugador(matias);
-		Jugador jugadormariano = new Jugador(mariano);
-		Jugador jugadorjuana = new Jugador(juana);			
+		Jugador jugadorcecilia = new Jugador(cecilia,(double) 10);
+		Jugador jugadorezequiel = new Jugador(ezequiel,(double) 1);
+		Jugador jugadorjorge = new Jugador(jorge,(double) 0);
+		Jugador jugadorpablo = new Jugador(pablo,(double) 6);
+		Jugador jugadorfederico = new Jugador(federico,(double) 7);
+		Jugador jugadorsofia = new Jugador(sofia,(double) 5);
+		Jugador jugadormartin = new Jugador(martin,(double) 5);
+		Jugador jugadormatias = new Jugador(matias,(double) 0);
+		Jugador jugadormariano = new Jugador(mariano,(double) 10);
+		Jugador jugadorjuana = new Jugador(juana,(double) 9);			
 		
 		jugadormatias.agregarInfraccion(new Infraccion("por forro", fecha_y_hora));
 		
