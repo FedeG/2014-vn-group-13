@@ -117,7 +117,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.promedioHasta");;
 		
 		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
-		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No","Todos"), "infraccion")
+		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No","Indistinto"), "infraccion")
 		.bindValueToProperty("jugadorSearchParameter.tuvoInfraccion");
 		new Label(opcionesDeBusqueda).setText("Fecha nacimiento anterior a:");
 		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.antesDe");

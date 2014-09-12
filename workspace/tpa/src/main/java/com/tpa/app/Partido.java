@@ -6,9 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
+
+import org.uqbar.commons.utils.Observable;
+
 import com.tpa.app.Inscripcion.PrioridadesInscripciones;
 import com.tpa.app.NoEstaInscriptoExcepcion;
 
+@Observable
 public class Partido {
 
 	private int cupo;

@@ -3,6 +3,9 @@ package com.tpa.app;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.uqbar.commons.utils.Observable;
+
+@Observable
 public class Infraccion {
 	
 	private String motivo;

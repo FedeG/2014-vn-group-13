@@ -12,13 +12,13 @@ public class JugadorSearchParameter {
 	private Double handicapHasta = null;
 	private Double promedioDesde = null;
 	private Double promedioHasta = null;
-	private String tuvoInfraccion = "Todos";
+	private String tuvoInfraccion = "Indistinto";
 	private Date antesDe = null;
 
 	public void borrarParametros()
 	{
 		this.comienzaCon = this.contiene = "";
-		this.tuvoInfraccion = "Todos";
+		this.tuvoInfraccion = "Indistinto";
 		this.handicapDesde = this.handicapHasta = this.promedioDesde = this.promedioHasta = null;
 		this.antesDe = null;
 	}
