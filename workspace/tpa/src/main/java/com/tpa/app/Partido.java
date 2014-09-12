@@ -34,8 +34,7 @@ public class Partido {
 				this.getLugar(), this.getFechaHora());
 	}
 
-	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo,
-			MailSender sender) {
+	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo, MailSender sender) {
 		this.mailSender = sender;
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
@@ -98,7 +97,7 @@ public class Partido {
 
 	public void inscribir(Inscripcion inscripcion) {
 		this.getInscripciones().add(inscripcion);
-		inscripcion.getJugador().avisarAmigos(this);
+		//inscripcion.getJugador().avisarAmigos(this);
 		//if (this.verificarCupoCompleto())
 			//this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
 	}
