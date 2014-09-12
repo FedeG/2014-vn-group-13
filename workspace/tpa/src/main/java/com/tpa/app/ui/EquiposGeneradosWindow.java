@@ -4,55 +4,62 @@ import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
+import org.uqbar.arena.widgets.Container;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Widget;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.model.IModel;
 
+import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
-import com.tpa.app.Persona;
+import com.tpa.app.Jugador;
 import com.tpa.app.domain.PantallaPrincipal;
+import com.tpa.app.domain.SelectorJugadores;
 
-public class EquiposGeneradosWindow extends  SimpleWindow<Partido> {
+public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 
-	public EquiposGeneradosWindow(WindowOwner parent) {
-		super(parent, null);
-
+	public EquiposGeneradosWindow(WindowOwner parent, SelectorJugadores partido) {
+		super(parent, partido);
 	}
 	
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
 		this.setTitle("Ver Equipos Generados");
-		//this.setTaskDescription("Elija una operación a realizar");
+		this.setTaskDescription("Elija una operación a realizar");
 		super.createMainTemplate(mainPanel);
 		
-		this.createResultsGrid(mainPanel);
+		Panel horizontal_panel = new Panel(mainPanel);
+		horizontal_panel.setLayout(new HorizontalLayout());
+		this.createResultsGrid(horizontal_panel, "equipoA", "Equipo 1");
+		this.createResultsGrid(horizontal_panel, "equipoB", "Equipo 2");
 		this.createGridActions(mainPanel);
 
 	}
+	
+	protected void createResultsGrid(Panel mainPanel, String property, String name) {
 
-	protected void createResultsGrid(Panel mainPanel) {
-		
-		Table<Persona> table = new Table<Persona>(mainPanel, Persona.class);
+		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
 		table.setHeigth(200);
-		table.setWidth(450);
+		table.setWidth(250);
 
-		//table.bindItemsToProperty("resultadosJugadoresA");
-		//table.bindValueToProperty("jugadorSeleccionado");
+		table.bindItemsToProperty(property);
+		table.bindValueToProperty("jugadorSeleccionado");
 
-		this.describeResultsGrid(table);
+		this.describeResultsGrid(table, name);
 	}
-	
-	protected void describeResultsGrid(Table<Persona> table) {
+
+	protected void describeResultsGrid(Table<Jugador> table, String nombre) {
 		
-		new Column<Persona>(table) //
-			.setTitle("Nombre")
+		new Column<Jugador>(table)
+			.setTitle(nombre)
 			.setFixedSize(250)
-			.bindContentsToProperty("nombre");
-	
+			.bindContentsToTransformer(new NombreTransformer());
+
 	}
 	
 	protected void createGridActions(Panel mainPanel) {
@@ -64,8 +71,7 @@ public class EquiposGeneradosWindow extends  SimpleWindow<Partido> {
 		edit.setCaption("Ver");
 		edit.onClick(new MessageSend(this, "ver"));
 
-		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
-		NotNullObservable elementSelected = new NotNullObservable("partidoSeleccionado");
+		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
 		edit.bindEnabled(elementSelected);
 	}
 	
