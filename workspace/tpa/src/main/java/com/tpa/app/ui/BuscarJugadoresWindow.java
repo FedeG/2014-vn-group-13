@@ -90,15 +90,15 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		.setFixedSize(225)
 		.bindContentsToTransformer(new ApodoTransformer());
 
-		Column<Jugador> modeloColumn = new Column<Jugador>(table);
-		modeloColumn.setTitle("Handicap");
-		modeloColumn.setFixedSize(75);
-		modeloColumn.bindContentsToProperty("handicap");
+		Column<Jugador> handicapColumn = new Column<Jugador>(table);
+		handicapColumn.setTitle("Handicap");
+		handicapColumn.setFixedSize(75);
+		handicapColumn.bindContentsToProperty("handicap");
 	
-		Column<Jugador> ingresoColumn = new Column<Jugador>(table);
-		ingresoColumn.setTitle("Promedio");
-		ingresoColumn.setFixedSize(75);
-		ingresoColumn.bindContentsToTransformer(new PromedioTransformer());
+		Column<Jugador> promedioColumn = new Column<Jugador>(table);
+		promedioColumn.setTitle("Promedio");
+		promedioColumn.setFixedSize(75);
+		promedioColumn.bindContentsToTransformer(new PromedioTransformer());
 		
 		/* Grid Actions */
 		
