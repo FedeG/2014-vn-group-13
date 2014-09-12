@@ -28,6 +28,13 @@ public class BuscadorJugadores implements Serializable {
 		); 
 	}
 	
+	public void borrarBusqueda()
+	{
+		this.comienzaCon = this.contiene = this.tuvoInfraccion = "";
+		this.handicapDesde = this.handicapHasta = this.promedioDesde = this.promedioHasta = null;
+		this.antesDe = null;
+	}
+	
 	public Jugador getJugadorSeleccionado(){ return this.jugadorSeleccionado; }
 	public void setJugadorSeleccionado(Jugador jugador){ this.jugadorSeleccionado = jugador; }
 

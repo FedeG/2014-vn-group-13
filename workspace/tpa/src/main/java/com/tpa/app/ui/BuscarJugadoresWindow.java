@@ -68,7 +68,8 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		
 		new Button(mainPanel)
 		.setCaption("Buscar")
-		.onClick(new MessageSend(this.getModelObject(), "search"));
+		.onClick(new MessageSend(this.getModelObject(), "search"))
+		.disableOnError();
 		
 		/* Create Grid */
 		
@@ -113,6 +114,8 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		Button borrar = new Button(botonera);
 		borrar.setCaption("Borrar campos busqueda");
 		borrar.setWidth(200);
+		borrar.onClick(new MessageSend(getModelObject(), "borrarBusqueda"));
+		borrar.disableOnError();
 		
 		Button volver = new Button(botonera);
 		volver.setCaption("Volver");
