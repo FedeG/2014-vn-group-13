@@ -6,6 +6,7 @@ import java.util.List;
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -37,36 +38,41 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
+		
+		
 		this.setTitle("Generar Equipos");
-		//this.setTaskDescription("Elija una operación a realizar");
+		mainPanel.setLayout(new VerticalLayout());
 		super.createMainTemplate(mainPanel);
 		
-		this.createResultsGrid(mainPanel);
-		this.createGridActions(mainPanel);
+		/* Create Radio Selector */
 		
-	}
+		Panel searchFormPanel = new Panel(mainPanel);
+		searchFormPanel.setLayout(new VerticalLayout());
 		
-
-	@Override
-	protected void addActions(Panel actionsPanel) {
+		new Label(searchFormPanel).setText("Criterios de Ordenamiento");
+		RadioSelector<String> radioSelectorOrdenamiento=new RadioSelector<>(searchFormPanel);
+		radioSelectorOrdenamiento.setWidth(20);
+		radioSelectorOrdenamiento.bindValueToProperty("ordenamientoSeleccionado");
+		radioSelectorOrdenamiento.bindItemsToProperty("ordenamientos");
+		this.getModelObject().setOrdenamientoSeleccionado("Por Promedio");
 		
-		//botones del panel principal
+		new Label(searchFormPanel).setText("Criterios de Selección");
+		RadioSelector<String> radioSelectorSeleccion=new RadioSelector<>(searchFormPanel);
+		radioSelectorSeleccion.setWidth(20);
+		radioSelectorSeleccion.bindValueToProperty("seleccionSeleccionada");
+		radioSelectorSeleccion.bindItemsToProperty("selecciones");
+		this.getModelObject().setSeleccionSeleccionada("Par/Impar");
 		
-	}
-	
-	protected void createResultsGrid(Panel mainPanel) {
+		/* Create Grid */
 		
 		Table<Partido> table = new Table<Partido>(mainPanel, Partido.class);
 		table.setHeigth(200);
-		table.setWidth(450);
+		table.setWidth(600);
 
 		table.bindItemsToProperty("resultados");
 		table.bindValueToProperty("partidoSeleccionado");
-
-		this.describeResultsGrid(table);
-	}
-	
-	protected void describeResultsGrid(Table<Partido> table) {
+		
+		/* Grid Description */
 		
 		new Column<Partido>(table) //
 			.setTitle("Fecha y Hora")
@@ -78,24 +84,24 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 			.setFixedSize(100)
 			.bindContentsToProperty("lugar");
 
-	
-	}
-	
-	protected void createGridActions(Panel mainPanel) {
+		/* Grid Actions */
 		
-		Panel actionsPanel = new Panel(mainPanel);
-		actionsPanel.setLayout(new HorizontalLayout());
+		Panel botonera = new Panel(mainPanel);
+		botonera.setLayout(new HorizontalLayout());
 
-		Button edit = new Button(actionsPanel);
-		edit.setCaption("Generar");
-		edit.onClick(new MessageSend(this, "generar"));
+		Button generar = new Button(botonera);
+		generar.setCaption("Generar");
+		generar.onClick(new MessageSend(this, "generar"));
 
 		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("partidoSeleccionado");
-		edit.bindEnabled(elementSelected);
+		generar.bindEnabled(elementSelected);
+
+		
+		
 	}
-	
-	
+		
+
 	public void generar() {
 		
 		//esto no esta bueno, por ahi podria tener una instancia de generador asociado y ya
@@ -169,30 +175,16 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 	}
 
 	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		
-		Panel searchFormPanel = new Panel(mainPanel);
-		
-		//mainPanel.setLayout(new VerticalLayout());
-		
-		new Label(mainPanel).setText("Criterios de Ordenamiento");
-		RadioSelector<String> radioSelectorOrdenamiento=new RadioSelector<>(mainPanel);
-		radioSelectorOrdenamiento.setWidth(20);
-		radioSelectorOrdenamiento.bindValueToProperty("ordenamientoSeleccionado");
-		radioSelectorOrdenamiento.bindItemsToProperty("ordenamientos");
-		this.getModelObject().setOrdenamientoSeleccionado("Por Promedio");
-		
-		
-		//new Label(mainPanel).setText("Criterios de Ordenamiento");
-		//new Label(mainPanel).bindValueToProperty("ordenamientoSeleccionado");
-		
-		new Label(mainPanel).setText("Criterios de Selección");
-		RadioSelector<String> radioSelectorSeleccion=new RadioSelector<>(mainPanel);
-		radioSelectorSeleccion.setWidth(20);
-		radioSelectorSeleccion.bindValueToProperty("seleccionSeleccionada");
-		radioSelectorSeleccion.bindItemsToProperty("selecciones");
-		this.getModelObject().setSeleccionSeleccionada("Par/Impar");
-		
+	protected void createFormPanel(Panel arg0) {
+		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void addActions(Panel arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
