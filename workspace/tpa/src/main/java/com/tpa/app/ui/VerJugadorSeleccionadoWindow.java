@@ -1,39 +1,24 @@
 package com.tpa.app.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.aop.windows.TransactionalDialog;
-import org.uqbar.arena.bindings.ObservableProperty;
-import org.uqbar.arena.bindings.PropertyAdapter;
+import org.uqbar.arena.bindings.DateAdapter;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.CheckBox;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.Selector;
-import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
-import org.uqbar.lacar.ui.model.ListBuilder;
-import org.uqbar.lacar.ui.model.bindings.Binding;
 
 import com.tpa.app.Jugador;
-import com.tpa.app.domain.PantallaPrincipal;
 
 @Observable
 public class VerJugadorSeleccionadoWindow extends TransactionalDialog<Jugador> {
 
-	private List<Jugador> listaJugadores; 
-	
 	public VerJugadorSeleccionadoWindow(WindowOwner parent, Jugador jugador) {
 		super(parent, jugador);
-		this.listaJugadores  = new ArrayList<Jugador>();
-		this.listaJugadores.add(jugador);
 	}
 
 	@Override
@@ -41,10 +26,10 @@ public class VerJugadorSeleccionadoWindow extends TransactionalDialog<Jugador> {
 		this.setTitle("Ver Jugador Seleccionado");
 		super.createMainTemplate(mainPanel);
 	}
-	
+
 	@Override
 	protected void createFormPanel(Panel mainPanel) {
-		
+
 		Panel form = new Panel(mainPanel);
 		form.setLayout(new ColumnLayout(4));
 
@@ -53,52 +38,47 @@ public class VerJugadorSeleccionadoWindow extends TransactionalDialog<Jugador> {
 
 		new Label(form).setText("Apodo");
 		new Label(form).bindValueToProperty("persona.apodo");
-		
-		new Label(form).setText("Handicap");
-		new Label(form).bindValueToProperty("handicap");
-		
-		new Label(form).setText("Promedio");
-		new Label(form).bindValueToProperty("promedio");
-		
-//		new Label(form).setText("Nombre del cliente");
-//		new TextBox(form).bindValueToProperty("nombre");
-//
-//		new Label(form).setText("Modelo del aparato");
-//		
-//		Selector<ModeloCelular> selector = new Selector<ModeloCelular>(form) //
-//			.allowNull(false);
-//		selector.bindValueToProperty("modeloCelular");
-//
-//		Binding<ListBuilder<ModeloCelular>> itemsBinding = selector.bindItems( //
-//			new ObservableProperty(RepositorioModelos.getInstance(), "modelos"));
-//
-//		itemsBinding.setAdapter( //
-//			new PropertyAdapter(ModeloCelular.class, "descripcionEntera"));
-//
-//		
-//		new Label(form).setText("Recibe resumen cuenta en domicilio");
-//		new CheckBox(form).bindValueToProperty("recibeResumenCuenta");
 
+		new Label(form).setText("Fecha de Nacim:");
+		new Label(form).bindValueToProperty("persona.fechaNac"));
+		
+		//new Label(form).setText("Handicap");
+		//new Label(form).bindValueToProperty("handicap");
+
+		//new Label(form).setText("Promedio");
+		//new Label(form).bindValueToProperty("promedio");
+
+		//crearGrillaConAmigos(mainPanel);
+		//crearGrillaConInfracciones(mainPanel);
 	}
 
-	public List<Jugador> getListaJugadores() {
-		return listaJugadores;
-	}
+	protected void crearGrillaConInfracciones(Panel mainPanel) {
+		Table<Jugador> table = new Table<Jugador>(mainPanel);
+		table.setHeigth(100);
+		table.setWidth(250);
+		table.bindItemsToProperty("infracciones");
+		//table.bindValueToProperty("jugadorSeleccionado");
+		
+		//Grid Description 
+		
+		new Column<Jugador>(table) //
+		.setTitle("Motivo")
+		.setFixedSize(225)
+		.bindContentsToProperty("motivo");
 
-	public void setListaJugadores(List<Jugador> listaJugadores) {
-		this.listaJugadores = listaJugadores;
+		new Column<Jugador>(table) //
+		.setTitle("Fecha")
+		.setFixedSize(225)
+		.bindContentsToProperty("momento");
 	}
 
 	@Override
 	protected void addActions(Panel actionsPanel) {
-		new Button(actionsPanel)
-		.setCaption("Volver")
-		.onClick(new MessageSend(this, "volver"));
+		new Button(actionsPanel).setCaption("Volver").onClick(
+				new MessageSend(this, "volver"));
 	}
 
 	public void volver() {
 		this.close();
 	}
-
-
 }
