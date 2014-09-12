@@ -4,20 +4,13 @@ import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.Container;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.Widget;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.commons.model.IModel;
 
-import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
-import com.tpa.app.Partido;
-import com.tpa.app.Jugador;
-import com.tpa.app.domain.PantallaPrincipal;
 import com.tpa.app.domain.SelectorJugadores;
 
 public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
@@ -95,6 +88,6 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 
 	@Override
 	protected void createFormPanel(Panel mainPanel) {
-		Panel searchFormPanel = new Panel(mainPanel);		
+		new Panel(mainPanel);		
 	}
 }

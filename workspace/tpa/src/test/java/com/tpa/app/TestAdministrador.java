@@ -68,7 +68,7 @@ public class TestAdministrador {
 		valores.add(par1);
 		valores.add(par2);
 		valores.add(par3);
-		porHandicap = new PorHandicap(valores);
+		porHandicap = new PorHandicap();
 		porPromedio = new PorPromedio();
 		//-------------------------------------------------------------/
 		partido.calificar(jugadorConJuego2, jugadorConJuego1, 9, "");

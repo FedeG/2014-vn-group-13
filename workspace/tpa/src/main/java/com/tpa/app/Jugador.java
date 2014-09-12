@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
+import com.tpa.app.ui.PromedioTransformer;
+
 @Observable
 public class Jugador {
 
@@ -13,7 +15,15 @@ public class Jugador {
 	private List<Partido> partidosJugados;
 	private Double handicap;
 
+	public Double getPromedio() {
+		Double promedio = new PromedioTransformer().transform(this); 
+		if (promedio == null) promedio = 0.0;
+		return promedio;
+	}
 
+	public void setPromedio(Double promedio) {
+		
+	}
 
 	public Jugador(Persona persona) {
 		this.infracciones = new ArrayList<Infraccion>();
@@ -65,6 +75,6 @@ public class Jugador {
 	public void setHandicap(Double handicap) {
 		this.handicap = handicap;
 	}
-
-
+	
+	
 }

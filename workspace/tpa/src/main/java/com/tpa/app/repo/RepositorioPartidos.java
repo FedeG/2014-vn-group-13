@@ -1,24 +1,16 @@
 package com.tpa.app.repo;
 
-import static org.mockito.Mockito.mock;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
 import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
-import com.tpa.app.MailSender;
 import com.tpa.app.Partido;
-import com.tpa.app.PartidoMailSender;
 import com.tpa.app.Persona;
-import com.tpa.app.Inscripcion.PrioridadesInscripciones;
 
 @Observable
 public class RepositorioPartidos implements Serializable {
@@ -81,8 +73,8 @@ public class RepositorioPartidos implements Serializable {
 		partido1.inscribir(insc10);
 		
 			
-		Partido partido2 = new Partido(fecha_y_hora, "Adrogue", 10);
-		Partido partido3 = new Partido(fecha_y_hora, "Lugano", 10);
+		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
+		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
 		
 		partido2.inscribir(insc1);
 		partido2.inscribir(insc2);
@@ -159,7 +151,5 @@ public class RepositorioPartidos implements Serializable {
 		}
 		return resultados;
 	}
-
-
 
 }

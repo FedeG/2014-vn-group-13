@@ -19,21 +19,24 @@ public class ConfirmacionExitosaWindow extends  SimpleWindow<PantallaPrincipal> 
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
-		this.setTitle("");
 		super.createMainTemplate(mainPanel);
+		this.setTitle("");
+		this.setTaskDescription("Confirmación Exitosa :D :D :D");
+		
 
 	}
 
-	
-
-	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		Panel searchFormPanel = new Panel(mainPanel);		
-	}
 
 
 	@Override
 	protected void addActions(Panel arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void createFormPanel(Panel arg0) {
 		// TODO Auto-generated method stub
 		
 	}
