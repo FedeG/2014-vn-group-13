@@ -22,10 +22,10 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
-		this.setTitle("Ver Equipos Generados");
-		this.setTaskDescription("Elija una operación a realizar");
+		this.setTitle("Equipos Generados");
+		this.setTaskDescription("");
 		super.createMainTemplate(mainPanel);
-		
+
 		Panel horizontal_panel = new Panel(mainPanel);
 		horizontal_panel.setLayout(new HorizontalLayout());
 		this.createResultsGrid(horizontal_panel, "equipoA", "Equipo 1");
@@ -47,7 +47,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 
 	protected void describeResultsGrid(Table<Jugador> table, String nombre) {
-		
+
 		new Column<Jugador>(table)
 			.setTitle(nombre)
 			.setFixedSize(250)
@@ -60,34 +60,28 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 		Panel actionsPanel = new Panel(mainPanel);
 		actionsPanel.setLayout(new HorizontalLayout());
 
-		Button edit = new Button(actionsPanel);
-		edit.setCaption("Ver");
-		edit.onClick(new MessageSend(this, "ver"));
+		new Button(actionsPanel)
+			.setCaption("Confirmar")
+			.onClick(new MessageSend(this, "confirmar"));
+		
+		Button ver = new Button(actionsPanel);
+		ver.setCaption("Ver");
+		ver.onClick(new MessageSend(this, "ver"));
 
 		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
-		edit.bindEnabled(elementSelected);
-	}
-	
-
-	@Override
-	protected void addActions(Panel actionsPanel) {
-		new Button(actionsPanel)
-		.setCaption("Confirmar")
-		.onClick(new MessageSend(this, "confirmar"));
-		
+		ver.bindEnabled(elementSelected);
 	}
 	
 	public void confirmar() {
-		this.openDialog(new ConfirmacionExitosaWindow(this));
-	}
-	
-
-	private void openDialog(ConfirmacionExitosaWindow confirmacionExitosaWindow) {
-		confirmacionExitosaWindow.open();
+		new ConfirmacionExitosaWindow(this).open();
 	}
 
 	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		new Panel(mainPanel);		
+	protected void addActions(Panel arg0) {
 	}
+
+	@Override
+	protected void createFormPanel(Panel arg0) {
+	}
+
 }
