@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
+import scala.languageFeature.postfixOps;
+
+import com.tpa.app.Infraccion;
 import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
@@ -41,6 +44,11 @@ public class RepositorioPartidos implements Serializable {
 		Persona matias = new Persona(fecha_y_hora, "matias", "matias", "forro");
 		Persona mariano = new Persona(fecha_y_hora, "mariano", "mariano", "bueno");
 		Persona juana = new Persona(fecha_y_hora, "juana", "juana", "la loca");
+		juana.addAmigo(cecilia);
+		juana.addAmigo(jorge);
+		juana.addAmigo(federico);
+		juana.addAmigo(ezequiel);
+		juana.addAmigo(pablo);
 		Jugador jugadorcecilia = new Jugador(cecilia);
 		Jugador jugadorezequiel = new Jugador(ezequiel);
 		Jugador jugadorjorge = new Jugador(jorge);
@@ -51,6 +59,10 @@ public class RepositorioPartidos implements Serializable {
 		Jugador jugadormatias = new Jugador(matias);
 		Jugador jugadormariano = new Jugador(mariano);
 		Jugador jugadorjuana = new Jugador(juana);
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
 		Inscripcion insc1 = new Inscripcion(jugadorcecilia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		Inscripcion insc2 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		Inscripcion insc3 = new Inscripcion(jugadorjorge, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
