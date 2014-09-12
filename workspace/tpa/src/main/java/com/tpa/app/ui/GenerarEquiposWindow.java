@@ -36,9 +36,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 	}
 	
 	@Override
-	protected void createMainTemplate(Panel mainPanel) {
-		
-		
+	protected void createMainTemplate(Panel mainPanel) {		
 		
 		this.setTitle("Generar Equipos");
 		mainPanel.setLayout(new VerticalLayout());
@@ -77,7 +75,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 		new Column<Partido>(table) //
 			.setTitle("Fecha y Hora")
 			.setFixedSize(250)
-			.bindContentsToProperty("fechaHora");
+			.bindContentsToTransformer(new FechaTransfomer());
 
 		new Column<Partido>(table) //
 			.setTitle("Lugar")
@@ -95,9 +93,7 @@ public class GenerarEquiposWindow extends  SimpleWindow<BuscadorPartidos> {
 
 		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("partidoSeleccionado");
-		generar.bindEnabled(elementSelected);
-
-		
+		generar.bindEnabled(elementSelected);		
 		
 	}
 		
