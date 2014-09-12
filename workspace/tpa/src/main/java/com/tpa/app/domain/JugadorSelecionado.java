@@ -13,29 +13,24 @@ import com.tpa.app.ui.PromedioTransformer;
 @Observable
 public class JugadorSelecionado implements Serializable {
 
-	private Double promedio;
-	private List<Infraccion> infracciones;
-	private List<Persona> amigos;
 	private Jugador jugador;
 
 	public JugadorSelecionado(Jugador jugador) {
 		this.jugador = jugador;
-		this.infracciones = jugador.getInfracciones();
-		this.amigos = jugador.getPersona().getAmigos();
-		this.promedio = new PromedioTransformer().transform(this.getJugador());  
-		if (this.promedio == null) this.promedio = 0.0;
 	}
 
 	public Double getPromedio() {
+		Double promedio = new PromedioTransformer().transform(this.getJugador());  
+		if (promedio == null) promedio = 0.0;
 		return promedio;
 	}
 
 	public List<Infraccion> getInfracciones() {
-		return infracciones;
+		return jugador.getInfracciones();
 	}
 
 	public List<Persona> getAmigos() {
-		return amigos;
+		return jugador.getPersona().getAmigos();
 	}
 
 	public Jugador getJugador() {
