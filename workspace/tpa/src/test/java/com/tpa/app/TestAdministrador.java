@@ -218,7 +218,7 @@ public class TestAdministrador {
 			futbol5.inscribir(new Inscripcion(new Jugador(personaMock),
 					PrioridadesInscripciones.ESTANDAR, null));
 		}
-		admin.getGeneradorDeEquipos().dividirEquipos(byIndex, futbol5);
+		//admin.getGeneradorDeEquipos().dividirEquipos(byIndex, futbol5);
 		Assert.assertArrayEquals(
 				futbol5.getEquipoA().stream()
 						.map(i -> i.getJugador().getPersona().getNombre())
