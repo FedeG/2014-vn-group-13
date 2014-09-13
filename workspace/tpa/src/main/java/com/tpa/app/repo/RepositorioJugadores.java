@@ -18,23 +18,16 @@ import com.tpa.app.ui.PromedioTransformer;
 
 @Observable
 public class RepositorioJugadores implements Serializable {
-	
-	private static RepositorioJugadores instance;
-	private List<Jugador> data = new ArrayList<Jugador>();
 
-	public static synchronized RepositorioJugadores getInstance() {
-		if (instance == null) {
-			instance = new RepositorioJugadores();
-		}
-		return instance;
+	private List<Jugador> data = new ArrayList<Jugador>();
+	private static final RepositorioJugadores instance = new RepositorioJugadores();
+	public static RepositorioJugadores getInstance() {
+	    return instance;
 	}
 
-	private RepositorioJugadores() {		
+	public RepositorioJugadores() {		
 		
-
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
-		Partido partido1 = new Partido(fecha_y_hora, "Parque Patricios", 10);
-		
 		Persona cecilia = new Persona(fecha_y_hora, "cecilia", "cecilia", "chechu");
 		Persona ezequiel = new Persona(fecha_y_hora, "ezequiel", "ezequiel", "pantalla tactil");
 		Persona jorge = new Persona(fecha_y_hora, "jorge", "jorge", "pollerudo");
@@ -45,7 +38,38 @@ public class RepositorioJugadores implements Serializable {
 		Persona matias = new Persona(fecha_y_hora, "matias", "matias", "forro");
 		Persona mariano = new Persona(fecha_y_hora, "mariano", "mariano", "bueno");
 		Persona juana = new Persona(fecha_y_hora, "juana", "juana", "la loca");
-
+		
+		ezequiel.addAmigo(cecilia);
+		ezequiel.addAmigo(jorge);
+		ezequiel.addAmigo(federico);
+		ezequiel.addAmigo(juana);
+		ezequiel.addAmigo(pablo);
+		cecilia.addAmigo(juana);
+		cecilia.addAmigo(jorge);
+		cecilia.addAmigo(federico);
+		cecilia.addAmigo(ezequiel);
+		cecilia.addAmigo(pablo);
+		jorge.addAmigo(pablo);
+		pablo.addAmigo(cecilia);
+		pablo.addAmigo(jorge);
+		pablo.addAmigo(federico);
+		pablo.addAmigo(ezequiel);
+		pablo.addAmigo(juana);
+		federico.addAmigo(cecilia);
+		federico.addAmigo(jorge);
+		federico.addAmigo(juana);
+		federico.addAmigo(ezequiel);
+		federico.addAmigo(pablo);
+		martin.addAmigo(cecilia);
+		martin.addAmigo(jorge);
+		martin.addAmigo(federico);
+		martin.addAmigo(ezequiel);
+		martin.addAmigo(pablo);
+		matias.addAmigo(juana);
+		matias.addAmigo(jorge);
+		matias.addAmigo(federico);
+		matias.addAmigo(ezequiel);
+		matias.addAmigo(pablo);
 		juana.addAmigo(cecilia);
 		juana.addAmigo(jorge);
 		juana.addAmigo(federico);
@@ -76,54 +100,21 @@ public class RepositorioJugadores implements Serializable {
 		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
 		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
 		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
-		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
-		
-		Inscripcion insc1 = new Inscripcion(jugadorcecilia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc2 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc3 = new Inscripcion(jugadorjorge, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc4 = new Inscripcion(jugadorpablo, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc5 = new Inscripcion(jugadorfederico, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc6 = new Inscripcion(jugadorsofia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc7 = new Inscripcion(jugadormartin, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc8 = new Inscripcion(jugadormatias, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc9 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc10 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		jugadormatias.agregarInfraccion(new Infraccion("Por forro", fecha_y_hora));
 
+		Partido partido1 = new Partido(fecha_y_hora, "Algun lugar", 10);
+		
+		Inscripcion insc1 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc2 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc3 = new Inscripcion(jugadorcecilia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc4 = new Inscripcion(jugadorfederico, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc5 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		
 		partido1.inscribir(insc1);
 		partido1.inscribir(insc2);
 		partido1.inscribir(insc3);
 		partido1.inscribir(insc4);
 		partido1.inscribir(insc5);
-		partido1.inscribir(insc6);
-		partido1.inscribir(insc7);
-		partido1.inscribir(insc8);
-		partido1.inscribir(insc9);
-		partido1.inscribir(insc10);
-			
-		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
-		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
-		
-		partido2.inscribir(insc1);
-		partido2.inscribir(insc2);
-		partido2.inscribir(insc3);
-		partido2.inscribir(insc4);
-		partido2.inscribir(insc5);
-		partido2.inscribir(insc6);
-		partido2.inscribir(insc7);
-		partido2.inscribir(insc8);
-		partido2.inscribir(insc9);
-		partido2.inscribir(insc10);
-		
-		partido3.inscribir(insc1);
-		partido3.inscribir(insc2);
-		partido3.inscribir(insc3);
-		partido3.inscribir(insc4);
-		partido3.inscribir(insc5);
-		partido3.inscribir(insc6);
-		partido3.inscribir(insc7);
-		partido3.inscribir(insc8);
-		partido3.inscribir(insc9);
-		partido3.inscribir(insc10);
 
 		partido1.calificar(jugadorjuana, jugadormariano, 10, "un genio");
 		partido1.calificar(jugadorcecilia, jugadormariano, 8, "un genio");
@@ -131,10 +122,9 @@ public class RepositorioJugadores implements Serializable {
 		partido1.calificar(jugadorjuana, jugadorezequiel, 2, "un muerto");
 		partido1.calificar(jugadorfederico, jugadorezequiel, 3, "mal arquero");
 		partido1.calificar(jugadorcecilia, jugadorezequiel, 1, "muy raro");		
-		jugadorezequiel.agregarPartidoJugado(partido1);
-		jugadormariano.agregarPartidoJugado(partido1);		
 		
-		jugadormatias.agregarInfraccion(new Infraccion("por forro", fecha_y_hora));
+		jugadorezequiel.agregarPartidoJugado(partido1);
+		jugadormariano.agregarPartidoJugado(partido1);
 		
 		this.create(jugadorcecilia);
 		this.create(jugadorezequiel);
@@ -148,9 +138,17 @@ public class RepositorioJugadores implements Serializable {
 		this.create(jugadorsofia);
 		
 	}
+	
+	// ********************************************************
+	// ** Getter
+	// ********************************************************
+	
+	public List<Jugador> getData(){
+		return data;
+	}
 
 	// ********************************************************
-	// ** Altas y bajas
+	// ** Altas
 	// ********************************************************
 
 	public void create(Jugador jugador) {
@@ -175,8 +173,7 @@ public class RepositorioJugadores implements Serializable {
 			   && esMenorOIgual(datosBusqueda.getPromedioHasta(), promedioTrans.transform(jugador))
 			   && compararBooleanoConListaVacia(datosBusqueda.getTuvoInfraccion(), jugador.getInfracciones())
 			   && esMenorFecha(jugador.getPersona().getFechaNac(), datosBusqueda.getAntesDe())
-			)
-				resultados.add(jugador);
+			   ) resultados.add(jugador);
 			}
 		return resultados;
 	}
@@ -207,7 +204,6 @@ public class RepositorioJugadores implements Serializable {
 	}
 	
 	protected boolean match(Object expectedValue, Object realValue) {
-		return expectedValue == null
-			|| realValue.toString().toLowerCase().contains(expectedValue.toString().toLowerCase());
+		return expectedValue == null || realValue.toString().toLowerCase().contains(expectedValue.toString().toLowerCase());
 	}
 }
