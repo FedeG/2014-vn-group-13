@@ -23,7 +23,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		this.setTitle("Equipos Generados");
-		this.setTaskDescription("");
+		this.setTaskDescription("Puede confirmar o ver los jugadores");
 		super.createMainTemplate(mainPanel);
 		Panel horizontal_panel = new Panel(mainPanel);
 		horizontal_panel.setLayout(new HorizontalLayout());
@@ -35,7 +35,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	protected void createResultsGrid(Panel mainPanel, String property, String name) {
 		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
 		table.setHeigth(200);
-		table.setWidth(250);
+		table.setWidth(180);
 		table.bindItemsToProperty(property);
 		table.bindValueToProperty("jugadorSeleccionado");
 		this.describeResultsGrid(table, name);
@@ -44,7 +44,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	protected void describeResultsGrid(Table<Jugador> table, String nombre) {
 		new Column<Jugador>(table)
 			.setTitle(nombre)
-			.setFixedSize(250)
+			.setFixedSize(180)
 			.bindContentsToProperty("persona.nombre");
 	}
 	
@@ -54,11 +54,13 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 
 		new Button(actionsPanel)
 			.setCaption("Confirmar")
-			.onClick(new MessageSend(this, "confirmar"));
+			.onClick(new MessageSend(this, "confirmar"))
+			.setWidth(200);
 
 		Button ver = new Button(actionsPanel);
-		ver.setCaption("Ver");
+		ver.setCaption("Ver jugador seleccionado");
 		ver.onClick(new MessageSend(this, "ver"));
+		ver.setWidth(200);
 
 		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
 		ver.bindEnabled(elementSelected);

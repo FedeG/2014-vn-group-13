@@ -90,7 +90,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		Button volver = new Button(botonera);
 		volver.setCaption("Volver");
 		volver.setWidth(200);
-		volver.onClick(new MessageSend(this, "volverAtras"));
+		volver.onClick(new MessageSend(this, "close"));
 		
 		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
@@ -117,7 +117,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.promedioHasta");;
 		
 		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
-		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No","Todos"), "infraccion")
+		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No","Indistinto"), "infraccion")
 		.bindValueToProperty("jugadorSearchParameter.tuvoInfraccion");
 		new Label(opcionesDeBusqueda).setText("Fecha nacimiento anterior a:");
 		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.antesDe");
@@ -143,9 +143,5 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 	
 	private void openDialog(VerJugadorSeleccionadoWindow nuevaVentana) {
 		nuevaVentana.open();
-	}
-	
-	public void volverAtras(){
-		this.close();
 	}
 }

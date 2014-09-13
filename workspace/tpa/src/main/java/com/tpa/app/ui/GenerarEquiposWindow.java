@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
+import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -42,27 +43,33 @@ public class GenerarEquiposWindow extends SimpleWindow<BuscadorPartidos> {
 		/* Create Radio Selector */
 
 		Panel searchFormPanel = new Panel(mainPanel);
-		searchFormPanel.setLayout(new VerticalLayout());
+		searchFormPanel.setLayout(new HorizontalLayout());
 
-		new Label(searchFormPanel).setText("Criterios de Ordenamiento");
-		RadioSelector<String> radioSelectorOrdenamiento = new RadioSelector<>(searchFormPanel);
+		Panel searchOrdenamientoPanel = new Panel(searchFormPanel);
+		searchOrdenamientoPanel.setLayout(new VerticalLayout());
+		
+		new Label(searchOrdenamientoPanel).setText("Criterios de Ordenamiento");
+		RadioSelector<String> radioSelectorOrdenamiento = new RadioSelector<>(searchOrdenamientoPanel);
 		radioSelectorOrdenamiento.setWidth(20);
 		radioSelectorOrdenamiento.bindValueToProperty("ordenamientoSeleccionado");
 		radioSelectorOrdenamiento.bindItemsToProperty("ordenamientos");
 		this.getModelObject().setOrdenamientoSeleccionado("Por Promedio");
 
-		new Label(searchFormPanel).setText("Criterios de Selección");
-		RadioSelector<String> radioSelectorSeleccion = new RadioSelector<>(searchFormPanel);
+		Panel searchSeleccionPanel = new Panel(searchFormPanel);
+		searchSeleccionPanel.setLayout(new VerticalLayout());
+		
+		new Label(searchSeleccionPanel).setText("Criterios de Seleccion");
+		RadioSelector<String> radioSelectorSeleccion = new RadioSelector<>(searchSeleccionPanel);
 		radioSelectorSeleccion.setWidth(20);
 		radioSelectorSeleccion.bindValueToProperty("seleccionSeleccionada");
 		radioSelectorSeleccion.bindItemsToProperty("selecciones");
 		this.getModelObject().setSeleccionSeleccionada("Par/Impar");
-
+		
 		/* Create Grid */
 
 		Table<Partido> table = new Table<Partido>(mainPanel, Partido.class);
-		table.setHeigth(200);
-		table.setWidth(600);
+		table.setHeigth(100);
+		table.setWidth(380);
 
 		table.bindItemsToProperty("resultados");
 		table.bindValueToProperty("partidoSeleccionado");
@@ -70,22 +77,27 @@ public class GenerarEquiposWindow extends SimpleWindow<BuscadorPartidos> {
 		/* Grid Description */
 
 		new Column<Partido>(table)
-			.setTitle("Fecha y Hora").setFixedSize(250)
+			.setTitle("Fecha y Hora").setFixedSize(200)
 			.bindContentsToTransformer(new FechaTransfomer());
 
 		new Column<Partido>(table)
-			.setTitle("Lugar").setFixedSize(100)
+			.setTitle("Lugar").setFixedSize(180)
 			.bindContentsToProperty("lugar");
 
 		/* Grid Actions */
 
 		Panel botonera = new Panel(mainPanel);
 		botonera.setLayout(new HorizontalLayout());
-
+		
 		Button generar = new Button(botonera);
 		generar.setCaption("Generar");
-		generar.onClick(new MessageSend(this, "generar"));
-
+		generar.onClick(new MessageSend(this, "generar")).setWidth(200);
+		
+		Button volver = new Button(botonera);
+		volver.setCaption("Volver");
+		volver.setWidth(200);
+		volver.onClick(new MessageSend(this, "close"));
+		
 		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("partidoSeleccionado");
 		generar.bindEnabled(elementSelected);
