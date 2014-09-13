@@ -18,6 +18,7 @@ public class Jugador {
 		this.infracciones = new ArrayList<Infraccion>();
 		this.partidosJugados = new ArrayList<Partido>();
 		this.persona = persona;
+		this.handicap = 0.0;
 	}
 	
 	public Jugador(Persona persona, Double handicap) {
