@@ -19,6 +19,7 @@ import org.uqbar.arena.widgets.RadioSelector;
 import com.tpa.app.ByIndex;
 import com.tpa.app.Criterio;
 import com.tpa.app.GeneradorDeEquipos;
+import com.tpa.app.Inscripcion;
 import com.tpa.app.Partido;
 import com.tpa.app.PorHandicap;
 import com.tpa.app.PorPromedio;
@@ -97,11 +98,10 @@ public class GenerarEquiposWindow extends SimpleWindow<BuscadorPartidos> {
 		List<Criterio> critOrden = new ArrayList<Criterio>();
 		critOrden = crearListaSegunRadioButton();
 
-		generador.ordenarJugadores(critOrden, this.getModelObject()
-				.getPartidoSeleccionado());
+		List<Inscripcion> inscripciones = generador.ordenarJugadores(critOrden, this.getModelObject().getPartidoSeleccionado());
 
 		ByIndex divisor = crearDivisorSegunRadioButton();
-		generador.dividirEquipos(divisor, this.getModelObject().getPartidoSeleccionado());
+		generador.dividirEquipos(divisor, this.getModelObject().getPartidoSeleccionado(), inscripciones);
 
 		new EquiposGeneradosWindow(this, this.getModelObject().getPartidoSeleccionado()).open();
 
@@ -144,7 +144,6 @@ public class GenerarEquiposWindow extends SimpleWindow<BuscadorPartidos> {
 		List<Criterio> critOrden = new ArrayList<Criterio>();
 		if (this.getModelObject().getOrdenamientoSeleccionado() == "Por Handicap") {
 			critOrden.add(new PorHandicap());
-			critOrden.add(new PorPromedio());
 		}
 		if (this.getModelObject().getOrdenamientoSeleccionado() == "Por Promedio") {
 			critOrden.add(new PorPromedio());

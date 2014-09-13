@@ -1,9 +1,7 @@
 package com.tpa.app.ui;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
 import com.uqbar.commons.collections.Transformer;
 

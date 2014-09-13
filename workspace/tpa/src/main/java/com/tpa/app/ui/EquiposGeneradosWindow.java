@@ -45,7 +45,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 		new Column<Jugador>(table)
 			.setTitle(nombre)
 			.setFixedSize(250)
-			.bindContentsToTransformer(new NombreTransformer());
+			.bindContentsToProperty("persona.nombre");
 	}
 	
 	protected void createGridActions(Panel mainPanel) {
@@ -65,6 +65,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 	
 	public void confirmar() {
+		this.getModelObject().getPartido().setConfirmado(true);
 		new ConfirmacionExitosaWindow(this).open();
 	}
 

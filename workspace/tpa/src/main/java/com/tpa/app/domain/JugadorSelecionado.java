@@ -20,9 +20,7 @@ public class JugadorSelecionado implements Serializable {
 	}
 
 	public Double getPromedio() {
-		Double promedio = new PromedioTransformer().transform(this.getJugador());  
-		if (promedio == null) promedio = 0.0;
-		return promedio;
+		return new PromedioTransformer().transform(this.getJugador());  
 	}
 
 	public List<Infraccion> getInfracciones() {

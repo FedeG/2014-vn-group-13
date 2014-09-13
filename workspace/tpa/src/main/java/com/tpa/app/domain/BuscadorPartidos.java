@@ -7,9 +7,7 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
-import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
-import com.tpa.app.Persona;
 import com.tpa.app.repo.RepositorioPartidos;
 
 
@@ -71,9 +69,8 @@ public class BuscadorPartidos implements Serializable {
 		this.ordenamientoSeleccionado = ordenamientoSeleccionado;
 	}
 	
-	public List<String> getOrdenamientos()
-	{
-	 return Arrays.asList("Por Promedio", "Por Handicap", "Mixto");
+	public List<String> getOrdenamientos(){
+		return Arrays.asList("Por Promedio", "Por Handicap", "Mixto");
 	}
 
 	public String getSeleccionSeleccionada() {
@@ -84,9 +81,8 @@ public class BuscadorPartidos implements Serializable {
 		this.seleccionSeleccionada = seleccionSeleccionada;
 	}
 	
-	public List<String> getSelecciones()
-	{
-	 return Arrays.asList("Par/Impar", "1,4,5,8,9");
+	public List<String> getSelecciones(){
+		return Arrays.asList("Par/Impar", "1,4,5,8,9");
 	}
 
 

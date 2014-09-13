@@ -21,11 +21,11 @@ public class SelectorJugadores implements Serializable {
 	}
 
 	public List<Jugador> getEquipoA() {
-		return get_jugadores(this.partido.getEquipoA());
+		return get_jugadores(this.getPartido().getEquipoA());
 	}
 
 	public List<Jugador> getEquipoB() {
-		return get_jugadores(this.partido.getEquipoB());
+		return get_jugadores(this.getPartido().getEquipoB());
 	}
 	
 	private List<Jugador> get_jugadores(List<Inscripcion> inscripciones){
@@ -40,6 +40,10 @@ public class SelectorJugadores implements Serializable {
 
 	public void setJugadorSeleccionado(Jugador jugadorSeleccionado) {
 		this.jugadorSeleccionado = jugadorSeleccionado;
+	}
+
+	public Partido getPartido() {
+		return partido;
 	}
 
 }
