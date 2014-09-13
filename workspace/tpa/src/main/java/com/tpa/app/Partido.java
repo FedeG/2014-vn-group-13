@@ -12,7 +12,7 @@ import com.tpa.app.NoEstaInscriptoExcepcion;
 public class Partido {
 
 	private int cupo;
-	
+	private Boolean confirmado;	
 	private LocalDateTime fechaHora;
 	private String lugar;
 	private PriorityQueue<Inscripcion> inscripciones;
@@ -63,6 +63,15 @@ public class Partido {
 		this.lugar = lugar;
 	}
 
+	public Boolean getConfirmado(){
+		return this.confirmado;
+	}
+	
+	public void setConfirmado(Boolean confirmado){
+		//TODO ver despues :/
+		this.confirmado = confirmado;
+	}
+	
 	public List<Inscripcion> getEquipoA() {
 		return equipoA;
 	}
