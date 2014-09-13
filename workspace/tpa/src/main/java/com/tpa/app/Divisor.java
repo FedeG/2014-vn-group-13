@@ -1,10 +1,10 @@
 package com.tpa.app;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.List;
 
 public interface Divisor {
 	String nombre = "";
-	ArrayList<Inscripcion> generarEquipoA(PriorityQueue<Inscripcion> priorityQueue); 
-	ArrayList<Inscripcion> generarEquipoB(PriorityQueue<Inscripcion> inscripciones); 
+	ArrayList<Inscripcion> generarEquipoA(List<Inscripcion> priorityQueue); 
+	ArrayList<Inscripcion> generarEquipoB(List<Inscripcion> inscripciones); 
 }
