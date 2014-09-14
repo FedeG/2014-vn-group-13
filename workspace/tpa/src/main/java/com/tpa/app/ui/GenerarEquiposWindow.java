@@ -15,11 +15,9 @@ import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.RadioSelector;
-
 import com.tpa.app.ByIndex;
 import com.tpa.app.Criterio;
 import com.tpa.app.GeneradorDeEquipos;
-import com.tpa.app.Inscripcion;
 import com.tpa.app.Partido;
 import com.tpa.app.PartidoYaConfirmadoExcepcion;
 import com.tpa.app.PorHandicap;
@@ -112,17 +110,12 @@ public class GenerarEquiposWindow extends SimpleWindow<BuscadorPartidos> {
 	public void generar() {
 		if(getModelObject().getPartidoSeleccionado().getConfirmado())
 			throw new PartidoYaConfirmadoExcepcion();
+		
 		GeneradorDeEquipos generador = new GeneradorDeEquipos();
-
+		ByIndex divisor = crearDivisorSegunRadioButton();
 		List<Criterio> critOrden = new ArrayList<Criterio>();
 		critOrden = crearListaSegunRadioButton();
-
-		List<Inscripcion> inscripciones = generador.ordenarJugadores(critOrden,
-				this.getModelObject().getPartidoSeleccionado());
-
-		ByIndex divisor = crearDivisorSegunRadioButton();
-		generador.dividirEquipos(divisor, this.getModelObject()
-				.getPartidoSeleccionado(), inscripciones);
+		generador.generarEquipos(getModelObject().getPartidoSeleccionado(), critOrden, divisor);
 
 		new EquiposGeneradosWindow(this, this.getModelObject()
 				.getPartidoSeleccionado()).open();

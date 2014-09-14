@@ -13,6 +13,7 @@ import com.tpa.app.Infraccion;
 import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
+import com.tpa.app.PartidoMailSender;
 import com.tpa.app.Persona;
 import com.tpa.app.ui.PromedioTransformer;
 
@@ -98,11 +99,11 @@ public class RepositorioJugadores implements Serializable {
 		Jugador jugadorjuana = new Jugador(juana,(double) 9);
 		
 		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
-		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
-		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now().plusDays(7)));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now().plusDays(14)));
 		jugadormatias.agregarInfraccion(new Infraccion("Por forro", fecha_y_hora));
 
-		Partido partido1 = new Partido(fecha_y_hora, "Algun lugar", 10);
+		Partido partido1 = new Partido(fecha_y_hora, "Algun lugar", 10, new PartidoMailSender());
 		
 		Inscripcion insc1 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		Inscripcion insc2 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);

@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
 import org.uqbar.commons.utils.Observable;
-
 import com.tpa.app.Partido;
 import com.tpa.app.repo.RepositorioPartidos;
-
 
 @Observable
 public class BuscadorPartidos implements Serializable {
@@ -84,6 +81,4 @@ public class BuscadorPartidos implements Serializable {
 	public List<String> getSelecciones(){
 		return Arrays.asList("Par/Impar", "1,4,5,8,9");
 	}
-
-
 }

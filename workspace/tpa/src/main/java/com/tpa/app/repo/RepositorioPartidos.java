@@ -1,20 +1,20 @@
 package com.tpa.app.repo;
 
+import static org.mockito.Mockito.mock;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.uqbar.commons.utils.Observable;
-
 import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
+import com.tpa.app.PartidoMailSender;
 import com.tpa.app.Persona;
 
 @Observable
 public class RepositorioPartidos implements Serializable {
-	
 	private List<Partido> data = new ArrayList<Partido>();
 	private static final RepositorioPartidos instance = new RepositorioPartidos();
 	public static RepositorioPartidos getInstance() {
@@ -22,7 +22,6 @@ public class RepositorioPartidos implements Serializable {
 	}
 
 	public RepositorioPartidos() {
-
 		RepositorioJugadores jugadores = new RepositorioJugadores();
 		List<Jugador> listajugadores = jugadores.getData(); 
 		
@@ -50,9 +49,10 @@ public class RepositorioPartidos implements Serializable {
 		Inscripcion insc9 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		Inscripcion insc10 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 
-		Partido partido1 = new Partido(fecha_y_hora, "Parque Patricios", 10);
-		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
-		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
+		PartidoMailSender mailSender = new PartidoMailSender();
+		Partido partido1 = new Partido(fecha_y_hora, "Parque Patricios", 10, mailSender);
+		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10, mailSender);
+		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10, mailSender);
 
 		partido1.inscribir(insc1);
 		partido1.inscribir(insc2);

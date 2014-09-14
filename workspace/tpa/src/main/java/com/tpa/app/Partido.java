@@ -39,11 +39,7 @@ public class Partido {
 
 	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo,
 			MailSender sender) {
-		this(fecha_y_hora, lugar, cupo);
 		this.mailSender = sender;
-	}
-
-	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
@@ -66,10 +62,12 @@ public class Partido {
 
 	public void Confirmar() {
 		if (!verificarCupoCompleto())
-			throw new UserException("El partido no tiene el cupo completo de jugadores");
+			throw new UserException(
+					"El partido no tiene el cupo completo de jugadores");
 
 		if (getConfirmado()) // SI ya esta confirmado, avisar
-			throw new PartidoYaConfirmadoExcepcion();;
+			throw new PartidoYaConfirmadoExcepcion();
+		;
 
 		confirmado = true;
 	}
@@ -107,12 +105,12 @@ public class Partido {
 	}
 
 	public void inscribir(Inscripcion inscripcion) {
-		if(getConfirmado())
+		if (getConfirmado())
 			throw new PartidoYaConfirmadoExcepcion();
 		this.getInscripciones().add(inscripcion);
-		// inscripcion.getJugador().avisarAmigos(this);
-		// if (this.verificarCupoCompleto())
-		// this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
+		inscripcion.getJugador().avisarAmigos(this);
+		if (this.verificarCupoCompleto())
+			this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
 	}
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador) {
@@ -126,7 +124,7 @@ public class Partido {
 	}
 
 	public void darDeBaja(Jugador jugador, String motivo) {
-		if(getConfirmado())
+		if (getConfirmado())
 			throw new PartidoYaConfirmadoExcepcion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActivo(false);
@@ -136,7 +134,7 @@ public class Partido {
 	}
 
 	public void darDeBaja(Jugador jugador, Jugador jugadorReemplaza) {
-		if(getConfirmado())
+		if (getConfirmado())
 			throw new PartidoYaConfirmadoExcepcion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActivo(false);

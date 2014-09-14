@@ -2,6 +2,7 @@ package com.tpa.app;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class ByIndex implements Divisor {
 	private ArrayList<Integer> indicesEquipoA;
@@ -46,18 +47,18 @@ public class ByIndex implements Divisor {
 
 	@Override
 	public ArrayList<Inscripcion> generarEquipoA(
-			List<Inscripcion> inscripciones) {
+			PriorityQueue<Inscripcion> inscripciones) {
 		return generarEquipoConIndices(inscripciones, this.getIndicesEquipoA());
 	}
 
 	@Override
 	public ArrayList<Inscripcion> generarEquipoB(
-			List<Inscripcion> inscripciones) {
+			PriorityQueue<Inscripcion> inscripciones) {
 		return generarEquipoConIndices(inscripciones, this.getIndicesEquipoB());
 	}
 
 	public ArrayList<Inscripcion> generarEquipoConIndices(
-			List<Inscripcion> inscripciones, ArrayList<Integer> indices) {
+			PriorityQueue<Inscripcion> inscripciones, ArrayList<Integer> indices) {
 		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
 		ArrayList<Inscripcion> inscripcionesList = new ArrayList<>();
 		inscripcionesList.addAll(inscripciones);
