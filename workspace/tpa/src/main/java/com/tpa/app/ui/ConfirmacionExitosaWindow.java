@@ -1,5 +1,7 @@
 package com.tpa.app.ui;
 
+import org.uqbar.arena.actions.MessageSend;
+import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
@@ -15,8 +17,12 @@ public class ConfirmacionExitosaWindow extends SimpleWindow<PantallaPrincipal> {
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		this.setTitle("");
-		this.setTaskDescription("\n   ConfirmaciÃ³n Exitosa !!!   \n");
+		this.setTaskDescription("\n   Confirmación Exitosa !!!   \n");
 		super.createMainTemplate(mainPanel);
+		
+		new Button(mainPanel)
+		.setCaption("OK")
+		.onClick(new MessageSend(this, "close"));
 	}
 
 	@Override

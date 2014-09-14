@@ -9,7 +9,6 @@ import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
-
 import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
 import com.tpa.app.domain.SelectorJugadores;
@@ -32,7 +31,8 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 		this.createGridActions(mainPanel);
 	}
 
-	protected void createResultsGrid(Panel mainPanel, String property, String name) {
+	protected void createResultsGrid(Panel mainPanel, String property,
+			String name) {
 		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
 		table.setHeigth(200);
 		table.setWidth(180);
@@ -42,43 +42,49 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 
 	protected void describeResultsGrid(Table<Jugador> table, String nombre) {
-		new Column<Jugador>(table)
-			.setTitle(nombre)
-			.setFixedSize(180)
-			.bindContentsToProperty("persona.nombre");
+		new Column<Jugador>(table).setTitle(nombre).setFixedSize(180)
+				.bindContentsToProperty("persona.nombre");
 	}
-	
+
 	protected void createGridActions(Panel mainPanel) {
 		Panel actionsPanel = new Panel(mainPanel);
 		actionsPanel.setLayout(new HorizontalLayout());
 
-		new Button(actionsPanel)
-			.setCaption("Confirmar")
-			.onClick(new MessageSend(this, "confirmar"))
-			.setWidth(200);
+		new Button(actionsPanel).setCaption("Confirmar")
+				.onClick(new MessageSend(this, "confirmar")).setWidth(150);
 
 		Button ver = new Button(actionsPanel);
 		ver.setCaption("Ver jugador seleccionado");
 		ver.onClick(new MessageSend(this, "ver"));
-		ver.setWidth(200);
+		ver.setWidth(150);
 
-		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
+		NotNullObservable elementSelected = new NotNullObservable(
+				"jugadorSeleccionado");
 		ver.bindEnabled(elementSelected);
+
+		Button volver = new Button(actionsPanel);
+		volver.setCaption("Volver");
+		volver.setWidth(100);
+		volver.onClick(new MessageSend(this, "close"));
 	}
-	
+
 	public void confirmar() {
-		this.getModelObject().getPartido().setConfirmado(true);
+		this.getModelObject().getPartido().Confirmar();
 		new ConfirmacionExitosaWindow(this).open();
+		this.close();
 	}
 
 	public void ver() {
-		new VerJugadorSeleccionadoWindow(this, this.getModelObject().getJugadorSeleccionado()).open();
+		new VerJugadorSeleccionadoWindow(this, this.getModelObject()
+				.getJugadorSeleccionado()).open();
 	}
 
 	@Override
-	protected void addActions(Panel mainPanel) {}
+	protected void addActions(Panel mainPanel) {
+	}
 
 	@Override
-	protected void createFormPanel(Panel mainPanel) {}
+	protected void createFormPanel(Panel mainPanel) {
+	}
 
 }
