@@ -5,16 +5,28 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mockito.Mock;
+import static org.mockito.Mockito.mock;
+
 import org.uqbar.commons.utils.Observable;
 
+import com.tpa.app.Administrador;
+import com.tpa.app.ByIndex;
 import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
+import com.tpa.app.MailSender;
 import com.tpa.app.Partido;
 import com.tpa.app.Persona;
+import com.tpa.app.PorHandicap;
+import com.tpa.app.PorPromedio;
 
 @Observable
 public class RepositorioPartidos implements Serializable {
+
+	@Mock
+	MailSender mailSenderMock;
 	
+	private Administrador administrador;
 	private List<Partido> data = new ArrayList<Partido>();
 	private static final RepositorioPartidos instance = new RepositorioPartidos();
 	public static RepositorioPartidos getInstance() {
@@ -23,7 +35,7 @@ public class RepositorioPartidos implements Serializable {
 
 	public RepositorioPartidos() {
 
-		RepositorioJugadores jugadores = new RepositorioJugadores();
+		RepositorioJugadores jugadores = RepositorioJugadores.getInstance();
 		List<Jugador> listajugadores = jugadores.getData(); 
 		
 		Jugador jugadorcecilia = this.searchJugador(listajugadores, "cecilia");
@@ -50,9 +62,18 @@ public class RepositorioPartidos implements Serializable {
 		Inscripcion insc9 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		Inscripcion insc10 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 
-		Partido partido1 = new Partido(fecha_y_hora, "Parque Patricios", 10);
-		Partido partido2 = new Partido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
-		Partido partido3 = new Partido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
+		mailSenderMock = mock(MailSender.class);
+		this.administrador = new Administrador(mailSenderMock);
+		
+		PorHandicap porHandicap = new PorHandicap();
+		PorPromedio porPromedio = new PorPromedio();
+		
+		this.administrador.agregarCriterio(porHandicap);
+		this.administrador.agregarCriterio(porPromedio);
+		
+		Partido partido1 = this.administrador.crearPartido(fecha_y_hora, "Parque Patricios", 10);
+		Partido partido2 = this.administrador.crearPartido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
+		Partido partido3 = this.administrador.crearPartido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
 
 		partido1.inscribir(insc1);
 		partido1.inscribir(insc2);
@@ -91,10 +112,33 @@ public class RepositorioPartidos implements Serializable {
 		this.create(partido2);
 		this.create(partido3);
 		
+		ArrayList<Integer> indicesEquipoA = new ArrayList<Integer>() {{add(0);add(2);add(4);add(6);add(8);}};
+		ArrayList<Integer> indicesEquipoB = new ArrayList<Integer>() {{add(1);add(3);add(5);add(7);add(9);}};
+		ArrayList<Integer> indicesEquipoA2 = new ArrayList<Integer>() {{add(1);add(4);add(5);add(8);add(9);}};
+		ArrayList<Integer> indicesEquipoB2 = new ArrayList<Integer>() {{add(0);add(2);add(3);add(6);add(7);}};
+		
+		ByIndex byIndex = new ByIndex("ParesImpares", indicesEquipoA, indicesEquipoB);
+		ByIndex byIndex2 = new ByIndex("1,4,5,8,9", indicesEquipoA2, indicesEquipoB2);
+		
+		this.administrador.agregarDivisor(byIndex);
+		this.administrador.agregarDivisor(byIndex2);
+
+	}
+	
+	// ********************************************************
+	// ** Getter
+	// ********************************************************
+		
+	public List<Partido> getData(){
+		return this.data;
+	}
+	
+	public Administrador getAdministrador(){
+		return this.administrador;
 	}
 
 	// ********************************************************
-	// ** Altas y bajas
+	// ** Altas
 	// ********************************************************
 
 	public void create(Partido partido) {
