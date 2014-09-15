@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PorCalificacion implements Criterio {
-	private String nombre = "Criterio Por Calificacion";
+	private String nombre = "Por Calificacion";
 	private int cantidadDeCalificaciones;
 
 	public PorCalificacion(int cantidadDeCalificaciones) {
