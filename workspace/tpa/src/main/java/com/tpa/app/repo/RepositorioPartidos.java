@@ -1,12 +1,13 @@
 package com.tpa.app.repo;
 
+import static org.mockito.Mockito.mock;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.mockito.Mock;
-import static org.mockito.Mockito.mock;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -16,6 +17,7 @@ import com.tpa.app.Inscripcion;
 import com.tpa.app.Jugador;
 import com.tpa.app.MailSender;
 import com.tpa.app.Partido;
+import com.tpa.app.PartidoMailSender;
 import com.tpa.app.Persona;
 import com.tpa.app.PorHandicap;
 import com.tpa.app.PorPromedio;

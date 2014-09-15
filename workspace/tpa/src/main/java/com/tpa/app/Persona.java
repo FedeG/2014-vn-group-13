@@ -70,13 +70,13 @@ public class Persona {
 	}
 
 	public void avisarAmigos(Partido partido) {
-		//this.getAmigos()
-		//	.forEach(amigo -> partido
-		//		.getMailSender()
-		//		.enviarMail(
-		//			new Mail("Se anoto tu amigo.","Te queremos avisar que tu amigo se inscribio a este partido.","", amigo.getEmail())
-		//		)
-		//	);
+		this.getAmigos()
+			.forEach(amigo -> partido
+				.getMailSender()
+				.enviarMail(
+					new Mail("Se anoto tu amigo.","Te queremos avisar que tu amigo se inscribio a este partido.","", amigo.getEmail())
+				)
+			);
 	}
 	public String getApodo() {
 		return apodo;

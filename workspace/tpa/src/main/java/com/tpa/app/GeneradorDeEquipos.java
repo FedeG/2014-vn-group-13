@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
 
+
 public class GeneradorDeEquipos {
 
 	public List<Inscripcion> ordenarJugadores(List<Criterio> list, Partido partido) {
@@ -22,14 +23,26 @@ public class GeneradorDeEquipos {
 		partido.equiposAJugar(equipoA, equipoB);
 	}
 
-	public Comparator<Inscripcion> crearComparador(List<Criterio> list, Partido partido) {
-		if(list.isEmpty()) 
-			throw new RuntimeException("No se han seleccionado criterios de ordenamiento.");
-			Comparator<Inscripcion> comparator = (i1, i2) -> {
-				OptionalDouble promedio1 = list.stream().mapToDouble(criterio->criterio.dameTuValor(i1)).average();
-				OptionalDouble promedio2 = list.stream().mapToDouble(criterio->criterio.dameTuValor(i2)).average();
-				return Double.compare(promedio2.getAsDouble(), promedio1.getAsDouble());
-			};
+	public void generarEquipos(Partido partido, List<Criterio> criterios, Divisor divisor) {
+		ordenarJugadores(criterios,	partido);
+		this.dividirEquipos(divisor, partido, partido.getInscripciones());
+	}
+
+	public Comparator<Inscripcion> crearComparador(List<Criterio> list,
+			Partido partido) {
+		if (list.isEmpty())
+			throw new RuntimeException(
+					"No se han seleccionado criterios de ordenamiento.");
+		Comparator<Inscripcion> comparator = (i1, i2) -> {
+			OptionalDouble promedio1 = list.stream()
+					.mapToDouble(criterio -> criterio.dameTuValor(i1))
+					.average();
+			OptionalDouble promedio2 = list.stream()
+					.mapToDouble(criterio -> criterio.dameTuValor(i2))
+					.average();
+			return Double.compare(promedio2.getAsDouble(),
+					promedio1.getAsDouble());
+		};
 		return comparator;
 	}
 }

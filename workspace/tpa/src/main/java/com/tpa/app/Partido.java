@@ -38,11 +38,7 @@ public class Partido {
 	}
 
 	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo, MailSender sender) {
-		this(fecha_y_hora, lugar, cupo);
 		this.mailSender = sender;
-	}
-
-	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
@@ -110,9 +106,9 @@ public class Partido {
 	public void inscribir(Inscripcion inscripcion) {
 		this.verificarConfirmacion();
 		this.getInscripciones().add(inscripcion);
-		// inscripcion.getJugador().avisarAmigos(this);
-		// if (this.verificarCupoCompleto())
-				// this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
+		inscripcion.getJugador().avisarAmigos(this);
+		if (this.verificarCupoCompleto())
+			this.notificarAdministrador("Ya hay 10 jugadores inscriptos que pueden jugar.");
 	}
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador) {

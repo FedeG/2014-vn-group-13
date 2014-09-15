@@ -11,7 +11,6 @@ import com.tpa.app.ByIndex;
 import com.tpa.app.Partido;
 import com.tpa.app.repo.RepositorioPartidos;
 
-
 @Observable
 public class BuscadorPartidos implements Serializable {
 	
