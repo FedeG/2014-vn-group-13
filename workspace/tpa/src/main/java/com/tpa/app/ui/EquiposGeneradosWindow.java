@@ -31,8 +31,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 		this.createGridActions(mainPanel);
 	}
 
-	protected void createResultsGrid(Panel mainPanel, String property,
-			String name) {
+	protected void createResultsGrid(Panel mainPanel, String property, String name) {
 		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
 		table.setHeigth(200);
 		table.setWidth(180);
@@ -42,8 +41,10 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 
 	protected void describeResultsGrid(Table<Jugador> table, String nombre) {
-		new Column<Jugador>(table).setTitle(nombre).setFixedSize(180)
-				.bindContentsToProperty("persona.nombre");
+		new Column<Jugador>(table)
+			.setTitle(nombre)
+			.setFixedSize(180)
+			.bindContentsToProperty("persona.nombre");
 	}
 
 	protected void createGridActions(Panel mainPanel) {
@@ -69,22 +70,19 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 
 	public void confirmar() {
-		this.getModelObject().getPartido().Confirmar();
+		this.getModelObject().getPartido().confirmar();
 		new ConfirmacionExitosaWindow(this).open();
 		this.close();
 	}
 
 	public void ver() {
-		new VerJugadorSeleccionadoWindow(this, this.getModelObject()
-				.getJugadorSeleccionado()).open();
+		new VerJugadorSeleccionadoWindow(this, this.getModelObject().getJugadorSeleccionado()).open();
 	}
 
 	@Override
-	protected void addActions(Panel mainPanel) {
-	}
+	protected void addActions(Panel mainPanel) {}
 
 	@Override
-	protected void createFormPanel(Panel mainPanel) {
-	}
+	protected void createFormPanel(Panel mainPanel) {}
 
 }
