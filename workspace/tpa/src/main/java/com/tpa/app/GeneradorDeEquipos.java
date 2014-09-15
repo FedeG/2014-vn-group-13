@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 
 public class GeneradorDeEquipos {
@@ -24,8 +25,8 @@ public class GeneradorDeEquipos {
 	}
 
 	public void generarEquipos(Partido partido, List<Criterio> criterios, Divisor divisor) {
-		ordenarJugadores(criterios,	partido);
-		this.dividirEquipos(divisor, partido, partido.getInscripciones());
+		this.ordenarJugadores(criterios,	partido);
+		this.dividirEquipos(divisor, partido, (List<Inscripcion>) partido.getInscripciones().stream().collect(Collectors.toList()));
 	}
 
 	public Comparator<Inscripcion> crearComparador(List<Criterio> list,

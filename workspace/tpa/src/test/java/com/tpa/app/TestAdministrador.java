@@ -1,6 +1,7 @@
 package com.tpa.app;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.mock;
 
@@ -211,7 +212,7 @@ public class TestAdministrador {
 			futbol5.inscribir(new Inscripcion(new Jugador(personaMock),
 					PrioridadesInscripciones.ESTANDAR, null));
 		}
-		admin.getGeneradorDeEquipos().dividirEquipos(byIndex, futbol5);
+		admin.getGeneradorDeEquipos().dividirEquipos(byIndex, futbol5, futbol5.getInscripciones().stream().collect(Collectors.toList()));
 		Assert.assertArrayEquals(
 				futbol5.getEquipoA().stream()
 						.map(i -> i.getJugador().getPersona().getNombre())
