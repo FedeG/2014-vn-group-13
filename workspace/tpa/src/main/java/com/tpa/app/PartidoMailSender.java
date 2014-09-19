@@ -1,6 +1,6 @@
 package com.tpa.app;
 
-public class PartidoMailSender implements MailSender {
+public class PartidoMailSender extends MailSender {
 	private String remitente;
 	private String prefijoDelAsunto;
 

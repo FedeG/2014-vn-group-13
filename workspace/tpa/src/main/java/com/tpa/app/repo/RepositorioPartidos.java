@@ -1,6 +1,6 @@
 package com.tpa.app.repo;
 
-import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.mock;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,14 +25,15 @@ import com.tpa.app.PorPromedio;
 @Observable
 public class RepositorioPartidos implements Serializable {
 
-	@Mock
-	MailSender mailSenderMock;
+	//@Mock
+	//MailSender mailSenderMock;
 	
 	private Administrador administrador;
 	private List<Partido> data = new ArrayList<Partido>();
 	private static final RepositorioPartidos instance = new RepositorioPartidos();
 	public static RepositorioPartidos getInstance() {
-	    return instance;
+	    //if (instance == null) instance = new RepositorioPartidos();
+		return instance;
 	}
 
 	public RepositorioPartidos() {
@@ -64,15 +65,14 @@ public class RepositorioPartidos implements Serializable {
 		Inscripcion insc9 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		Inscripcion insc10 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 
-		mailSenderMock = mock(MailSender.class);
-		this.administrador = new Administrador(mailSenderMock);
+		//mailSenderMock = mock(MailSender.class);
+		this.administrador = new Administrador(new PartidoMailSender());
 		
 		PorHandicap porHandicap = new PorHandicap();
 		PorPromedio porPromedio = new PorPromedio();
 		
 		this.administrador.agregarCriterio(porHandicap);
 		this.administrador.agregarCriterio(porPromedio);
-		
 		Partido partido1 = this.administrador.crearPartido(fecha_y_hora, "Parque Patricios", 10);
 		Partido partido2 = this.administrador.crearPartido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
 		Partido partido3 = this.administrador.crearPartido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);

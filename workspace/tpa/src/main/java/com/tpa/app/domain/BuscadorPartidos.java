@@ -20,7 +20,8 @@ public class BuscadorPartidos implements Serializable {
 	private Administrador administrador;
 	
 	public BuscadorPartidos() {
-		this.administrador = RepositorioPartidos.getInstance().getAdministrador();
+		RepositorioPartidos repo = RepositorioPartidos.getInstance();
+		this.administrador = repo.getAdministrador();
 	}
 	
 	public Partido getPartidoSeleccionado() {
