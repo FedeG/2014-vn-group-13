@@ -3,16 +3,29 @@ package com.tpa.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.uqbar.commons.utils.Observable;
+
+
+@Observable
 public class Jugador {
 
 	private List<Infraccion> infracciones;
 	private Persona persona;
 	private List<Partido> partidosJugados;
+	private Double handicap;
 
 	public Jugador(Persona persona) {
 		this.infracciones = new ArrayList<Infraccion>();
 		this.partidosJugados = new ArrayList<Partido>();
 		this.persona = persona;
+		this.handicap = 0.0;
+	}
+	
+	public Jugador(Persona persona, Double handicap) {
+		this.infracciones = new ArrayList<Infraccion>();
+		this.partidosJugados = new ArrayList<Partido>();
+		this.persona = persona;
+		this.handicap = handicap;
 	}
 
 	public List<Infraccion> getInfracciones() {
@@ -23,8 +36,7 @@ public class Jugador {
 		getInfracciones().add(infraccion);
 	}
 
-	public void proponer(Persona persona, Partido partido, Administrador admin,
-			Inscripcion.PrioridadesInscripciones modalidad) {
+	public void proponer(Persona persona, Partido partido, Administrador admin, Inscripcion.PrioridadesInscripciones modalidad) {
 		Propuesta propuesta = new Propuesta(persona, modalidad, partido);
 		admin.agregarPropuesta(propuesta);
 	}
@@ -42,6 +54,16 @@ public class Jugador {
 	}
 
 	public void agregarPartidoJugado(Partido partidoJugado) {
-		this.getPartidosJugados().add(0, partidoJugado); //El ultimo partido jugado va a estar siempre al princio JOJO
+		this.getPartidosJugados().add(0, partidoJugado);
 	}
+
+	public Double getHandicap() {
+		return handicap;
+	}
+
+	public void setHandicap(Double handicap) {
+		this.handicap = handicap;
+	}
+	
+	
 }

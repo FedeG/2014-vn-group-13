@@ -1,6 +1,7 @@
 package com.tpa.app;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class ByIndex implements Divisor {
@@ -8,14 +9,12 @@ public class ByIndex implements Divisor {
 	private ArrayList<Integer> indicesEquipoB;
 	private String nombre = "Divisor por Index";
 
-	public ByIndex(ArrayList<Integer> indicesEquipoA,
-			ArrayList<Integer> indicesEquipoB) {
+	public ByIndex(ArrayList<Integer> indicesEquipoA, ArrayList<Integer> indicesEquipoB) {
 		this.setIndicesEquipoA(indicesEquipoA);
 		this.setIndicesEquipoB(indicesEquipoB);
 	}
 
-	public ByIndex(String nombre, ArrayList<Integer> indicesEquipoA,
-			ArrayList<Integer> indicesEquipoB) {
+	public ByIndex(String nombre, ArrayList<Integer> indicesEquipoA, ArrayList<Integer> indicesEquipoB) {
 		this(indicesEquipoA, indicesEquipoB);
 		this.setNombre(nombre);
 	}
@@ -45,19 +44,16 @@ public class ByIndex implements Divisor {
 	}
 
 	@Override
-	public ArrayList<Inscripcion> generarEquipoA(
-			PriorityQueue<Inscripcion> inscripciones) {
+	public ArrayList<Inscripcion> generarEquipoA(List<Inscripcion> inscripciones) {
 		return generarEquipoConIndices(inscripciones, this.getIndicesEquipoA());
 	}
 
 	@Override
-	public ArrayList<Inscripcion> generarEquipoB(
-			PriorityQueue<Inscripcion> inscripciones) {
+	public ArrayList<Inscripcion> generarEquipoB(List<Inscripcion> inscripciones) {
 		return generarEquipoConIndices(inscripciones, this.getIndicesEquipoB());
 	}
 
-	public ArrayList<Inscripcion> generarEquipoConIndices(
-			PriorityQueue<Inscripcion> inscripciones, ArrayList<Integer> indices) {
+	public ArrayList<Inscripcion> generarEquipoConIndices(List<Inscripcion> inscripciones, ArrayList<Integer> indices) {
 		ArrayList<Inscripcion> retorno = new ArrayList<Inscripcion>();
 		ArrayList<Inscripcion> inscripcionesList = new ArrayList<>();
 		inscripcionesList.addAll(inscripciones);

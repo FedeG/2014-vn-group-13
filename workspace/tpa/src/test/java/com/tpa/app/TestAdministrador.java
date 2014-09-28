@@ -1,6 +1,7 @@
 package com.tpa.app;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.mock;
 
@@ -19,7 +20,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-@SuppressWarnings("restriction")
 public class TestAdministrador {
 
 	private Administrador admin;
@@ -48,28 +48,21 @@ public class TestAdministrador {
 		inscripcionJ1 = new Inscripcion(jugadorConJuego1,
 				PrioridadesInscripciones.ESTANDAR, null);
 		partido.inscribir(inscripcionJ1);
+		jugadorConJuego1.setHandicap(1.0);
 
 		jugadorConJuego2 = new Jugador(new Persona(null, "cecilia"));
 		inscripcionJ2 = new Inscripcion(jugadorConJuego2,
 				PrioridadesInscripciones.ESTANDAR, null);
 		partido.inscribir(inscripcionJ2);
-
+		jugadorConJuego2.setHandicap(2.0);
+		
 		jugadorConJuego3 = new Jugador(new Persona(null, "mauro"));
 		inscripcionJ3 = new Inscripcion(jugadorConJuego3,
 				PrioridadesInscripciones.ESTANDAR, null);
 		partido.inscribir(inscripcionJ3);
+		jugadorConJuego3.setHandicap(3.0);
 
-		ArrayList<Pair<Jugador, Integer>> valores = new ArrayList<Pair<Jugador, Integer>>();
-		Pair<Jugador, Integer> par1 = new Pair<Jugador, Integer>(
-				jugadorConJuego1, 1);
-		Pair<Jugador, Integer> par2 = new Pair<Jugador, Integer>(
-				jugadorConJuego2, 2);
-		Pair<Jugador, Integer> par3 = new Pair<Jugador, Integer>(
-				jugadorConJuego3, 3);
-		valores.add(par1);
-		valores.add(par2);
-		valores.add(par3);
-		porHandicap = new PorHandicap(valores);
+		porHandicap = new PorHandicap();
 		porPromedio = new PorPromedio();
 		//-------------------------------------------------------------/
 		partido.calificar(jugadorConJuego2, jugadorConJuego1, 9, "");
@@ -219,7 +212,7 @@ public class TestAdministrador {
 			futbol5.inscribir(new Inscripcion(new Jugador(personaMock),
 					PrioridadesInscripciones.ESTANDAR, null));
 		}
-		admin.getGeneradorDeEquipos().dividirEquipos(byIndex, futbol5);
+		admin.getGeneradorDeEquipos().dividirEquipos(byIndex, futbol5, futbol5.getInscripciones().stream().collect(Collectors.toList()));
 		Assert.assertArrayEquals(
 				futbol5.getEquipoA().stream()
 						.map(i -> i.getJugador().getPersona().getNombre())

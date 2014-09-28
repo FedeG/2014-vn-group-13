@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
+import org.uqbar.commons.utils.Observable;
+
+@Observable
 public class Administrador {
 	private Collection<Partido> partidos;
 	private MailSender mailSender;
@@ -27,10 +30,8 @@ public class Administrador {
 		return this.partidos;
 	}
 
-	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar,
-			int cupo) {
-		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo,
-				this.mailSender);
+	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
+		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo, this.mailSender);
 		this.partidos.add(partidoNuevo);
 		return partidoNuevo;
 	}
@@ -40,16 +41,14 @@ public class Administrador {
 				.getInscripciones()
 				.stream()
 				.limit(5)
-				.collect(
-						Collectors
-								.toCollection(() -> new ArrayList<Inscripcion>()));
+				.collect(Collectors.toCollection(() -> new ArrayList<Inscripcion>()));
+		
 		List<Inscripcion> equipoB = partido
 				.getInscripciones()
 				.stream()
 				.skip(5)
-				.collect(
-						Collectors
-								.toCollection(() -> new ArrayList<Inscripcion>()));
+				.collect(Collectors.toCollection(() -> new ArrayList<Inscripcion>()));
+
 		partido.equiposAJugar(equipoA, equipoB);
 	}
 

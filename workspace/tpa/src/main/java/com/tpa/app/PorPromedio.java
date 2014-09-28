@@ -3,7 +3,7 @@ package com.tpa.app;
 import java.util.List;
 
 public class PorPromedio implements Criterio {
-	private String nombre = "Promedio de calificaciones del ultimo partido jugado";
+	private String nombre = "Por Promedio"; // Promedio de calificaciones del ultimo partido jugado
 
 	public String getNombre() {
 		return nombre;
