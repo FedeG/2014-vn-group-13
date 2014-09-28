@@ -1,0 +1,24 @@
+El pom.xml está mal configurado, dice build success pero no compila nada ni tampoco puedo correr los tests porque no está configurada ninguna carpeta para que compile
+
+Está muy mal que pregunta tenga todos atributos públicos y ningún comportamiento.
+
+El diseño actual no permite especificar si las preguntas son multiple choice verdadero false o pregunta concreata.
+
+La clase Roboprof no me dice nada, entiendo que ahí pusieron los criterios de correción, pero los nombres son importantes. Además la tabla de notas está fija ahí y con esos valores, eso no está bien.
+Con respecto al nombre de la variable le pusieron notas... lo cual me costó entender que era la tabla de notas. Los nombres son importantes, tomen los conceptos de los enunciados, las ideas, los objetos están ahí, acuerdense cuando hablé de Domain Driven Design, que es eso...? El dominio nos guia para diseñar, en este caso el enunciado del tp, y yo tengo que abrir los ojos ante cada concepto que aparezca para poder reflejarlo en el código, en el día a día de laburo es igual si el cliente me habla de factura de acá factura de allá, no voy a crear un objeto que sea ComprobanteDePago, voy a hacer uno que sea Factura, asi hablamos el mismo idioma y estamos en sintonía.
+
+Ahora sobre las justificaciones
+
+"- NO se tuvo en cuenta los diferentes tipos de respuesta porque considerando los límites del escenario planteado no fue necesario. De cada una de las respuestas no interesaba saber cuál era su tipo si no solamente si era correcta o no"
+
+Cuales eran los limites del escenario? Eso fue invento suyo... se pedía claramente que puedan corregir los diferentes tipos de preguntas y el diseño no lo abarca
+
+"- Se consideró que el profesor puede agregar preguntas únicas una sóla vez y repetirlas para distintos parciales. A su vez, se podría implementar un método de corrección masiva donde se corrijan todos los parciales que contiene la colección de roboprof."
+
+El nombre roboprof no me dice nada, arriba aclare varias cosas sobre los nombres
+
+"- El diseño es simple y cohesivo porque delega de forma correcta responsabilidades. La clase item determina si está correcto el punto del parcial, la clase parcial (que contiene a todos los items) determina el puntaje total obtenido, y , por último, el roboprof es el que corrige según la información obtenida a través del parcial. Lo contrario de esto sería, por ejemplo, que la clase roboprof realice todo el trabajo sin ningún tipo de discriminación o delegación de  responsabilidades."
+
+Les parece cohesivo que el objeto pregunta no tenga ningún comportamiento ?
+
+En el parcial los métodos puntajeTotal y puntaje alumno son muy parecidos. Investiguen los streams de java 8 para resolver esto adecuadamente.
