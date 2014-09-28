@@ -2,9 +2,7 @@ package com.tpa.app.repo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
@@ -15,7 +13,6 @@ import com.tpa.app.Jugador;
 import com.tpa.app.Partido;
 import com.tpa.app.PartidoMailSender;
 import com.tpa.app.Persona;
-import com.tpa.app.ui.PromedioTransformer;
 
 @Observable
 public class RepositorioJugadores implements Serializable {
@@ -160,51 +157,10 @@ public class RepositorioJugadores implements Serializable {
 	// ** Búsquedas
 	// ********************************************************
 	
-	public List<Jugador> search(JugadorSearchParameter datosBusqueda) {
-		
+	public List<Jugador> search(BusquedaMultiple filtros) {
 		List<Jugador> resultados = new ArrayList<Jugador>();
-		PromedioTransformer promedioTrans = new PromedioTransformer();
-
-		for (Jugador jugador : this.data) {
-			if(startsWith(datosBusqueda.getComienzaCon(), jugador.getPersona().getNombre()) 
-			   && match(datosBusqueda.getContiene(), jugador.getPersona().getApodo()) 
-			   && esMayorOIgual(datosBusqueda.getHandicapDesde(), jugador.getHandicap()) 
-			   && esMenorOIgual(datosBusqueda.getHandicapHasta(), jugador.getHandicap())
-			   && esMayorOIgual(datosBusqueda.getPromedioDesde(), promedioTrans.transform(jugador))
-			   && esMenorOIgual(datosBusqueda.getPromedioHasta(), promedioTrans.transform(jugador))
-			   && compararBooleanoConListaVacia(datosBusqueda.getTuvoInfraccion(), jugador.getInfracciones())
-			   && esMenorFecha(jugador.getPersona().getFechaNac(), datosBusqueda.getAntesDe())
-			   ) resultados.add(jugador);
-			}
+		for (Jugador jugador : this.data) 
+			if (filtros.evaluarJugador(jugador)) resultados.add(jugador);
 		return resultados;
-	}
-
-	private boolean esMenorFecha(LocalDateTime ldt, Date fechaTope) {
-		if (fechaTope == null) return true;
-		Date fecha = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
-		return fecha.before(fechaTope);
-	}
-
-	private boolean compararBooleanoConListaVacia(String SiNo, List<?> lista) {
-		if (SiNo.equals("Indistinto")) return true;
-		return SiNo.equals("No") == lista.isEmpty();
-	}
-
-	private boolean esMenorOIgual(Double tope, Double valor) {
-		return tope == null || valor <= tope;
-	}
-
-	private boolean esMayorOIgual(Double base, Double valor) {
-		return base == null || valor >= base;
-	}
-
-	protected boolean startsWith(String iniciales, String nombre){
-		if (iniciales == null) return true;
-		if (iniciales.length() > nombre.length()) return false;
-		return match(iniciales, nombre.substring(0, iniciales.length()));
-	}
-	
-	protected boolean match(Object expectedValue, Object realValue) {
-		return expectedValue == null || realValue.toString().toLowerCase().contains(expectedValue.toString().toLowerCase());
 	}
 }

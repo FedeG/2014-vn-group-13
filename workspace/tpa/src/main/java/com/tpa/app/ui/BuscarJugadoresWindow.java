@@ -23,6 +23,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 
 	public BuscarJugadoresWindow(WindowOwner parent) {
 		super(parent, new BuscadorJugadores());
+		this.getModelObject().borrarBusqueda();
 		this.getModelObject().search();
 	}
 	
@@ -85,7 +86,6 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		borrar.setCaption("Borrar campos busqueda");
 		borrar.setWidth(200);
 		borrar.onClick(new MessageSend(getModelObject(), "borrarBusqueda"));
-		borrar.disableOnError();
 		
 		Button volver = new Button(botonera);
 		volver.setCaption("Volver");
@@ -102,31 +102,30 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		opcionesDeBusqueda.setLayout(new ColumnLayout(4));
 		
 		new Label(opcionesDeBusqueda).setText("Nombre comienza con:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.comienzaCon");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("comienzaCon");
 		new Label(opcionesDeBusqueda).setText("Apodo contiene:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.contiene");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("apodoContiene");
 		
 		new Label(opcionesDeBusqueda).setText("Handicap desde:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.handicapDesde");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("handicapDesde");
 		new Label(opcionesDeBusqueda).setText("Handicap hasta:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.handicapHasta");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("handicapHasta");
 
 		new Label(opcionesDeBusqueda).setText("Promedio desde:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.promedioDesde");;
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("promedioDesde");;
 		new Label(opcionesDeBusqueda).setText("Promedio hasta:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.promedioHasta");;
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("promedioHasta");;
 		
 		new Label(opcionesDeBusqueda).setText("Tuvo infraccion:");
 		new RadioSelector<String>(opcionesDeBusqueda).setContents(Arrays.asList("Si","No","Indistinto"), "infraccion")
-		.bindValueToProperty("jugadorSearchParameter.tuvoInfraccion");
+		.bindValueToProperty("opcionInfraccion");
 		new Label(opcionesDeBusqueda).setText("Fecha nacimiento anterior a:");
-		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("jugadorSearchParameter.antesDe");
+		new TextBox(opcionesDeBusqueda).setWidth(80).bindValueToProperty("fechaTope");
 		
 		new Button(mainPanel)
 		.setCaption("Buscar")
 		.onClick(new MessageSend(this.getModelObject(), "search"))
-		.disableOnError();
-		
+		.disableOnError();	
 	}
 
 	@Override
