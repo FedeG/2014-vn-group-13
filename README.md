@@ -70,6 +70,13 @@ Diagrama de clases:
 
 ![Diagrama](https://github.com/dds-utn/2014-vn-group-13/blob/master/DiagramaDeClases.jpg "Diagrama")
 
+
+DER:
+----
+
+![DER](http://www.gliffy.com/go/publish/image/6234591/L.png "DER")
+
+
 Casos de uso:
 ----------------
 
