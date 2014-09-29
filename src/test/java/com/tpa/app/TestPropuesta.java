@@ -3,14 +3,20 @@ package com.tpa.app;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.mockito.Mockito.mock;
 
 import java.time.LocalDateTime;
 
 import org.mockito.Mock;
 
-import com.tpa.app.Inscripcion.PrioridadesInscripciones;
-import com.tpa.app.Propuesta.EstadoPropuesta;
+import com.tpa.app.model.Administrador;
+import com.tpa.app.model.MailSender;
+import com.tpa.app.model.Partido;
+import com.tpa.app.model.Persona;
+import com.tpa.app.model.Propuesta;
+import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
+import com.tpa.app.model.Propuesta.EstadoPropuesta;
 
 public class TestPropuesta {
 

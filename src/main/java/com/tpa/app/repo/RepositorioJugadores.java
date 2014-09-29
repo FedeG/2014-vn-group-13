@@ -7,12 +7,13 @@ import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
 
-import com.tpa.app.Infraccion;
-import com.tpa.app.Inscripcion;
-import com.tpa.app.Jugador;
-import com.tpa.app.Partido;
-import com.tpa.app.PartidoMailSender;
-import com.tpa.app.Persona;
+import com.tpa.app.model.Infraccion;
+import com.tpa.app.model.Inscripcion;
+import com.tpa.app.model.Jugador;
+import com.tpa.app.model.Partido;
+import com.tpa.app.model.PartidoMailSender;
+import com.tpa.app.model.Persona;
+import com.tpa.app.viewModel.BusquedaMultiple;
 
 @Observable
 public class RepositorioJugadores implements Serializable {

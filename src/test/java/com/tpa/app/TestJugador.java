@@ -13,7 +13,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import com.tpa.app.Inscripcion.PrioridadesInscripciones;
+import com.tpa.app.model.Administrador;
+import com.tpa.app.model.Inscripcion;
+import com.tpa.app.model.Jugador;
+import com.tpa.app.model.Mail;
+import com.tpa.app.model.MailSender;
+import com.tpa.app.model.Partido;
+import com.tpa.app.model.Persona;
+import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 
 public class TestJugador {
 
