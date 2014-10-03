@@ -1,10 +1,12 @@
 package com.tpa.app.view;
 
 
+import java.awt.Color;
 import java.util.Arrays;
 
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
+import org.uqbar.arena.bindings.Transformer;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -32,10 +34,6 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		
-		/* Desde ya esto es un code smell Long Method, pero hay que admitir
-		 * que hace a la instanciacion de la ventana mucho mas entendible y amigable
-		 */
-		
 		this.setTitle("Buscar Jugadores");
 		mainPanel.setLayout(new VerticalLayout());
 		super.createMainTemplate(mainPanel);
@@ -45,34 +43,7 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		crearPanelDeBusqueda(mainPanel);
 
 		/* Create Grid */
-		
-		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
-		table.setHeigth(200);
-		table.setWidth(600);
-		table.bindItemsToProperty("resultados");
-		table.bindValueToProperty("jugadorSeleccionado");
-		
-		/* Grid Description */
-		
-		new Column<Jugador>(table)
-			.setTitle("Nombre")
-			.setFixedSize(225)
-			.bindContentsToProperty("persona.nombre");
-
-		new Column<Jugador>(table)
-			.setTitle("Apodo")
-			.setFixedSize(225)
-			.bindContentsToProperty("persona.apodo");
-
-		new Column<Jugador>(table)
-			.setTitle("Handicap")
-			.setFixedSize(75)
-			.bindContentsToProperty("handicap");
-	
-		new Column<Jugador>(table)
-			.setTitle("Promedio")
-			.setFixedSize(75)
-			.bindContentsToTransformer(new PromedioTransformer());
+		createResultsGrid(mainPanel);
 		
 		/* Grid Actions */
 		
@@ -97,6 +68,35 @@ public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 		//Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
 		NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
 		verJugador.bindEnabled(elementSelected);
+	}
+	protected void createResultsGrid(Panel mainPanel) {
+		Table<Jugador> table = new Table<Jugador>(mainPanel, Jugador.class);
+		table.setHeigth(200);
+		table.setWidth(600);
+		table.bindItemsToProperty("resultados");
+		table.bindValueToProperty("jugadorSeleccionado");
+		
+		/* Grid Description */
+		describeResultsGrid(table, "Nombre", "persona.nombre", 225);
+		describeResultsGrid(table, "Apodo", "persona.apodo", 225);
+		describeResultsGrid(table, "Handicap", "handicap", 75);
+		describeResultsGrid(table, "Promedio", 75).bindContentsToTransformer(new PromedioTransformer());
+	}
+	protected Column<Jugador> describeResultsGrid(Table<Jugador> table, String nombre, int fixedSize) {
+		return new Column<Jugador>(table)
+			.setTitle(nombre)
+			.setFixedSize(fixedSize)
+			.bindBackground("handicap", new com.uqbar.commons.collections.Transformer<Double, Color>() {
+					@Override
+					public Color transform(Double handicap) {
+						return  (handicap > 8 ? Color.BLUE : Color.WHITE);
+					}
+				} 		
+			);
+	}
+	protected void describeResultsGrid(Table<Jugador> table, String nombre, String property, int fixedSize) {
+		describeResultsGrid(table, nombre, fixedSize)
+			.bindContentsToProperty(property);
 	}
 	protected void crearPanelDeBusqueda(Panel mainPanel)
 	{

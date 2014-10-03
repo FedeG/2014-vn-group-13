@@ -3,9 +3,7 @@ package com.tpa.app.viewModel;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import org.uqbar.commons.utils.Observable;
-
 import com.tpa.app.model.Jugador;
 import com.tpa.app.repo.RepositorioJugadores;
 
