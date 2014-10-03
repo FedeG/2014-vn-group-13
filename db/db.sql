@@ -1,12 +1,12 @@
 /* CREACION DE LAS TABLAS */
 
-CREATE SCHEMA futbol2;
+CREATE SCHEMA futbol;
 
-CREATE TYPE futbol2.modalidad AS ENUM
+CREATE TYPE futbol.modalidad AS ENUM
   ('ESTANDAR', 'SOLIDARIO', 'CONDICIONAL');
 
 
-CREATE TABLE futbol2.PERSONA (
+CREATE TABLE futbol.PERSONA (
   persona_id  serial NOT NULL,
   nombre      varchar(50) NOT NULL,
   email       varchar(50) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE futbol2.PERSONA (
 );
 
 
-CREATE TABLE futbol2.JUGADOR (
+CREATE TABLE futbol.JUGADOR (
   jugador_id  serial NOT NULL,
   persona_id  integer NOT NULL,
   handicap    double precision NOT NULL,
@@ -28,11 +28,11 @@ CREATE TABLE futbol2.JUGADOR (
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (persona_id)
-    REFERENCES futbol2.PERSONA(persona_id)
+    REFERENCES futbol.PERSONA(persona_id)
 );
 
 
-CREATE TABLE futbol2.ADMINISTRADOR (
+CREATE TABLE futbol.ADMINISTRADOR (
   administrador_id  serial NOT NULL,
   persona_id        integer NOT NULL,
   /* Keys */
@@ -41,10 +41,10 @@ CREATE TABLE futbol2.ADMINISTRADOR (
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (persona_id)
-    REFERENCES futbol2.PERSONA(persona_id)
+    REFERENCES futbol.PERSONA(persona_id)
 );
 
-CREATE TABLE futbol2.PARTIDO (
+CREATE TABLE futbol.PARTIDO (
   partido_id        serial NOT NULL,
   administrador_id  integer NOT NULL,
   cupo              integer NOT NULL DEFAULT 10,
@@ -57,10 +57,10 @@ CREATE TABLE futbol2.PARTIDO (
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (administrador_id)
-    REFERENCES futbol2.ADMINISTRADOR(administrador_id)
+    REFERENCES futbol.ADMINISTRADOR(administrador_id)
 );
 
-CREATE TABLE futbol2.AMIGOS_X_PERSONA (
+CREATE TABLE futbol.AMIGOS_X_PERSONA (
   persona_id  integer NOT NULL,
   amigo_id    integer NOT NULL,
   /* Keys */
@@ -69,34 +69,37 @@ CREATE TABLE futbol2.AMIGOS_X_PERSONA (
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (persona_id)
-    REFERENCES futbol2.PERSONA(persona_id), 
+    REFERENCES futbol.PERSONA(persona_id), 
   CONSTRAINT Foreign_key02
     FOREIGN KEY (amigo_id)
-    REFERENCES futbol2.PERSONA(persona_id)
+    REFERENCES futbol.PERSONA(persona_id)
 );
 
-CREATE TABLE futbol2.CALIFICACION (
+CREATE TABLE futbol.CALIFICACION (
   jugador_calificado_id  integer NOT NULL,
   partido_id             integer NOT NULL,
   jugador_califica_id    integer NOT NULL,
   critica                varchar(70) NOT NULL,
   nota                   integer NOT NULL,
   /* Keys */
-  CONSTRAINT CALIFICACION_pkey
+  CONSTRAINT calificacion_pkey
     PRIMARY KEY (jugador_calificado_id, partido_id, jugador_califica_id),
+  /* Checks */
+  CONSTRAINT Check01
+    CHECK (nota = ANY (ARRAY[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])),
   /* Foreign keys */
-  CONSTRAINT Foreign_key01
+  CONSTRAINT foreign_key01
     FOREIGN KEY (jugador_calificado_id)
-    REFERENCES futbol2.JUGADOR(jugador_id), 
-  CONSTRAINT Foreign_key02
+    REFERENCES futbol.jugador(jugador_id), 
+  CONSTRAINT foreign_key02
     FOREIGN KEY (partido_id)
-    REFERENCES futbol2.PARTIDO(partido_id), 
-  CONSTRAINT Foreign_key03
+    REFERENCES futbol.partido(partido_id), 
+  CONSTRAINT foreign_key03
     FOREIGN KEY (jugador_califica_id)
-    REFERENCES futbol2.JUGADOR(jugador_id)
+    REFERENCES futbol.jugador(jugador_id)
 );
 
-CREATE TABLE futbol2.INFRACCION (
+CREATE TABLE futbol.INFRACCION (
   infraccion_id  serial NOT NULL,
   motivo         varchar(70) NOT NULL,
   momento        timestamp WITHOUT TIME ZONE NOT NULL,
@@ -108,32 +111,32 @@ CREATE TABLE futbol2.INFRACCION (
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (jugador_id)
-    REFERENCES futbol2.JUGADOR(jugador_id), 
+    REFERENCES futbol.JUGADOR(jugador_id), 
   CONSTRAINT Foreign_key02
     FOREIGN KEY (partido_id)
-    REFERENCES futbol2.PARTIDO(partido_id)
+    REFERENCES futbol.PARTIDO(partido_id)
 );
 
-CREATE TABLE futbol2.INSCRIPCION (
+CREATE TABLE futbol.INSCRIPCION (
   inscripcion_id       serial NOT NULL PRIMARY KEY,
   jugador_id           integer NOT NULL,
   estado               boolean NOT NULL DEFAULT true,
   partido_id           integer NOT NULL,
-  modalidad            futbol2.modalidad NOT NULL DEFAULT 'ESTANDAR',
+  modalidad            futbol.modalidad NOT NULL DEFAULT 'ESTANDAR',
   jugador_remplazo_id  integer,
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (jugador_id)
-    REFERENCES futbol2.JUGADOR(jugador_id), 
+    REFERENCES futbol.JUGADOR(jugador_id), 
   CONSTRAINT Foreign_key02
     FOREIGN KEY (partido_id)
-    REFERENCES futbol2.PARTIDO(partido_id), 
+    REFERENCES futbol.PARTIDO(partido_id), 
   CONSTRAINT Foreign_key03
     FOREIGN KEY (jugador_remplazo_id)
-    REFERENCES futbol2.JUGADOR(jugador_id)
+    REFERENCES futbol.JUGADOR(jugador_id)
 );
 
-CREATE TABLE futbol2.INSCRIPCION_X_PARTIDO (
+CREATE TABLE futbol.INSCRIPCION_X_PARTIDO (
   inscripcion_id  integer NOT NULL,
   partido_id      integer NOT NULL,
   equipo          integer NOT NULL,
@@ -146,15 +149,15 @@ CREATE TABLE futbol2.INSCRIPCION_X_PARTIDO (
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (inscripcion_id)
-    REFERENCES futbol2.INSCRIPCION(inscripcion_id), 
+    REFERENCES futbol.INSCRIPCION(inscripcion_id), 
   CONSTRAINT Foreign_key02
     FOREIGN KEY (partido_id)
-    REFERENCES futbol2.PARTIDO(partido_id)
+    REFERENCES futbol.PARTIDO(partido_id)
 );
 
 /* CARGA DE DATOS */
 
-INSERT INTO futbol2.PERSONA (persona_id, nombre, email, apodo, fecha_nac) VALUES
+INSERT INTO futbol.PERSONA (persona_id, nombre, email, apodo, fecha_nac) VALUES
   (1, 'Cecilia', 'chechu@gmail.com', 'chechu', '1982-07-29'),
   (2, 'Federico', 'fede tux@hotmail.com', 'fede tux', '1988-04-15'),
   (3, 'Pablo', 'baby on board@yahoo.com', 'baby on board', '1968-11-03'),
@@ -185,7 +188,7 @@ INSERT INTO futbol2.PERSONA (persona_id, nombre, email, apodo, fecha_nac) VALUES
   (28, 'Ignacio', 'nacho@hotmail.com', 'nacho', '1988-04-01'),
   (29, 'Pedro', 'pepe@gmail.com', 'pepe', '1985-04-04'),
   (30, 'Tomas', 'tomi@hotmail.com', 'tomi', '1963-03-28');
-INSERT INTO futbol2.JUGADOR (jugador_id, persona_id, handicap) VALUES
+INSERT INTO futbol.JUGADOR (jugador_id, persona_id, handicap) VALUES
   (1, 5, 10),
   (2, 2, 9),
   (3, 10, 8),
@@ -211,9 +214,9 @@ INSERT INTO futbol2.JUGADOR (jugador_id, persona_id, handicap) VALUES
   (23, 20, 0),
   (24, 24, 1),
   (25, 28, 2);
-INSERT INTO futbol2.ADMINISTRADOR (administrador_id, persona_id) VALUES
+INSERT INTO futbol.ADMINISTRADOR (administrador_id, persona_id) VALUES
   (1, 30);
-INSERT INTO futbol2.AMIGOS_X_PERSONA (persona_id, amigo_id) VALUES
+INSERT INTO futbol.AMIGOS_X_PERSONA (persona_id, amigo_id) VALUES
   (1, 2),
   (1, 3),
   (1, 4),
@@ -234,14 +237,14 @@ INSERT INTO futbol2.AMIGOS_X_PERSONA (persona_id, amigo_id) VALUES
   (2, 7),
   (2, 8),
   (3, 30);
-INSERT INTO futbol2.PARTIDO (partido_id, administrador_id, cupo, fecha_hora, lugar, confirmado) VALUES
+INSERT INTO futbol.PARTIDO (partido_id, administrador_id, cupo, fecha_hora, lugar, confirmado) VALUES
   (1, 1, 10, '2014-09-26 09:00:00', 'Lugano', true),
   (2, 1, 10, '2014-11-15 00:00:00', 'Villa Crespo', true),
   (3, 1, 10, '2015-02-03 00:00:00', 'Barracas', false),
   (4, 1, 10, '2014-12-28 00:00:00', 'Adrogué', false),
   (5, 1, 10, '2014-10-12 00:00:00', 'Flores', false),
   (6, 1, 10, '2015-08-15 00:00:00', 'Palermo', false);
-INSERT INTO futbol2.INSCRIPCION (inscripcion_id, jugador_id, estado, partido_id, jugador_remplazo_id) VALUES
+INSERT INTO futbol.INSCRIPCION (inscripcion_id, jugador_id, estado, partido_id, jugador_remplazo_id) VALUES
   (2, 2, true, 1, null),
   (3, 3, true, 1, null),
   (4, 4, true, 1, null),
@@ -252,7 +255,7 @@ INSERT INTO futbol2.INSCRIPCION (inscripcion_id, jugador_id, estado, partido_id,
   (9, 9, true, 1, null),
   (10, 10, true, 1, null),
   (1, 1, true, 1, null);
-INSERT INTO futbol2.INSCRIPCION_X_PARTIDO (inscripcion_id, partido_id, equipo) VALUES
+INSERT INTO futbol.INSCRIPCION_X_PARTIDO (inscripcion_id, partido_id, equipo) VALUES
   (1, 1, 1),
   (2, 1, 1),
   (3, 1, 1),
@@ -263,7 +266,7 @@ INSERT INTO futbol2.INSCRIPCION_X_PARTIDO (inscripcion_id, partido_id, equipo) V
   (8, 1, 2),
   (9, 1, 2),
   (10, 1, 2);
-INSERT INTO futbol2.CALIFICACION (jugador_calificado_id, partido_id, jugador_califica_id, critica, nota) VALUES
+INSERT INTO futbol.CALIFICACION (jugador_calificado_id, partido_id, jugador_califica_id, critica, nota) VALUES
   (2, 1, 1, 'mal', 3),
   (3, 1, 1, 'mal', 1),
   (4, 1, 1, 'bien', 8),
@@ -295,7 +298,7 @@ INSERT INTO futbol2.CALIFICACION (jugador_calificado_id, partido_id, jugador_cal
   (8, 1, 5, 'mal', 4),
   (9, 1, 5, 'bien', 10),
   (10, 1, 5, 'mal', 4);
-INSERT INTO futbol2.INFRACCION (infraccion_id, motivo, momento, jugador_id, partido_id) VALUES
+INSERT INTO futbol.INFRACCION (infraccion_id, motivo, momento, jugador_id, partido_id) VALUES
   (1, 'mala', '2014-09-26 09:00:00', 1, 1),
   (2, 'falta grave', '2014-09-26 09:00:00', 2, 1),
   (3, 'patada ninja', '2014-09-26 09:00:00', 3, 1),
@@ -321,51 +324,51 @@ INSERT INTO futbol2.INFRACCION (infraccion_id, motivo, momento, jugador_id, part
 
 /* Punto a */
 
-CREATE VIEW futbol2.JugadoresMalos 
+CREATE VIEW futbol.JugadoresMalos 
 AS 
-SELECT * FROM futbol2.JUGADOR WHERE handicap <= 5;
+SELECT * FROM futbol.JUGADOR WHERE handicap <= 5;
 
 /* Pruebas
-SELECT * FROM futbol2.JugadoresMalos
+SELECT * FROM futbol.JugadoresMalos
 */
 
 /* Punto b */
 
-CREATE VIEW futbol2.JugadoresTraicioneros 
+CREATE VIEW futbol.JugadoresTraicioneros 
 AS 
-SELECT * FROM futbol2.JUGADOR JJ
+SELECT * FROM futbol.JUGADOR JJ
 WHERE 
-(SELECT COUNT(*) FROM futbol2.INFRACCION II WHERE JJ.jugador_id = II.jugador_id) > 3;
+(SELECT COUNT(*) FROM futbol.INFRACCION II WHERE JJ.jugador_id = II.jugador_id) > 3;
 
 /* Pruebas
-SELECT * FROM futbol2.JugadoresTraicioneros
+SELECT * FROM futbol.JugadoresTraicioneros
 */ 
 
 /* Punto c */
 
-CREATE VIEW futbol2.JugadoresQuePodrianMejorar
+CREATE VIEW futbol.JugadoresQuePodrianMejorar
 AS
-SELECT VV.* FROM futbol2.JugadoresMalos VV, futbol2.PERSONA PP 
+SELECT VV.* FROM futbol.JugadoresMalos VV, futbol.PERSONA PP 
 WHERE
 (VV.persona_id = PP.persona_id)
 AND
 date_part('year',age(PP.fecha_nac)) < 25;
 
 /* Pruebas
-SELECT * FROM futbol2.JugadoresQuePodrianMejorar
+SELECT * FROM futbol.JugadoresQuePodrianMejorar
 */
 
 /* Punto d */
 
-CREATE FUNCTION futbol2.DarDeBaja(idJug integer, idPar integer)
+CREATE FUNCTION futbol.DarDeBaja(idJug integer, idPar integer)
 RETURNS void AS $$
 BEGIN
-  UPDATE futbol2.INSCRIPCION SET estado = false WHERE jugador_id = idJug AND partido_id = idPar;
+  UPDATE futbol.INSCRIPCION SET estado = false WHERE jugador_id = idJug AND partido_id = idPar;
 END;
 $$ LANGUAGE plpgsql;
 
 /* Pruebas
-select futbol2.darDeBaja(10,1)
+select futbol.darDeBaja(10,1)
 select futbol.darDeBaja(1,1)
 SELECT * FROM futbol.INSCRIPCION
 */
