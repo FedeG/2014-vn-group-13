@@ -14,7 +14,7 @@ Docentes de cursada:
 DER:
 ----
 
-![DER](http://www.gliffy.com/go/publish/image/6234591/L.png "DER")
+![DER](http://www.gliffy.com/go/publish/image/6258940/L.png "DER")
 
 Diagrama de clases (en construcción):
 -------------------------------------
