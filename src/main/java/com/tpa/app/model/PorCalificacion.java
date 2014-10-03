@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PorCalificacion implements Criterio {
+public class PorCalificacion extends Criterio {
 	private String nombre = "Por Calificacion";
 	private int cantidadDeCalificaciones;
 

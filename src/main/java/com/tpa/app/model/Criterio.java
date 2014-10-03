@@ -1,6 +1,11 @@
 package com.tpa.app.model;
 
-public interface Criterio {
-	double dameTuValor(Inscripcion inscripcion);
-	String getNombre();
+public abstract class Criterio {
+	public abstract double dameTuValor(Inscripcion inscripcion);
+	public abstract String getNombre();
+
+	@Override
+	public String toString() {
+		return getNombre();
+	}
 }

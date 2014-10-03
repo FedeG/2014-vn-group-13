@@ -1,8 +1,5 @@
 package com.tpa.app.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.HorizontalLayout;
@@ -16,10 +13,8 @@ import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.RadioSelector;
 
-import com.tpa.app.model.ByIndex;
 import com.tpa.app.model.Criterio;
-import com.tpa.app.model.GeneradorDeEquipos;
-import com.tpa.app.model.Inscripcion;
+import com.tpa.app.model.Divisor;
 import com.tpa.app.model.Partido;
 import com.tpa.app.viewModel.GeneradorEquipos;
 
@@ -68,21 +63,21 @@ public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 		searchOrdenamientoPanel.setLayout(new VerticalLayout());
 
 		new Label(searchOrdenamientoPanel).setText("Criterios de Ordenamiento");
-		RadioSelector<String> radioSelectorOrdenamiento = new RadioSelector<>(searchOrdenamientoPanel);
+		RadioSelector<Criterio> radioSelectorOrdenamiento = new RadioSelector<>(searchOrdenamientoPanel);
 		radioSelectorOrdenamiento.setWidth(20);
 		radioSelectorOrdenamiento.bindValueToProperty("ordenamientoSeleccionado");
 		radioSelectorOrdenamiento.bindItemsToProperty("ordenamientos");
-		this.getModelObject().setOrdenamientoSeleccionado("Por Promedio");
+		//this.getModelObject().setOrdenamientoSeleccionado("Por Promedio");
 
 		Panel searchSeleccionPanel = new Panel(searchFormPanel);
 		searchSeleccionPanel.setLayout(new VerticalLayout());
 
 		new Label(searchSeleccionPanel).setText("Criterios de Seleccion");
-		RadioSelector<String> radioSelectorSeleccion = new RadioSelector<>(searchSeleccionPanel);
-		radioSelectorSeleccion.setWidth(20);
-		radioSelectorSeleccion.bindValueToProperty("divisionSeleccionada");
-		radioSelectorSeleccion.bindItemsToProperty("selecciones");
-		this.getModelObject().setDivisionSeleccionada("ParesImpares");
+		RadioSelector<Divisor> radioDivisorSeleccion = new RadioSelector<>(searchSeleccionPanel);
+		radioDivisorSeleccion.setWidth(20);
+		radioDivisorSeleccion.bindValueToProperty("divisionSeleccionada");
+		radioDivisorSeleccion.bindItemsToProperty("divisores");
+		//this.getModelObject().setDivisionSeleccionada("ParesImpares");
 	}
 
 	protected void crearGrillaPartidos(Panel mainPanel) {

@@ -1,6 +1,6 @@
 package com.tpa.app.model;
 
-public class PorHandicap implements Criterio {
+public class PorHandicap extends Criterio {
 	private String nombre = "Por Handicap";
 
 	public String getNombre() {

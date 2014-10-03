@@ -118,7 +118,7 @@ public class RepositorioPartidos implements Serializable {
 		ArrayList<Integer> indicesEquipoA2 = new ArrayList<Integer>() {{add(1);add(4);add(5);add(8);add(9);}};
 		ArrayList<Integer> indicesEquipoB2 = new ArrayList<Integer>() {{add(0);add(2);add(3);add(6);add(7);}};
 		
-		ByIndex byIndex = new ByIndex("ParesImpares", indicesEquipoA, indicesEquipoB);
+		ByIndex byIndex = new ByIndex("Pares/Impares", indicesEquipoA, indicesEquipoB);
 		ByIndex byIndex2 = new ByIndex("1,4,5,8,9", indicesEquipoA2, indicesEquipoB2);
 		
 		this.administrador.agregarDivisor(byIndex);

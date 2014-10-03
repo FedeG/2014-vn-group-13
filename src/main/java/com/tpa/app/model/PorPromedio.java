@@ -2,8 +2,9 @@ package com.tpa.app.model;
 
 import java.util.List;
 
-public class PorPromedio implements Criterio {
-	private String nombre = "Por Promedio"; // Promedio de calificaciones del ultimo partido jugado
+public class PorPromedio extends Criterio {
+	private String nombre = "Por Promedio"; // Promedio de calificaciones del
+											// ultimo partido jugado
 
 	public String getNombre() {
 		return nombre;
