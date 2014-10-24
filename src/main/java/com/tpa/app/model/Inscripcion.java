@@ -2,7 +2,15 @@ package com.tpa.app.model;
 
 import java.util.function.Predicate;
 
-public class Inscripcion {
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "inscripcion")
+public class Inscripcion extends PersistentEntity {
 	
 	public enum PrioridadesInscripciones implements TipoInscripcion {
 		ESTANDAR {
@@ -21,17 +29,25 @@ public class Inscripcion {
 			}
 		},
 		;
-
-		
 	}
-	
-	private PrioridadesInscripciones modalidad;
+	@OneToOne
+	@JoinColumn(name = "jugador_id")
 	private Jugador jugador;
-	private boolean activo;
-	private Predicate<Partido> condicion;
 	
-	public Inscripcion(Jugador jugador, PrioridadesInscripciones modalidad, Predicate<Partido> condicion) {
+	private boolean activa;
+	@OneToOne
+	@JoinColumn(name = "partido_id")
+	private Partido partido;
+	private PrioridadesInscripciones modalidad;
+	@Transient
+	private Predicate<Partido> condicion;
+	@OneToOne
+	@JoinColumn(name = "jugador_reemplazo_id")
+	private Jugador jugadorReemplazo;
+	
+	public Inscripcion(Jugador jugador, Partido partido, PrioridadesInscripciones modalidad, Predicate<Partido> condicion) {
 		this.jugador = jugador;
+		this.partido = partido;
 		this.setCondicion(condicion);
 		this.modalidad = modalidad;
 	}
@@ -40,29 +56,25 @@ public class Inscripcion {
 	public Jugador getJugador() {
 		return jugador;
 	}
-
-	public void setJugador(Jugador jugador) {
-		this.jugador = jugador;
+	public Partido Partido() {
+		return partido;
 	}
 
-	public boolean getActivo() {
-		return activo;
+	public boolean getActiva() {
+		return activa;
 	}
 
-	public void setActivo(boolean activo) {
-		this.activo = activo;
+	public void setActiva(boolean activa) {
+		this.activa = activa;
 	}
-
 
 	public Predicate<Partido> getCondicion() {
 		return condicion;
 	}
 
-
 	public void setCondicion(Predicate<Partido> condicion) {
 		this.condicion = condicion;
 	}
-
 
 	public PrioridadesInscripciones getModalidad() {
 		return modalidad;

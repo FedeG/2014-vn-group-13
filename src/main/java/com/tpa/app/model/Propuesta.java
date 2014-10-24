@@ -77,7 +77,7 @@ public class Propuesta {
 		Jugador jugador = new Jugador(this.persona);
 		this.estado = EstadoPropuesta.Aprobada;
 		this.fechaHoraRespuesta = LocalDateTime.now();
-		Inscripcion insc = new Inscripcion(jugador, this.modalidad, this.condicion);
+		Inscripcion insc = new Inscripcion(jugador, this.partido, this.modalidad, this.condicion);
 		this.partido.inscribir(insc);
 	}
 

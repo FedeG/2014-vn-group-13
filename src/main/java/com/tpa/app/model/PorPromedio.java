@@ -20,7 +20,7 @@ public class PorPromedio extends Criterio {
 		double valor = ultimoPartido
 				.getCalificaciones()
 				.stream()
-				.filter(calificacion -> calificacion.getJugador().equals(
+				.filter(calificacion -> calificacion.getJugadorCalificado().equals(
 						inscripcion.getJugador()))
 				.mapToDouble(calificacion -> calificacion.getNota()).average()
 				.getAsDouble();

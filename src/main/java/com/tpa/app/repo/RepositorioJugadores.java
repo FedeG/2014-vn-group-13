@@ -96,18 +96,19 @@ public class RepositorioJugadores implements Serializable {
 		Jugador jugadormariano = new Jugador(mariano,(double) 10);
 		Jugador jugadorjuana = new Jugador(juana,(double) 9);
 		
-		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now()));
-		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now().plusDays(7)));
-		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now().plusDays(14)));
-		jugadormatias.agregarInfraccion(new Infraccion("Por forro", fecha_y_hora));
-
 		Partido partido1 = new Partido(fecha_y_hora, "Algun lugar", 10, new PartidoMailSender());
 		
-		Inscripcion insc1 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc2 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc3 = new Inscripcion(jugadorcecilia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc4 = new Inscripcion(jugadorfederico, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc5 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now(), partido1));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now().plusDays(7), partido1));
+		jugadorjuana.agregarInfraccion(new Infraccion("Esta re loca", LocalDateTime.now().plusDays(14), partido1));
+		jugadormatias.agregarInfraccion(new Infraccion("Por forro", fecha_y_hora, partido1));
+
+
+		Inscripcion insc1 = new Inscripcion(jugadorezequiel, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc2 = new Inscripcion(jugadormariano, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc3 = new Inscripcion(jugadorcecilia, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc4 = new Inscripcion(jugadorfederico, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc5 = new Inscripcion(jugadorjuana, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 		
 		partido1.inscribir(insc1);
 		partido1.inscribir(insc2);

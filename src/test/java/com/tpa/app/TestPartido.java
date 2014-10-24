@@ -53,11 +53,11 @@ public class TestPartido {
 	public void testNotificarAlAdministrador() {
 		int i;
 		for (i = 0; i < 10; i++)
-			partido.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null));
+			partido.inscribir(new Inscripcion(jugador,partido, PrioridadesInscripciones.ESTANDAR, null));
 		for (i = 0; i < 5; i++)
-			partido.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.SOLIDARIA, null));
+			partido.inscribir(new Inscripcion(jugador, partido, PrioridadesInscripciones.SOLIDARIA, null));
 		for (i = 0; i < 8; i++)
-			partido.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.CONDICIONAL, null));
+			partido.inscribir(new Inscripcion(jugador, partido, PrioridadesInscripciones.CONDICIONAL, null));
 
 		verify(mailSenderMock, times(14)).enviarMail(any(Mail.class));
 	}
@@ -67,7 +67,7 @@ public class TestPartido {
 	@Test
 	public void testNoNotificarAlAdministrador() {
 		for (int i = 0; i < 8; i++)
-			partido2.inscribir(new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null));
+			partido2.inscribir(new Inscripcion(jugador, partido2, PrioridadesInscripciones.ESTANDAR, null));
 
 		verify(mailSenderMock, times(0)).enviarMail(any(Mail.class));
 	}
@@ -76,7 +76,7 @@ public class TestPartido {
 	
 	@Test
 	public void testNotaDeCalificacionCorrectaParaCalificarJugadorValido() {
-		Inscripcion inscripcionEstandar = new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion inscripcionEstandar = new Inscripcion(jugador, partido, PrioridadesInscripciones.ESTANDAR, null);
 		partido.inscribir(inscripcionEstandar);
 		partido.calificar(jugador, jugador, 10, "soy el mejor del mundo");
 
@@ -85,16 +85,16 @@ public class TestPartido {
 
 	@Test
 	public void testJugadorDeCalificacionCorrectaParaCalificarJugadorValido() {
-		Inscripcion inscripcionEstandar = new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion inscripcionEstandar = new Inscripcion(jugador, partido, PrioridadesInscripciones.ESTANDAR, null);
 		partido.inscribir(inscripcionEstandar);
 		partido.calificar(jugador, jugador, 10, "soy el mejor del mundo");
 
-		Assert.assertEquals(partido.getCalificaciones().get(0).getJugador(), jugador);
+		Assert.assertEquals(partido.getCalificaciones().get(0).getJugadorCalificado(), jugador);
 	}
 
 	@Test
 	public void testCriticaDeCalificacionCorrectaParaCalificarJugadorValido() {
-		Inscripcion inscripcionEstandar = new Inscripcion(jugador, PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion inscripcionEstandar = new Inscripcion(jugador, partido, PrioridadesInscripciones.ESTANDAR, null);
 		partido.inscribir(inscripcionEstandar);
 		partido.calificar(jugador, jugador, 10, "soy el mejor del mundo");
 

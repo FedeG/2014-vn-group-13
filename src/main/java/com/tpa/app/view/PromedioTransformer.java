@@ -14,7 +14,7 @@ public final class PromedioTransformer implements Transformer<Jugador, Double> {
 				.map(partido -> partido
 					.getCalificaciones()
 					.stream()
-					.filter(calificacion -> calificacion.getJugador().equals(jugador))
+					.filter(calificacion -> calificacion.getJugadorCalificado().equals(jugador))
 					.mapToDouble(calificacion -> calificacion.getNota())
 					.average()
 					.getAsDouble()

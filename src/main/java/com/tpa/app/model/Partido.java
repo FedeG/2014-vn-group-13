@@ -2,10 +2,16 @@ package com.tpa.app.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.stream.Collectors;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
@@ -14,25 +20,40 @@ import com.tpa.app.model.NoEstaInscriptoExcepcion;
 import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 
 @Observable
-public class Partido {
+@Entity
+@Table(name = "partido")
+public class Partido extends PersistentEntity {
 
+	@OneToOne
+	@JoinColumn(name = "administrador_id")
+	private Administrador administrador;
 	private int cupo;
+	@Column(name="fecha_hora")
 	private LocalDateTime fechaHora;
 	private String lugar;
-	private PriorityQueue<Inscripcion> inscripciones;
+	
+	@OneToMany
+	@JoinColumn(name = "partido_id")
+	private List<Inscripcion> inscripciones;
+	@Transient
 	private List<Inscripcion> equipoA;
+	@Transient
 	private List<Inscripcion> equipoB;
+	@Transient
 	private MailSender mailSender;
+	
+	@OneToMany
+	@JoinColumn(name = "partido_id")
 	private List<Calificacion> calificaciones;
-	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
+	private Boolean confirmado;
+
+/*	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
 		@Override
 		public int compare(Inscripcion i1, Inscripcion i2) {
 			return i1.getModalidad().dameTuPrioridad()
 					- i2.getModalidad().dameTuPrioridad();
 		}
-	};
-	private Boolean confirmado;
-
+	};*/
 	@Override
 	public String toString() {
 		return String.format("Partido {0} {1:dd/MM/yyyy HH:mm}",
@@ -44,7 +65,7 @@ public class Partido {
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.setInscripciones(new PriorityQueue<Inscripcion>(cupo, comparator));
+		this.setInscripciones(new ArrayList<Inscripcion>(cupo));
 		this.calificaciones = new ArrayList<Calificacion>();
 		this.confirmado = false;
 	}
@@ -101,7 +122,7 @@ public class Partido {
 		return fechaHora;
 	}
 
-	public PriorityQueue<Inscripcion> getInscripciones() {
+	public List<Inscripcion> getInscripciones() {
 		return this.inscripciones;
 	}
 
@@ -125,8 +146,8 @@ public class Partido {
 	public void darDeBaja(Jugador jugador, String motivo) {
 		this.verificarConfirmacion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
-		inscripcion.setActivo(false);
-		jugador.agregarInfraccion(new Infraccion(motivo, LocalDateTime.now()));
+		inscripcion.setActiva(false);
+		jugador.agregarInfraccion(new Infraccion(motivo, LocalDateTime.now(), this));
 		if (!this.verificarCupoCompleto())
 			this.notificarAdministrador("Se dio de baja un jugador.");
 	}
@@ -134,8 +155,8 @@ public class Partido {
 	public void darDeBaja(Jugador jugador, Jugador jugadorReemplaza) {
 		this.verificarConfirmacion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
-		inscripcion.setActivo(false);
-		this.inscribir(new Inscripcion(jugador, inscripcion.getModalidad(), null)); // misma modalidad que el que se dio de baja
+		inscripcion.setActiva(false);
+		this.inscribir(new Inscripcion(jugador,this, inscripcion.getModalidad(), null)); // misma modalidad que el que se dio de baja
 	}
 
 	public boolean verificarCupoCompleto() {
@@ -177,7 +198,7 @@ public class Partido {
 	public void calificar(Jugador jugadorCalificador, Jugador jugadorACalificar, int nota, String critica) {
 		this.verificarJugadorIncripto(jugadorACalificar);
 		this.verificarJugadorIncripto(jugadorCalificador);
-		Calificacion calificacion = new Calificacion(nota, jugadorACalificar, critica);
+		Calificacion calificacion = new Calificacion(jugadorCalificador, this, nota, jugadorACalificar, critica);
 		this.agregarCalificacion(calificacion);
 	}
 
@@ -186,12 +207,18 @@ public class Partido {
 		this.setEquipoB(equipoB);
 	}
 
-	public void setInscripciones(PriorityQueue<Inscripcion> inscripciones) {
+	public void setInscripciones(List<Inscripcion> inscripciones) {
 		this.inscripciones = inscripciones;
 	}
 
 
 	public Boolean getConfirmado() {
 		return confirmado;
+	}
+	public Administrador getAdministrador() {
+		return administrador;
+	}
+	public void setAdministrador(Administrador adm) {
+		this.administrador = adm;
 	}
 }

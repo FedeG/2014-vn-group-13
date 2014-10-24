@@ -6,18 +6,40 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.uqbar.commons.utils.Observable;
 
 @Observable
-public class Administrador {
+@Entity
+@Table(name = "administrador")
+public class Administrador extends PersistentEntity {
+	
+	@OneToOne
+	@JoinColumn(name = "persona_id")
+	private Persona persona;
+	
+	@OneToMany
+	@JoinColumn(name = "administrador_id")
 	private Collection<Partido> partidos;
+	@Transient
 	private MailSender mailSender;
+	@Transient
 	private List<Propuesta> propuestas;
+	@Transient
 	private GeneradorDeEquipos generadorDeEquipos;
+	@Transient
 	private List<Criterio> criterios;
+	@Transient
 	private List<Divisor> divisores;
 
-	public Administrador(MailSender mailSender) {
+	public Administrador(Persona persona, MailSender mailSender) {
+		this.persona = persona;
 		this.mailSender = mailSender;
 		this.partidos = new ArrayList<Partido>();
 		this.propuestas = new ArrayList<Propuesta>();
@@ -32,6 +54,7 @@ public class Administrador {
 
 	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
 		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo, this.mailSender);
+		partidoNuevo.setAdministrador(this);
 		this.partidos.add(partidoNuevo);
 		return partidoNuevo;
 	}
@@ -81,5 +104,9 @@ public class Administrador {
 	}
 	public void agregarDivisor(Divisor divisor) {
 		this.getDivisores().add(divisor);
+	}
+
+	public Persona getPersona() {
+		return persona;
 	}
 }

@@ -68,7 +68,7 @@ public class PorCalificacion extends Criterio {
 				.get(numeroDePartido)
 				.getCalificaciones()
 				.stream()
-				.filter(calificacion -> calificacion.getJugador().equals(
+				.filter(calificacion -> calificacion.getJugadorCalificado().equals(
 						jugador)).collect(Collectors.toList());
 
 	}

@@ -53,19 +53,8 @@ public class RepositorioPartidos implements Serializable {
 		
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
 		
-		Inscripcion insc1 = new Inscripcion(jugadorcecilia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc2 = new Inscripcion(jugadorezequiel, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc3 = new Inscripcion(jugadorjorge, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc4 = new Inscripcion(jugadorpablo, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc5 = new Inscripcion(jugadorfederico, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc6 = new Inscripcion(jugadorsofia, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc7 = new Inscripcion(jugadormartin, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc8 = new Inscripcion(jugadormatias, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc9 = new Inscripcion(jugadormariano, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-		Inscripcion insc10 = new Inscripcion(jugadorjuana, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
-
 		//mailSenderMock = mock(MailSender.class);
-		this.administrador = new Administrador(new PartidoMailSender());
+		this.administrador = new Administrador(new Persona(fecha_y_hora, "admin_lomas@futbol.com", "admin"), new PartidoMailSender());
 		
 		PorHandicap porHandicap = new PorHandicap();
 		PorPromedio porPromedio = new PorPromedio();
@@ -73,8 +62,19 @@ public class RepositorioPartidos implements Serializable {
 		this.administrador.agregarCriterio(porHandicap);
 		this.administrador.agregarCriterio(porPromedio);
 		Partido partido1 = this.administrador.crearPartido(fecha_y_hora, "Parque Patricios", 10);
-		Partido partido2 = this.administrador.crearPartido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
-		Partido partido3 = this.administrador.crearPartido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
+		//Partido partido2 = this.administrador.crearPartido(fecha_y_hora.plusMonths(2).plusDays(5).plusHours(3).plusMinutes(16), "Adrogue", 10);
+		//Partido partido3 = this.administrador.crearPartido(fecha_y_hora.plusMonths(7).plusDays(15).plusHours(7).plusMinutes(36), "Lugano", 10);
+		
+		Inscripcion insc1 = new Inscripcion(jugadorcecilia, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc2 = new Inscripcion(jugadorezequiel, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc3 = new Inscripcion(jugadorjorge, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc4 = new Inscripcion(jugadorpablo, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc5 = new Inscripcion(jugadorfederico, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc6 = new Inscripcion(jugadorsofia, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc7 = new Inscripcion(jugadormartin, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc8 = new Inscripcion(jugadormatias, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc9 = new Inscripcion(jugadormariano, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
+		Inscripcion insc10 = new Inscripcion(jugadorjuana, partido1, Inscripcion.PrioridadesInscripciones.ESTANDAR, null);
 
 		partido1.inscribir(insc1);
 		partido1.inscribir(insc2);
@@ -86,7 +86,7 @@ public class RepositorioPartidos implements Serializable {
 		partido1.inscribir(insc8);
 		partido1.inscribir(insc9);
 		partido1.inscribir(insc10);
-
+/*
 		partido2.inscribir(insc1);
 		partido2.inscribir(insc2);
 		partido2.inscribir(insc3);
@@ -107,11 +107,11 @@ public class RepositorioPartidos implements Serializable {
 		partido3.inscribir(insc7);
 		partido3.inscribir(insc8);
 		partido3.inscribir(insc9);
-		partido3.inscribir(insc10);
+		partido3.inscribir(insc10);*/
 
 		this.create(partido1);
-		this.create(partido2);
-		this.create(partido3);
+		/*this.create(partido2);
+		this.create(partido3);*/
 		
 		ArrayList<Integer> indicesEquipoA = new ArrayList<Integer>() {{add(0);add(2);add(4);add(6);add(8);}};
 		ArrayList<Integer> indicesEquipoB = new ArrayList<Integer>() {{add(1);add(3);add(5);add(7);add(9);}};

@@ -4,21 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import org.uqbar.commons.utils.Observable;
 
 @Observable
-public class Persona {
+@Entity
+@Table(name = "persona")
+public class Persona extends PersistentEntity {
 
-	private LocalDateTime fechaNac;
-	private String email;
+	@Column(nullable=false)
 	private String nombre;
+	private String email;
 	private String apodo;
-	private List<Persona> amigos;
+	@Column(name="fecha_nac")
+	private LocalDateTime fechaNac;	
+	@ManyToMany
+	@JoinTable(name = "amigos_x_persona",
+            joinColumns =
+                @JoinColumn(name = "persona_id", referencedColumnName = "Id"),
+            inverseJoinColumns =
+                @JoinColumn(name = "amigo_id", referencedColumnName = "Id"))
+	private List<Persona> amigos = new ArrayList<Persona>();
 
 	public Persona(LocalDateTime fechaNac, String email, String nombre) {
 		this(fechaNac, email);
 		this.nombre = nombre;
-		this.setAmigos(new ArrayList<Persona>());
+		//this.setAmigos(new ArrayList<Persona>());
 	}
 	public Persona(LocalDateTime fechaNac, String email) {
 		this.setFechaNac(fechaNac);

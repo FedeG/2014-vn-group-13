@@ -3,27 +3,36 @@ package com.tpa.app.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.uqbar.commons.utils.Observable;
 
-
 @Observable
-public class Jugador {
+@Entity
+@Table(name = "jugador")
+public class Jugador extends PersistentEntity {
 
-	private List<Infraccion> infracciones;
+	@OneToOne
+	@JoinColumn(name = "persona_id")
 	private Persona persona;
-	private List<Partido> partidosJugados;
 	private Double handicap;
+	
+	@OneToMany
+	@JoinColumn(name = "jugador_id")
+	private List<Infraccion> infracciones = new ArrayList<Infraccion>();
+	@Transient
+	private List<Partido> partidosJugados = new ArrayList<Partido>();
+	
 
 	public Jugador(Persona persona) {
-		this.infracciones = new ArrayList<Infraccion>();
-		this.partidosJugados = new ArrayList<Partido>();
-		this.persona = persona;
-		this.handicap = 0.0;
+		this(persona, 0.0);
 	}
 	
 	public Jugador(Persona persona, Double handicap) {
-		this.infracciones = new ArrayList<Infraccion>();
-		this.partidosJugados = new ArrayList<Partido>();
 		this.persona = persona;
 		this.handicap = handicap;
 	}
@@ -33,6 +42,7 @@ public class Jugador {
 	}
 
 	public void agregarInfraccion(Infraccion infraccion) {
+		infraccion.setJugador(this);
 		getInfracciones().add(infraccion);
 	}
 

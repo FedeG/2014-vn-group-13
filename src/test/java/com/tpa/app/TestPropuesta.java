@@ -26,18 +26,21 @@ public class TestPropuesta {
 	Administrador admin;
 	@Mock
 	MailSender mailSenderMock;
+	@Mock
+	Persona personaMock;
 
 	@Before
 	public void setUp() {
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
 		mailSenderMock = mock(MailSender.class);
+		personaMock = mock(Persona.class);
 		partido = new Partido(fecha_y_hora, "Parque patricios", 10,
 				mailSenderMock);
 		LocalDateTime fechaNac = LocalDateTime.of(1991, 9, 26, 23, 25);
 		persona = new Persona(fechaNac, "ceciliazgr@gmail.com");
 		propuesta = new Propuesta(persona, PrioridadesInscripciones.ESTANDAR,
 				partido);
-		admin = new Administrador(mailSenderMock);
+		admin = new Administrador(personaMock, mailSenderMock);
 	}
 
 	// Test #1 - Aceptar una propuesta

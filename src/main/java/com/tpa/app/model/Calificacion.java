@@ -1,38 +1,56 @@
 package com.tpa.app.model;
 
-public class Calificacion {
+import java.io.Serializable;
 
-	private int nota;
-	private Jugador jugador;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "calificacion")
+public class Calificacion implements Serializable{
+	@Id
+	@OneToOne
+	@JoinColumn(name = "jugador_califica_id")
+	private Jugador jugadorCalificador;
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "partido_id")
+	private Partido partido; 
+	
+	@Id
+	@OneToOne
+	@JoinColumn(name = "jugador_calificado_id")
+	private Jugador jugadorCalificado;
+
 	private String critica;
+	private int nota;
 
-	public Calificacion(int nota, Jugador jugador, String critica) {
-		this.setCritica(critica);
-		this.setNota(nota);
-		this.setJugador(jugador);
-	}
-
-	public int getNota() {
-		return nota;
-	}
-
-	public void setNota(int nota) {
+	public Calificacion(Jugador calificador, Partido partido, int nota, Jugador calificado, String critica) {
+		this.jugadorCalificador = calificador;
+		this.partido = partido;
+		this.critica = critica;
 		this.nota = nota;
+		this.jugadorCalificado = calificado;
 	}
 
-	public Jugador getJugador() {
-		return jugador;
+	public Partido getPartido() {
+		return partido;
 	}
-
-	public void setJugador(Jugador jugador) {
-		this.jugador = jugador;
+	public Jugador getJugadorCalificador() {
+		return jugadorCalificador;
 	}
-
+	public Jugador getJugadorCalificado() {
+		return jugadorCalificado;
+	}
 	public String getCritica() {
 		return critica;
-	}
-
-	public void setCritica(String critica) {
-		this.critica = critica;
+	}	
+	public int getNota() {
+		return nota;
 	}
 }

@@ -36,15 +36,18 @@ public class TestJugador {
 	Inscripcion inscripcionEstandarConAmigos;
 	@Mock
 	MailSender mailSenderMock;
+	@Mock
+	Persona personaMock;
 
 	@Before
 	public void setUp() {
 		LocalDateTime fecha_y_hora = LocalDateTime.now();
 		mailSenderMock = mock(MailSender.class);
+		personaMock = mock(Persona.class);
 		partido = new Partido(fecha_y_hora, "Parque patricios", 10,
 				mailSenderMock);
 		LocalDateTime fechaNac = LocalDateTime.of(1991, 9, 26, 23, 25);
-		admin = new Administrador(mailSenderMock);
+		admin = new Administrador(personaMock, mailSenderMock);
 		persona = new Persona(fechaNac, "ceciliazgr@gmail.com");
 		personaConAmigos = new Persona(fechaNac, "ceciliazgr@gmail.com");
 		ArrayList<Persona> amigos = new ArrayList<Persona>();
@@ -52,14 +55,14 @@ public class TestJugador {
 		personaConAmigos.setAmigos(amigos);
 		jugador = new Jugador(persona);
 		jugadorConAmigos = new Jugador(personaConAmigos);
-		inscripcionCondicional = new Inscripcion(jugador,
+		inscripcionCondicional = new Inscripcion(jugador, partido,
 				PrioridadesInscripciones.CONDICIONAL,
 				(Partido partido) -> partido.getLugar() == "Parque patricios");
-		inscripcionEstandar = new Inscripcion(jugador,
+		inscripcionEstandar = new Inscripcion(jugador, partido,
 				PrioridadesInscripciones.ESTANDAR, null);
-		inscripcionSolidaria = new Inscripcion(jugador,
+		inscripcionSolidaria = new Inscripcion(jugador, partido,
 				PrioridadesInscripciones.SOLIDARIA, null);
-		inscripcionEstandarConAmigos = new Inscripcion(jugadorConAmigos,
+		inscripcionEstandarConAmigos = new Inscripcion(jugadorConAmigos, partido,
 				PrioridadesInscripciones.ESTANDAR, null);
 
 	}

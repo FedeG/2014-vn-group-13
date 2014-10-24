@@ -8,9 +8,14 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	
-    	<!--<class>model.Alumno</class>-->
-    	
-
+    	<class>com.tpa.app.model.Administrador</class>
+    	<class>com.tpa.app.model.Calificacion</class>
+    	<class>com.tpa.app.model.Infraccion</class>
+    	<class>com.tpa.app.model.Inscripcion</class>
+    	<class>com.tpa.app.model.Jugador</class>
+    	<class>com.tpa.app.model.Partido</class>
+		<class>com.tpa.app.model.Persona</class>
+		
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
