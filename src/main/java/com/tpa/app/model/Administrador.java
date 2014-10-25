@@ -38,6 +38,11 @@ public class Administrador extends PersistentEntity {
 	@Transient
 	private List<Divisor> divisores;
 
+	public Administrador()
+	{
+		
+	}
+	
 	public Administrador(Persona persona, MailSender mailSender) {
 		this.persona = persona;
 		this.mailSender = mailSender;

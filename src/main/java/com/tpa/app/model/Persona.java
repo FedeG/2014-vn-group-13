@@ -2,6 +2,7 @@ package com.tpa.app.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,28 +11,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
 @Entity
 @Table(name = "persona")
-public class Persona extends PersistentEntity {
+public class Persona extends PersistentEntity implements Serializable {
 
-	@Column(nullable=false)
 	private String nombre;
 	private String email;
 	private String apodo;
+	
 	@Column(name="fecha_nac")
+	@Type(type="date")
+	
 	private LocalDateTime fechaNac;	
 	@ManyToMany
 	@JoinTable(name = "amigos_x_persona",
             joinColumns =
                 @JoinColumn(name = "persona_id", referencedColumnName = "Id"),
             inverseJoinColumns =
-                @JoinColumn(name = "amigo_id", referencedColumnName = "Id"))
+                @JoinColumn(name = "amigo_id", referencedColumnName = "Id"))	
 	private List<Persona> amigos = new ArrayList<Persona>();
 
+	public Persona()
+	{
+		
+	}
+	
 	public Persona(LocalDateTime fechaNac, String email, String nombre) {
 		this(fechaNac, email);
 		this.nombre = nombre;

@@ -1,5 +1,6 @@
 package com.tpa.app.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,25 +10,33 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.uqbar.commons.utils.Observable;
 
 @Observable
 @Entity
 @Table(name = "jugador")
-public class Jugador extends PersistentEntity {
+public class Jugador extends PersistentEntity implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "persona_id")
+//	@Transient
 	private Persona persona;
 	private Double handicap;
 	
+	@Transient
 	@OneToMany
 	@JoinColumn(name = "jugador_id")
 	private List<Infraccion> infracciones = new ArrayList<Infraccion>();
 	@Transient
 	private List<Partido> partidosJugados = new ArrayList<Partido>();
 	
-
+	
+	public Jugador()
+	{
+	
+	}
+	
 	public Jugador(Persona persona) {
 		this(persona, 0.0);
 	}

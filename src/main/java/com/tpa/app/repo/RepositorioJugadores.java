@@ -1,5 +1,8 @@
 package com.tpa.app.repo;
 
+import static com.tpa.app.db.EntityManagerHelper.getEntityManager;
+//import static utn.dds.persistencia.futbol.db.EntityManagerHelper.getEntityManager;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import com.tpa.app.model.Persona;
 import com.tpa.app.viewModel.BusquedaMultiple;
 
 @Observable
-public class RepositorioJugadores implements Serializable {
+public class RepositorioJugadores implements Serializable{
 
 	private List<Jugador> data = new ArrayList<Jugador>();
 	private static final RepositorioJugadores instance = new RepositorioJugadores();
@@ -24,9 +27,14 @@ public class RepositorioJugadores implements Serializable {
 	    return instance;
 	}
 
+	@SuppressWarnings("unchecked")
 	public RepositorioJugadores() {		
 		
-		LocalDateTime fecha_y_hora = LocalDateTime.now();
+		data = getEntityManager()
+				.createQuery("from Jugador")
+				.getResultList();
+		
+		/*LocalDateTime fecha_y_hora = LocalDateTime.now();
 		Persona cecilia = new Persona(fecha_y_hora, "cecilia", "cecilia", "chechu");
 		Persona ezequiel = new Persona(fecha_y_hora, "ezequiel", "ezequiel", "pantalla tactil");
 		Persona jorge = new Persona(fecha_y_hora, "jorge", "jorge", "pollerudo");
@@ -135,7 +143,9 @@ public class RepositorioJugadores implements Serializable {
 		this.create(jugadormatias);
 		this.create(jugadormariano);
 		this.create(jugadorjuana);
-		this.create(jugadorsofia);
+		this.create(jugadorsofia);*/
+		
+		
 		
 	}
 	
