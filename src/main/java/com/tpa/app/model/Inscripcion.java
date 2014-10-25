@@ -1,5 +1,6 @@
 package com.tpa.app.model;
 
+import java.io.Serializable;
 import java.util.function.Predicate;
 
 import javax.persistence.Entity;
@@ -10,7 +11,9 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "inscripcion")
-public class Inscripcion extends PersistentEntity {
+public class Inscripcion extends PersistentEntity implements Serializable {
+	public Inscripcion()
+	{}
 	
 	public enum PrioridadesInscripciones implements TipoInscripcion {
 		ESTANDAR {

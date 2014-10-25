@@ -1,22 +1,26 @@
 package com.tpa.app.model;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import org.uqbar.commons.utils.Observable;
+
 
 @Observable
 @Entity
 @Table(name = "infraccion")
-public class Infraccion extends PersistentEntity {
+public class Infraccion extends PersistentEntity implements Serializable {
+	public Infraccion()
+	{}
 	
 	private String motivo;
-	private LocalDateTime momento;
+	@Column(name = "momento")
+	private Timestamp momento;
 	@OneToOne
 	@JoinColumn(name = "jugador_id")
 	private Jugador jugador;
@@ -24,7 +28,7 @@ public class Infraccion extends PersistentEntity {
 	@JoinColumn(name = "partido_id")
 	private Partido partido;
 	
-	public Infraccion(String motivo, LocalDateTime momento, Partido partido)
+	public Infraccion(String motivo, Timestamp momento, Partido partido)
 	{
 		this.momento = momento;
 		this.motivo = motivo;
@@ -35,18 +39,18 @@ public class Infraccion extends PersistentEntity {
 		return motivo;
 	}
 
-	public LocalDateTime getMomento() {
+	public Timestamp getMomento() {
 		return momento;
 	}
 	
 	public String getDate(){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		return momento.format(formatter);
+		return momento.toLocalDateTime().format(formatter);
 	}
 
 	public String getTime(){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-		return momento.format(formatter);
+		return momento.toLocalDateTime().format(formatter);
 	}
 	public Partido getPartido() {
 		return partido;

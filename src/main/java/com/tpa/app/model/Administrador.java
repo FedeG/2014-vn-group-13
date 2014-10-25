@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -18,7 +20,9 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @Entity
 @Table(name = "administrador")
-public class Administrador extends PersistentEntity {
+public class Administrador extends PersistentEntity implements Serializable {
+	public Administrador()
+	{}
 	
 	@OneToOne
 	@JoinColumn(name = "persona_id")
@@ -37,11 +41,6 @@ public class Administrador extends PersistentEntity {
 	private List<Criterio> criterios;
 	@Transient
 	private List<Divisor> divisores;
-
-	public Administrador()
-	{
-		
-	}
 	
 	public Administrador(Persona persona, MailSender mailSender) {
 		this.persona = persona;
@@ -51,13 +50,26 @@ public class Administrador extends PersistentEntity {
 		this.divisores = new ArrayList<Divisor>();
 		this.criterios = new ArrayList<Criterio>();
 		this.generadorDeEquipos = new GeneradorDeEquipos();
+		this.agregarCriterio(new PorHandicap());
+		this.agregarCriterio(new PorPromedio());
+		
+		ArrayList<Integer> indicesEquipoA = new ArrayList<Integer>() {{add(0);add(2);add(4);add(6);add(8);}};
+		ArrayList<Integer> indicesEquipoB = new ArrayList<Integer>() {{add(1);add(3);add(5);add(7);add(9);}};
+		ArrayList<Integer> indicesEquipoA2 = new ArrayList<Integer>() {{add(1);add(4);add(5);add(8);add(9);}};
+		ArrayList<Integer> indicesEquipoB2 = new ArrayList<Integer>() {{add(0);add(2);add(3);add(6);add(7);}};
+		
+		ByIndex byIndex = new ByIndex("Pares/Impares", indicesEquipoA, indicesEquipoB);
+		ByIndex byIndex2 = new ByIndex("1,4,5,8,9", indicesEquipoA2, indicesEquipoB2);
+		
+		this.agregarDivisor(byIndex);
+		this.agregarDivisor(byIndex2);
 	}
 
 	public Collection<Partido> getPartidos() {
 		return this.partidos;
 	}
 
-	public Partido crearPartido(LocalDateTime fecha_y_hora, String lugar, int cupo) {
+	public Partido crearPartido(Timestamp fecha_y_hora, String lugar, int cupo) {
 		Partido partidoNuevo = new Partido(fecha_y_hora, lugar, cupo, this.mailSender);
 		partidoNuevo.setAdministrador(this);
 		this.partidos.add(partidoNuevo);

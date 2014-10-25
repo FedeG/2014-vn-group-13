@@ -3,17 +3,13 @@ package com.tpa.app.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Type;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -21,50 +17,50 @@ import org.uqbar.commons.utils.Observable;
 @Table(name = "persona")
 public class Persona extends PersistentEntity implements Serializable {
 
+	public Persona()
+	{}
+	
+	@Column(nullable=false)
+
 	private String nombre;
 	private String email;
 	private String apodo;
 	
 	@Column(name="fecha_nac")
-	@Type(type="date")
-	
-	private LocalDateTime fechaNac;	
+	private Timestamp fechaNac;	
+
 	@ManyToMany
 	@JoinTable(name = "amigos_x_persona",
             joinColumns =
-                @JoinColumn(name = "persona_id", referencedColumnName = "Id"),
+                @JoinColumn(name = "persona_id", referencedColumnName = "id"),
             inverseJoinColumns =
-                @JoinColumn(name = "amigo_id", referencedColumnName = "Id"))	
+
+                @JoinColumn(name = "amigo_id", referencedColumnName = "id"))
 	private List<Persona> amigos = new ArrayList<Persona>();
 
-	public Persona()
-	{
-		
-	}
-	
-	public Persona(LocalDateTime fechaNac, String email, String nombre) {
+	public Persona(Timestamp fechaNac, String email, String nombre) {
 		this(fechaNac, email);
 		this.nombre = nombre;
 		//this.setAmigos(new ArrayList<Persona>());
 	}
-	public Persona(LocalDateTime fechaNac, String email) {
+	public Persona(Timestamp fechaNac, String email) {
 		this.setFechaNac(fechaNac);
 		this.setEmail(email);
 		this.setAmigos(new ArrayList<Persona>());
 	}
 
-	public Persona(LocalDateTime fechaNac, String email, String nombre, String apodo) {
+	public Persona(Timestamp fechaNac, String email, String nombre, String apodo) {
 		this(fechaNac, email);
 		this.nombre = nombre;
 		this.apodo = apodo;
 		this.setAmigos(new ArrayList<Persona>());
 	}
 
-	public LocalDateTime getFechaNac() {
+	public Timestamp getFechaNac() {
 		return this.fechaNac;
 	}
 
-	public void setFechaNac(LocalDateTime fechaNac) {
+	public void setFechaNac(Timestamp fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 

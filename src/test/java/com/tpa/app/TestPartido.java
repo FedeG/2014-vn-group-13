@@ -1,5 +1,7 @@
 package com.tpa.app;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import org.junit.Assert;
@@ -35,11 +37,11 @@ public class TestPartido {
 
 	@Before
 	public void setUp() {
-		LocalDateTime fecha_y_hora = LocalDateTime.now();
+		Timestamp fecha_y_hora = Timestamp.from(Instant.now());
 		mailSenderMock = mock(MailSender.class);
 		partido = new Partido(fecha_y_hora, "Parque Patricios", 10, mailSenderMock);
 		partido2 = new Partido(fecha_y_hora, "Parque Patricios", 10, mailSenderMock);
-		LocalDateTime fechaNac = LocalDateTime.of(1991, 9, 26, 23, 25);
+		Timestamp fechaNac = Timestamp.valueOf(LocalDateTime.of(1991, 9, 26, 23, 25));
 		persona = new Persona(fechaNac, "ceciliazgr@gmail.com");
 		jugador = new Jugador(persona);
 		otroJugador = new Jugador(persona);
