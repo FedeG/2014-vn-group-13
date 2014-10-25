@@ -1,10 +1,11 @@
 package com.tpa.app.model;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,24 +13,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-
 import com.tpa.app.model.NoEstaInscriptoExcepcion;
 import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 
 @Observable
 @Entity
 @Table(name = "partido")
-public class Partido extends PersistentEntity {
+public class Partido extends PersistentEntity implements Serializable {
 
+	public Partido()
+	{}
+	
 	@OneToOne
 	@JoinColumn(name = "administrador_id")
 	private Administrador administrador;
 	private int cupo;
-	@Column(name="fecha_hora")
-	private LocalDateTime fechaHora;
+	@Column(name = "fecha_hora")
+	private Timestamp fechaHora;
 	private String lugar;
 	
 	@OneToMany
@@ -60,7 +62,7 @@ public class Partido extends PersistentEntity {
 				this.getLugar(), this.getFechaHora());
 	}
 
-	public Partido(LocalDateTime fecha_y_hora, String lugar, int cupo, MailSender sender) {
+	public Partido(Timestamp fecha_y_hora, String lugar, int cupo, MailSender sender) {
 		this.mailSender = sender;
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
@@ -118,7 +120,7 @@ public class Partido extends PersistentEntity {
 		this.cupo = cupo;
 	}
 
-	public LocalDateTime getFechaHora() {
+	public Timestamp getFechaHora() {
 		return fechaHora;
 	}
 
@@ -147,7 +149,7 @@ public class Partido extends PersistentEntity {
 		this.verificarConfirmacion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActiva(false);
-		jugador.agregarInfraccion(new Infraccion(motivo, LocalDateTime.now(), this));
+		jugador.agregarInfraccion(new Infraccion(motivo, Timestamp.from(Instant.now()), this));
 		if (!this.verificarCupoCompleto())
 			this.notificarAdministrador("Se dio de baja un jugador.");
 	}

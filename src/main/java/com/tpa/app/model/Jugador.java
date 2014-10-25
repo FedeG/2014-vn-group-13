@@ -1,21 +1,24 @@
 package com.tpa.app.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.uqbar.commons.utils.Observable;
 
 @Observable
 @Entity
 @Table(name = "jugador")
-public class Jugador extends PersistentEntity {
-
+public class Jugador extends PersistentEntity implements Serializable {
+	public Jugador()
+	{}
+	
 	@OneToOne
 	@JoinColumn(name = "persona_id")
 	private Persona persona;

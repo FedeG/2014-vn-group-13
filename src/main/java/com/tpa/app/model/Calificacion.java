@@ -11,7 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "calificacion")
-public class Calificacion implements Serializable{
+public class Calificacion implements Serializable {
+	public Calificacion()
+	{}
+	
 	@Id
 	@OneToOne
 	@JoinColumn(name = "jugador_califica_id")
@@ -22,7 +25,7 @@ public class Calificacion implements Serializable{
 	@JoinColumn(name = "partido_id")
 	private Partido partido; 
 	
-	@Id
+	@Id	
 	@OneToOne
 	@JoinColumn(name = "jugador_calificado_id")
 	private Jugador jugadorCalificado;

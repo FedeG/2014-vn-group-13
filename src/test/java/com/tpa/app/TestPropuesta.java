@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import org.mockito.Mock;
@@ -31,12 +33,12 @@ public class TestPropuesta {
 
 	@Before
 	public void setUp() {
-		LocalDateTime fecha_y_hora = LocalDateTime.now();
+		Timestamp fecha_y_hora = Timestamp.from(Instant.now());
 		mailSenderMock = mock(MailSender.class);
 		personaMock = mock(Persona.class);
 		partido = new Partido(fecha_y_hora, "Parque patricios", 10,
 				mailSenderMock);
-		LocalDateTime fechaNac = LocalDateTime.of(1991, 9, 26, 23, 25);
+		Timestamp fechaNac = Timestamp.valueOf(LocalDateTime.of(1991, 9, 26, 23, 25));
 		persona = new Persona(fechaNac, "ceciliazgr@gmail.com");
 		propuesta = new Propuesta(persona, PrioridadesInscripciones.ESTANDAR,
 				partido);

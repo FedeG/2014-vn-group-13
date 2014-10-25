@@ -16,7 +16,7 @@ public class BusquedaPorFechaNacimiento extends CriterioBusquedaJugador{
 	@Override
 	public boolean evaluarJugador(Jugador unJugador) {
 		if (_fechaTope == null) return true;
-		LocalDateTime ldt = unJugador.getPersona().getFechaNac();
+		LocalDateTime ldt = unJugador.getPersona().getFechaNac().toLocalDateTime();
 		Date fecha = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 		return fecha.before(_fechaTope);
 	}
