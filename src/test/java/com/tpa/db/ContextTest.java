@@ -4,16 +4,11 @@ import static com.tpa.app.db.EntityManagerHelper.getEntityManager;
 import static org.junit.Assert.*;
 
 import java.util.List;
-
-import javax.persistence.Query;
-
 import org.junit.Test;
-
 import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Administrador;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
-import com.tpa.app.repo.RepositorioJugadores;
 
 public class ContextTest {
 
@@ -34,7 +29,6 @@ public class ContextTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void LevantarElAdmin() {
 		
 		Administrador admin = (Administrador)getEntityManager()
@@ -49,7 +43,7 @@ public class ContextTest {
 	public void LevantarLosPartidos() {
 		
 		List<Partido> partidosPersistidos = getEntityManager()
-				.createQuery("from Partidos")
+				.createQuery("from Partido")
 				.getResultList();
 		
 		assertTrue(!partidosPersistidos.isEmpty());
