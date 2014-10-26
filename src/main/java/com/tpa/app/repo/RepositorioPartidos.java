@@ -29,7 +29,6 @@ public class RepositorioPartidos implements Serializable {
 	//MailSender mailSenderMock;
 	
 	private Administrador administrador;
-	private List<Partido> data = new ArrayList<Partido>();
 	private static final RepositorioPartidos instance = new RepositorioPartidos();
 	public static RepositorioPartidos getInstance() {
 	    //if (instance == null) instance = new RepositorioPartidos();
@@ -92,17 +91,4 @@ public class RepositorioPartidos implements Serializable {
 		}
 		return resultados;
 	}
-
-	/*public Jugador searchJugador(List<Jugador> listajugadores, String nombre) {
-		return (Jugador) EntityManagerHelper
-				.createQuery("from Jugador where nombre = :nombre")
-				.setParameter("nombre", nombre)
-				.getSingleResult();
-		for (Jugador jugador : listajugadores) {
-			if(jugador.getPersona().getNombre().equals(nombre)) 
-				return jugador;
-			}
-		return null;
-	}*/
-
 }

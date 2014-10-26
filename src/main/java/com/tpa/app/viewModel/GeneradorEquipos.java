@@ -4,15 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+
+import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Administrador;
 import com.tpa.app.model.Criterio;
 import com.tpa.app.model.Divisor;
 import com.tpa.app.model.GeneradorDeEquipos;
 import com.tpa.app.model.Inscripcion;
 import com.tpa.app.model.Partido;
-import com.tpa.app.repo.RepositorioPartidos;
 
 @Observable
 public class GeneradorEquipos implements Serializable {
@@ -22,33 +24,22 @@ public class GeneradorEquipos implements Serializable {
 	private Divisor divisionSeleccionada;
 	private Administrador administrador;
 
-	public GeneradorEquipos() {
-		RepositorioPartidos repo = RepositorioPartidos.getInstance();
-		this.administrador = repo.getAdministrador();
+	public GeneradorEquipos(Administrador admin) {
+		this.administrador = admin;
 	}
 
 	public void generar() {
 		if(getOrdenamientoSeleccionado() == null)
 			throw new UserException("Debe seleccionar un criterio de ordenamiento");
 		if(getDivisionSeleccionada() == null)
-			throw new UserException("Debe seleccionar un criterio de división");
+			throw new UserException("Debe seleccionar un criterio de divisiÃ³n");
 		this.getPartidoSeleccionado().verificarConfirmacion();
+		if (!getPartidoSeleccionado().verificarCupoCompleto())
+			throw new UserException("El partido no tiene el cupo completo de jugadores");
 		GeneradorDeEquipos generador = new GeneradorDeEquipos();
-		List<Criterio> critOrden = new ArrayList<Criterio>();
-		critOrden = crearListaSegunRadioButton();
-		List<Inscripcion> inscripciones = generador.ordenarJugadores(critOrden,
-				this.getPartidoSeleccionado());
-		// ByIndex divisor = crearDivisorSegunRadioButton();
-		generador.dividirEquipos(getDivisionSeleccionada(),
-				this.getPartidoSeleccionado(), inscripciones);
+		generador.generarEquipos(this.getPartidoSeleccionado(), crearListaSegunRadioButton(), getDivisionSeleccionada());
+		EntityManagerHelper.persist(this.getPartidoSeleccionado());
 	}
-
-	// private ByIndex crearDivisorSegunRadioButton() {
-	// for (Divisor divisor : this.getAdministrador().getDivisores()) {
-	// if (this.getDivisionSeleccionada().getNombre() == divisor.getNombre())
-	// return (ByIndex) divisor;
-	// }
-	// }
 
 	private List<Criterio> crearListaSegunRadioButton() {
 		// TODO
@@ -57,11 +48,6 @@ public class GeneradorEquipos implements Serializable {
 		// arena tengo que usar :P
 		List<Criterio> criterios = new ArrayList<Criterio>();
 		criterios.add(getOrdenamientoSeleccionado());
-		//for (Criterio criterio : this.getAdministrador().getCriterios()) {
-		//	if (this.getOrdenamientoSeleccionado().getNombre() == criterio
-		//			.getNombre())
-		//		criterios.add(criterio);
-		//}
 		return criterios;
 	}
 
@@ -83,7 +69,6 @@ public class GeneradorEquipos implements Serializable {
 
 	public List<Criterio> getOrdenamientos() {
 		return this.administrador.getCriterios().stream()
-		// .map(criterio -> criterio.getNombre())
 				.collect(Collectors.toList());
 	}
 
@@ -97,12 +82,10 @@ public class GeneradorEquipos implements Serializable {
 
 	public List<Divisor> getDivisores() {
 		return this.administrador.getDivisores().stream()
-				//.map(divisor -> ((ByIndex) divisor).getNombre())
 				.collect(Collectors.toList());
 	}
 
 	public Administrador getAdministrador() {
 		return administrador;
 	}
-
 }

@@ -51,6 +51,5 @@ public class RepositorioJugadores implements Serializable {
 	public List<Jugador> search(BusquedaMultiple filtros) {
 		return getData().stream().filter(j -> filtros.evaluarJugador(j))
 				.collect(Collectors.toList());
-
 	}
 }

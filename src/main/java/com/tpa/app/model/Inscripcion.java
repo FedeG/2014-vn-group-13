@@ -14,21 +14,25 @@ import javax.persistence.Transient;
 public class Inscripcion extends PersistentEntity implements Serializable {
 	public Inscripcion()
 	{}
-	
+	public enum Equipo {
+		NINGUNO,
+		A,
+		B	
+	}
 	public enum PrioridadesInscripciones implements TipoInscripcion {
 		ESTANDAR {
 			public int dameTuPrioridad() {
-				return 1;
+				return 0;
 			}
 		},
 		SOLIDARIA {
 			public int dameTuPrioridad() {
-				return 2;
+				return 1;
 			}
 		},
 		CONDICIONAL {
 			public int dameTuPrioridad() {
-				return 3;
+				return 2;
 			}
 		},
 		;
@@ -47,14 +51,15 @@ public class Inscripcion extends PersistentEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "jugador_reemplazo_id")
 	private Jugador jugadorReemplazo;
+	private Equipo equipo;
 	
 	public Inscripcion(Jugador jugador, Partido partido, PrioridadesInscripciones modalidad, Predicate<Partido> condicion) {
 		this.jugador = jugador;
 		this.partido = partido;
 		this.setCondicion(condicion);
 		this.modalidad = modalidad;
+		this.equipo = Equipo.NINGUNO;
 	}
-
 
 	public Jugador getJugador() {
 		return jugador;
@@ -87,6 +92,12 @@ public class Inscripcion extends PersistentEntity implements Serializable {
 	public void setModalidad(PrioridadesInscripciones modalidad) {
 		this.modalidad = modalidad;
 	}
-
 	
+	public Equipo getEquipo() {
+		return equipo;
+	}
+
+	public void setEquipo(Equipo equipo) {
+		this.equipo = equipo;
+	}	
 }

@@ -1,15 +1,18 @@
 package com.tpa.app.view;
 
 import org.uqbar.arena.actions.MessageSend;
+import org.uqbar.arena.bindings.NotNullObservable;
+import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.Label;
+import org.uqbar.arena.widgets.Label;	
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
+import com.tpa.app.model.Administrador;
 import com.tpa.app.viewModel.PantallaPrincipal;
-
 
 public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 
@@ -23,28 +26,38 @@ public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 		this.setTaskDescription("Elija una operacion a realizar");
 		super.createMainTemplate(mainPanel);
 	}
-
 	@Override
 	protected void createFormPanel(Panel mainPanel){
+		
 		mainPanel.setLayout(new VerticalLayout());
+		
 		new Label(mainPanel).setText("- Operaciones -").setWidth(430);
-		new Button(mainPanel)
+		Panel panelSelectAdm = new Panel(mainPanel);
+		panelSelectAdm.setLayout(new HorizontalLayout());
+		new Label(panelSelectAdm).setText("Administrador:").setWidth(200);
+		Selector<Administrador> selector = new Selector<Administrador>(panelSelectAdm) //
+				.allowNull(false);
+		selector.setWidth(230);
+		selector.bindItemsToProperty("administradores");
+		selector.bindValueToProperty("administradorSeleccionado");
+			
+		Button boton = new Button(mainPanel)
 			.setCaption("Generar Equipos")
 			.onClick(new MessageSend(this, "generarEquipos"));
+		boton.bindEnabled(new NotNullObservable("administradorSeleccionado"));
 	
-		new Button(mainPanel)
+		boton = new Button(mainPanel)
 			.setCaption("Buscar Jugadores")
 			.onClick(new MessageSend(this, "buscarJugadores"));
+		boton.bindEnabled(new NotNullObservable("administradorSeleccionado"));
 	}
 	
 	@Override
 	protected void addActions(Panel actionsPanel) {
-		
-		
 	}
 	
 	public void generarEquipos() {
-		new GenerarEquiposWindow(this).open();
+		new GenerarEquiposWindow(this, this.getModelObject().getAdministradorSeleccionado()).open();
 	}
 
 	public void buscarJugadores() {

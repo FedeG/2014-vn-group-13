@@ -10,6 +10,7 @@ import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
+import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
 import com.tpa.app.viewModel.SelectorJugadores;
@@ -53,12 +54,12 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 		actionsPanel.setLayout(new HorizontalLayout());
 
 		new Button(actionsPanel).setCaption("Confirmar")
-				.onClick(new MessageSend(this, "confirmar")).setWidth(150);
+				.onClick(new MessageSend(this, "confirmar")).setWidth(100);
 
 		Button ver = new Button(actionsPanel);
 		ver.setCaption("Ver jugador seleccionado");
 		ver.onClick(new MessageSend(this, "ver"));
-		ver.setWidth(150);
+		ver.setWidth(200);
 
 		NotNullObservable elementSelected = new NotNullObservable(
 				"jugadorSeleccionado");
@@ -71,6 +72,7 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 
 	public void confirmar() {
+		EntityManagerHelper.commit();
 		this.getModelObject().getPartido().confirmar();
 		new ConfirmacionExitosaWindow(this).open();
 		this.close();

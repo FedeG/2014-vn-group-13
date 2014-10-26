@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -20,13 +17,11 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @Entity
 @Table(name = "administrador")
-public class Administrador extends PersistentEntity implements Serializable {
-	public Administrador()
-	{}
+public class Administrador extends PersistentEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "persona_id")
-	private Persona persona;
+	public Persona persona;
 	
 	@OneToMany
 	@JoinColumn(name = "administrador_id")
@@ -42,9 +37,12 @@ public class Administrador extends PersistentEntity implements Serializable {
 	@Transient
 	private List<Divisor> divisores;
 
-	public Administrador(Persona persona, MailSender mailSender) {
-		this.persona = persona;
-		this.mailSender = mailSender;
+	@Override
+	public String toString() {
+		return this.getPersona().getNombre();
+	}
+	public Administrador()
+	{
 		this.partidos = new ArrayList<Partido>();
 		this.propuestas = new ArrayList<Propuesta>();
 		this.divisores = new ArrayList<Divisor>();
@@ -63,6 +61,11 @@ public class Administrador extends PersistentEntity implements Serializable {
 		
 		this.agregarDivisor(byIndex);
 		this.agregarDivisor(byIndex2);
+	}
+	public Administrador(Persona persona, MailSender mailSender) {
+		this();
+		this.persona = persona;
+		this.mailSender = mailSender;
 	}
 
 	public Collection<Partido> getPartidos() {
@@ -125,5 +128,8 @@ public class Administrador extends PersistentEntity implements Serializable {
 
 	public Persona getPersona() {
 		return persona;
+	}
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 }

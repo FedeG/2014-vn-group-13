@@ -13,6 +13,7 @@ import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.RadioSelector;
 
+import com.tpa.app.model.Administrador;
 import com.tpa.app.model.Criterio;
 import com.tpa.app.model.Divisor;
 import com.tpa.app.model.Partido;
@@ -20,8 +21,8 @@ import com.tpa.app.viewModel.GeneradorEquipos;
 
 public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 
-	public GenerarEquiposWindow(WindowOwner parent) {
-		super(parent, new GeneradorEquipos());
+	public GenerarEquiposWindow(WindowOwner parent, Administrador admin) {
+		super(parent, new GeneradorEquipos(admin));
 	}
 
 	@Override
@@ -41,18 +42,26 @@ public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 
 		Button generar = new Button(botonera);
 		generar.setCaption("Generar");
-		generar.onClick(new MessageSend(this, "generar")).setWidth(200);		
+		generar.onClick(new MessageSend(this, "generar")).setWidth(150);		
 
+		Button ver = new Button(botonera);
+		ver.setCaption("Ver");
+		ver.onClick(new MessageSend(this, "ver")).setWidth(150);	
+		
 		Button volver = new Button(botonera);
 		volver.setCaption("Volver");
-		volver.setWidth(200);
+		volver.setWidth(100);
 		volver.onClick(new MessageSend(this, "close"));
 
 		NotNullObservable elementSelected = new NotNullObservable("partidoSeleccionado");
 		generar.bindEnabled(elementSelected);
+		ver.bindEnabled(elementSelected);
 	}
 	public void generar() {
 		this.getModelObject().generar();
+		new EquiposGeneradosWindow(this, this.getModelObject().getPartidoSeleccionado()).open();
+	}
+	public void ver() {
 		new EquiposGeneradosWindow(this, this.getModelObject().getPartidoSeleccionado()).open();
 	}
 	protected void crearSelectoresDeCriterios(Panel mainPanel) {

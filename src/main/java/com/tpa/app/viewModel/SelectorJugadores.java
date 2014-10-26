@@ -45,5 +45,4 @@ public class SelectorJugadores implements Serializable {
 	public Partido getPartido() {
 		return partido;
 	}
-
 }

@@ -2,10 +2,6 @@
 
 CREATE SCHEMA futbol;
 
-CREATE TYPE futbol.modalidad AS ENUM
-  ('ESTANDAR', 'SOLIDARIO', 'CONDICIONAL');
-
-
 CREATE TABLE futbol.PERSONA (
   id  	      serial NOT NULL,
   nombre      varchar(50) NOT NULL,
@@ -122,8 +118,9 @@ CREATE TABLE futbol.INSCRIPCION (
   jugador_id           integer NOT NULL,
   activa               boolean NOT NULL DEFAULT true,
   partido_id           integer NOT NULL,
-  modalidad            futbol.modalidad NOT NULL DEFAULT 'ESTANDAR',
-  jugador_remplazo_id  integer,
+  modalidad            integer NOT NULL DEFAULT 1,
+  jugador_reemplazo_id  integer,
+  equipo		integer NOT NULL DEFAULT 0,
   /* Keys */
   CONSTRAINT INSCRIPCION_pkey
     PRIMARY KEY (id),
@@ -135,27 +132,8 @@ CREATE TABLE futbol.INSCRIPCION (
     FOREIGN KEY (partido_id)
     REFERENCES futbol.PARTIDO(id), 
   CONSTRAINT Foreign_key03
-    FOREIGN KEY (jugador_remplazo_id)
+    FOREIGN KEY (jugador_reemplazo_id)
     REFERENCES futbol.JUGADOR(id)
-);
-
-CREATE TABLE futbol.INSCRIPCION_X_PARTIDO (
-  inscripcion_id  integer NOT NULL,
-  partido_id      integer NOT NULL,
-  equipo          integer NOT NULL,
-  /* Keys */
-  CONSTRAINT INSCRIPCION_X_PARTIDO_pkey
-    PRIMARY KEY (inscripcion_id, partido_id),
-  /* Checks */
-  CONSTRAINT Check01
-    CHECK (equipo = ANY (ARRAY[0, 1, 2])),
-  /* Foreign keys */
-  CONSTRAINT Foreign_key01
-    FOREIGN KEY (inscripcion_id)
-    REFERENCES futbol.INSCRIPCION(id), 
-  CONSTRAINT Foreign_key02
-    FOREIGN KEY (partido_id)
-    REFERENCES futbol.PARTIDO(id)
 );
 
 /* CARGA DE DATOS */
@@ -242,34 +220,23 @@ INSERT INTO futbol.AMIGOS_X_PERSONA (persona_id, amigo_id) VALUES
   (3, 30);
 INSERT INTO futbol.PARTIDO (administrador_id, cupo, fecha_hora, lugar, confirmado) VALUES
   (1, 10, '2014-09-26 09:00:00', 'Lugano', true),
-  (1, 10, '2014-11-15 00:00:00', 'Villa Crespo', true),
+  (1, 10, '2014-11-15 00:00:00', 'Villa Crespo', false),
   (1, 10, '2015-02-03 00:00:00', 'Barracas', false),
   (1, 10, '2014-12-28 00:00:00', 'Adrogué', false),
   (1, 10, '2014-10-12 00:00:00', 'Flores', false),
   (1, 10, '2015-08-15 00:00:00', 'Palermo', false);
-INSERT INTO futbol.INSCRIPCION (jugador_id, activa, partido_id, jugador_remplazo_id) VALUES
-  (1, true, 1, null),
-  (2, true, 1, null),
-  (3, true, 1, null),
-  (4, true, 1, null),
-  (5, true, 1, null),
-  (6, true, 1, null),
-  (7, true, 1, null),
-  (8, true, 1, null),
-  (9, true, 1, null),
-  (10, true, 1, null);
+INSERT INTO futbol.INSCRIPCION (jugador_id, activa, partido_id, jugador_reemplazo_id, equipo, modalidad) VALUES
+  (1, true, 1, null, 1, 0),
+  (2, true, 1, null, 1, 0),
+  (3, true, 1, null, 1, 0),
+  (4, true, 1, null, 1, 0),
+  (5, true, 1, null, 1, 0),
+  (6, true, 1, null, 2, 0),
+  (7, true, 1, null, 2, 0),
+  (8, true, 1, null, 2, 2),
+  (9, true, 1, null, 2, 2),
+  (10, true, 1, null, 2, 1);
 
-INSERT INTO futbol.INSCRIPCION_X_PARTIDO (inscripcion_id, partido_id, equipo) VALUES
-  (1, 1, 1),
-  (2, 1, 1),
-  (3, 1, 1),
-  (4, 1, 1),
-  (5, 1, 1),
-  (6, 1, 2),
-  (7, 1, 2),
-  (8, 1, 2),
-  (9, 1, 2),
-  (10, 1, 2);
 INSERT INTO futbol.CALIFICACION (jugador_calificado_id, partido_id, jugador_califica_id, critica, nota) VALUES
   (2, 1, 1, 'mal', 3),
   (3, 1, 1, 'mal', 1),
@@ -384,7 +351,7 @@ RETURNS trigger AS $AgregarInfraccionFuncion$
 BEGIN
 
          INSERT INTO futbol.INFRACCION (Motivo, momento, jugador_id, partido_id)
-         VALUES('se dio de baja sin remplazo',current_timestamp,NEW.jugador_id, NEW.partido_id);
+         VALUES('se dio de baja sin reemplazo',current_timestamp,NEW.jugador_id, NEW.partido_id);
     RETURN NEW;
 END;
 $AgregarInfraccionFuncion$ LANGUAGE plpgsql;
@@ -392,7 +359,7 @@ $AgregarInfraccionFuncion$ LANGUAGE plpgsql;
 CREATE TRIGGER AgregarInfraccion AFTER UPDATE
 ON futbol.INSCRIPCION
 FOR EACH ROW 
-WHEN ((OLD.activa IS DISTINCT FROM NEW.activa) AND (NEW.activa = false) AND (NEW.jugador_remplazo_id IS NULL))
+WHEN ((OLD.activa IS DISTINCT FROM NEW.activa) AND (NEW.activa = false) AND (NEW.jugador_reemplazo_id IS NULL))
 EXECUTE PROCEDURE futbol.AgregarInfraccionFuncion();
 
 /* Pruebas

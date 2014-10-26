@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 
 public class GeneradorDeEquipos {
 
-	public List<Inscripcion> ordenarJugadores(List<Criterio> list, Partido partido) {
+	private List<Inscripcion> ordenarJugadores(List<Criterio> list, Partido partido) {
 		List<Inscripcion> inscOrdenadas = new ArrayList<Inscripcion>();
 		inscOrdenadas.addAll(partido.getInscripciones());
 		Collections.sort(inscOrdenadas, this.crearComparador(list, partido));
 		return inscOrdenadas;
 	}
 
-	public void dividirEquipos(Divisor divisor, Partido partido, List<Inscripcion> inscripciones) {
+	private void dividirEquipos(Divisor divisor, Partido partido, List<Inscripcion> inscripciones) {
 		ArrayList<Inscripcion> equipoA, equipoB;
 		equipoA = divisor.generarEquipoA(inscripciones);
 		equipoB = divisor.generarEquipoB(inscripciones);
@@ -27,9 +27,10 @@ public class GeneradorDeEquipos {
 	public void generarEquipos(Partido partido, List<Criterio> criterios, Divisor divisor) {
 		this.ordenarJugadores(criterios,	partido);
 		this.dividirEquipos(divisor, partido, (List<Inscripcion>) partido.getInscripciones().stream().collect(Collectors.toList()));
+		
 	}
 
-	public Comparator<Inscripcion> crearComparador(List<Criterio> list,
+	private Comparator<Inscripcion> crearComparador(List<Criterio> list,
 			Partido partido) {
 		if (list.isEmpty())
 			throw new RuntimeException(

@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,8 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+
+import com.tpa.app.db.EntityManagerHelper;
+import com.tpa.app.model.Inscripcion.Equipo;
 import com.tpa.app.model.NoEstaInscriptoExcepcion;
 import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 
@@ -23,9 +29,6 @@ import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 @Table(name = "partido")
 public class Partido extends PersistentEntity implements Serializable {
 
-	public Partido()
-	{}
-	
 	@OneToOne
 	@JoinColumn(name = "administrador_id")
 	private Administrador administrador;
@@ -33,41 +36,36 @@ public class Partido extends PersistentEntity implements Serializable {
 	@Column(name = "fecha_hora")
 	private Timestamp fechaHora;
 	private String lugar;
-	
+
 	@OneToMany
 	@JoinColumn(name = "partido_id")
-	private List<Inscripcion> inscripciones;
+	private List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
 	@Transient
-	private List<Inscripcion> equipoA;
+	private List<Inscripcion> equipoA = new ArrayList<Inscripcion>();
 	@Transient
-	private List<Inscripcion> equipoB;
+	private List<Inscripcion> equipoB = new ArrayList<Inscripcion>();
 	@Transient
 	private MailSender mailSender;
-	
+
 	@OneToMany
 	@JoinColumn(name = "partido_id")
 	private List<Calificacion> calificaciones;
 	private Boolean confirmado;
 
-/*	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
-		@Override
-		public int compare(Inscripcion i1, Inscripcion i2) {
-			return i1.getModalidad().dameTuPrioridad()
-					- i2.getModalidad().dameTuPrioridad();
-		}
-	};*/
 	@Override
 	public String toString() {
 		return String.format("Partido {0} {1:dd/MM/yyyy HH:mm}",
 				this.getLugar(), this.getFechaHora());
 	}
 
-	public Partido(Timestamp fecha_y_hora, String lugar, int cupo, MailSender sender) {
+	public Partido() {
+	}
+	public Partido(Timestamp fecha_y_hora, String lugar, int cupo,
+			MailSender sender) {
 		this.mailSender = sender;
 		this.fechaHora = fecha_y_hora;
 		this.setLugar(lugar);
 		this.setCupo(cupo);
-		this.setInscripciones(new ArrayList<Inscripcion>(cupo));
 		this.calificaciones = new ArrayList<Calificacion>();
 		this.confirmado = false;
 	}
@@ -86,30 +84,25 @@ public class Partido extends PersistentEntity implements Serializable {
 
 	public void confirmar() {
 		if (!this.verificarCupoCompleto())
-			throw new UserException("El partido no tiene el cupo completo de jugadores");
+			throw new UserException(
+					"El partido no tiene el cupo completo de jugadores");
 		this.verificarConfirmacion();
 		this.confirmado = true;
 	}
-	
-	public void verificarConfirmacion(){
+
+	public void verificarConfirmacion() {
 		if (this.getConfirmado())
 			throw new PartidoYaConfirmadoExcepcion();
 	}
 
 	public List<Inscripcion> getEquipoA() {
-		return equipoA;
-	}
-
-	private void setEquipoA(List<Inscripcion> equipoA) {
-		this.equipoA = equipoA;
+		return inscripciones.stream().filter(i -> i.getEquipo() == Equipo.A)
+				.collect(Collectors.toList());
 	}
 
 	public List<Inscripcion> getEquipoB() {
-		return equipoB;
-	}
-
-	private void setEquipoB(List<Inscripcion> equipoB) {
-		this.equipoB = equipoB;
+		return inscripciones.stream().filter(i -> i.getEquipo() == Equipo.B)
+				.collect(Collectors.toList());
 	}
 
 	public int getCupo() {
@@ -138,10 +131,11 @@ public class Partido extends PersistentEntity implements Serializable {
 
 	public Inscripcion obtenerInscripcionDe(Jugador jugador) {
 		this.verificarJugadorIncripto(jugador);
-		List<Inscripcion> inscrips = this.getInscripciones()
-			.stream()
-			.filter(inscripcion -> inscripcion.getJugador().equals(jugador))
-			.collect(Collectors.toList());
+		List<Inscripcion> inscrips = this
+				.getInscripciones()
+				.stream()
+				.filter(inscripcion -> inscripcion.getJugador().equals(jugador))
+				.collect(Collectors.toList());
 		return inscrips.get(0);
 	}
 
@@ -149,7 +143,8 @@ public class Partido extends PersistentEntity implements Serializable {
 		this.verificarConfirmacion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActiva(false);
-		jugador.agregarInfraccion(new Infraccion(motivo, Timestamp.from(Instant.now()), this));
+		jugador.agregarInfraccion(new Infraccion(motivo, Timestamp.from(Instant
+				.now()), this));
 		if (!this.verificarCupoCompleto())
 			this.notificarAdministrador("Se dio de baja un jugador.");
 	}
@@ -158,7 +153,9 @@ public class Partido extends PersistentEntity implements Serializable {
 		this.verificarConfirmacion();
 		Inscripcion inscripcion = this.obtenerInscripcionDe(jugador);
 		inscripcion.setActiva(false);
-		this.inscribir(new Inscripcion(jugador,this, inscripcion.getModalidad(), null)); // misma modalidad que el que se dio de baja
+		this.inscribir(new Inscripcion(jugador, this, inscripcion
+				.getModalidad(), null)); // misma modalidad que el que se dio de
+											// baja
 	}
 
 	public boolean verificarCupoCompleto() {
@@ -167,7 +164,8 @@ public class Partido extends PersistentEntity implements Serializable {
 	}
 
 	private void notificarAdministrador(String mensaje) {
-		Mail mail = new Mail("Notificacion", mensaje, "", "admin_partidos@dds.utn.frba");
+		Mail mail = new Mail("Notificacion", mensaje, "",
+				"admin_partidos@dds.utn.frba");
 		this.getMailSender().enviarMail(mail);
 	}
 
@@ -180,16 +178,14 @@ public class Partido extends PersistentEntity implements Serializable {
 	}
 
 	public int contarInscripciones(PrioridadesInscripciones modalidad) {
-		return (int) this.getInscripciones()
-			.stream()
-			.filter(inscripcion -> inscripcion.getModalidad() == modalidad)
-			.count();
+		return (int) this.getInscripciones().stream()
+				.filter(inscripcion -> inscripcion.getModalidad() == modalidad)
+				.count();
 	}
 
 	private boolean estaInscripto(Jugador jugador) {
-		return this.getInscripciones()
-			.stream()
-			.anyMatch(i -> i.getJugador().equals(jugador));
+		return this.getInscripciones().stream()
+				.anyMatch(i -> i.getJugador().equals(jugador));
 	}
 
 	private void verificarJugadorIncripto(Jugador jugador) {
@@ -197,29 +193,33 @@ public class Partido extends PersistentEntity implements Serializable {
 			throw new NoEstaInscriptoExcepcion(jugador);
 	}
 
-	public void calificar(Jugador jugadorCalificador, Jugador jugadorACalificar, int nota, String critica) {
+	public void calificar(Jugador jugadorCalificador,
+			Jugador jugadorACalificar, int nota, String critica) {
 		this.verificarJugadorIncripto(jugadorACalificar);
 		this.verificarJugadorIncripto(jugadorCalificador);
-		Calificacion calificacion = new Calificacion(jugadorCalificador, this, nota, jugadorACalificar, critica);
+		Calificacion calificacion = new Calificacion(jugadorCalificador, this,
+				nota, jugadorACalificar, critica);
 		this.agregarCalificacion(calificacion);
 	}
 
-	public void equiposAJugar(List<Inscripcion> equipoA, List<Inscripcion> equipoB) {
-		this.setEquipoA(equipoA);
-		this.setEquipoB(equipoB);
+	public void equiposAJugar(List<Inscripcion> equipoA,
+			List<Inscripcion> equipoB) {
+		equipoA.stream().forEach(eqA -> eqA.setEquipo(Equipo.A));
+		equipoB.stream().forEach(eqB -> eqB.setEquipo(Equipo.B));
 	}
 
 	public void setInscripciones(List<Inscripcion> inscripciones) {
 		this.inscripciones = inscripciones;
 	}
 
-
 	public Boolean getConfirmado() {
 		return confirmado;
 	}
+
 	public Administrador getAdministrador() {
 		return administrador;
 	}
+
 	public void setAdministrador(Administrador adm) {
 		this.administrador = adm;
 	}
