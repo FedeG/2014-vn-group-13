@@ -3,11 +3,14 @@ package com.tpa.app.repo;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.uqbar.commons.utils.Observable;
+
 import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.viewModel.BusquedaMultiple;
 
+@SuppressWarnings("serial")
 @Observable
 public class RepositorioJugadores implements Serializable {
 	private static final RepositorioJugadores instance = new RepositorioJugadores();

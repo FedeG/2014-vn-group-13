@@ -2,10 +2,11 @@ package com.tpa.app.repo;
 
 //import static org.mockito.Mockito.mock;
 
+import static com.tpa.app.db.EntityManagerHelper.getEntityManager;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,30 +23,41 @@ import com.tpa.app.model.Persona;
 import com.tpa.app.model.PorHandicap;
 import com.tpa.app.model.PorPromedio;
 
+@SuppressWarnings("serial")
 @Observable
-public class RepositorioPartidos implements Serializable {
+public class RepositorioPartidos implements Serializable{
 
 	//@Mock
 	//MailSender mailSenderMock;
 	
 	private Administrador administrador;
-	private List<Partido> data = new ArrayList<Partido>();
+	//private List<Partido> data = new ArrayList<Partido>();
 	private static final RepositorioPartidos instance = new RepositorioPartidos();
 	public static RepositorioPartidos getInstance() {
 	    //if (instance == null) instance = new RepositorioPartidos();
 		return instance;
 	}
 
-	public RepositorioPartidos() {
+	public RepositorioPartidos()  {
 		Timestamp fecha_y_hora = Timestamp.from(Instant.now());
-		this.administrador = new Administrador(new Persona(fecha_y_hora, "admin_lomas@futbol.com", "admin"), new PartidoMailSender());
-
+		Administrador admin = new Administrador(new Persona(fecha_y_hora, "admin_lomas@futbol.com", "admin"), new PartidoMailSender());
+		
+		admin = (Administrador)getEntityManager()
+				.createQuery("from Administrador")
+				.getResultList().get(0);
+		
+		if (admin == null)
+			try { throw new Exception("Debe haber un admin en la base de datos");
+			} catch (Exception e) {	e.printStackTrace(); }
+		
+		this.administrador = admin;
 	}
 	
 	// ********************************************************
 	// ** Getter
 	// ********************************************************
 		
+	@SuppressWarnings("unchecked")
 	public List<Partido> getData(){
 		return EntityManagerHelper.createQuery(String.format("from Partido where administrador.id = 1")).getResultList();
 	}

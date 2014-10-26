@@ -21,8 +21,6 @@ import org.uqbar.commons.utils.Observable;
 @Entity
 @Table(name = "administrador")
 public class Administrador extends PersistentEntity implements Serializable {
-	public Administrador()
-	{}
 	
 	@OneToOne
 	@JoinColumn(name = "persona_id")
@@ -42,9 +40,9 @@ public class Administrador extends PersistentEntity implements Serializable {
 	@Transient
 	private List<Divisor> divisores;
 	
-	public Administrador(Persona persona, MailSender mailSender) {
-		this.persona = persona;
-		this.mailSender = mailSender;
+	@SuppressWarnings("serial")
+	public Administrador()
+	{
 		this.partidos = new ArrayList<Partido>();
 		this.propuestas = new ArrayList<Propuesta>();
 		this.divisores = new ArrayList<Divisor>();
@@ -63,6 +61,11 @@ public class Administrador extends PersistentEntity implements Serializable {
 		
 		this.agregarDivisor(byIndex);
 		this.agregarDivisor(byIndex2);
+	}
+	
+	public Administrador(Persona persona, MailSender mailSender) {
+		this.persona = persona;
+		this.mailSender = mailSender;
 	}
 
 	public Collection<Partido> getPartidos() {
