@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.uqbar.commons.utils.Observable;
 
+@SuppressWarnings("serial")
 @Observable
 @Entity
 @Table(name = "persona")
@@ -23,17 +24,20 @@ public class Persona extends PersistentEntity implements Serializable {
 	{}
 	
 	@Column(nullable=false)
+
 	private String nombre;
 	private String email;
 	private String apodo;
 	
 	@Column(name="fecha_nac")
 	private Timestamp fechaNac;	
+
 	@ManyToMany
 	@JoinTable(name = "amigos_x_persona",
             joinColumns =
                 @JoinColumn(name = "persona_id", referencedColumnName = "id"),
             inverseJoinColumns =
+
                 @JoinColumn(name = "amigo_id", referencedColumnName = "id"))
 	private List<Persona> amigos = new ArrayList<Persona>();
 

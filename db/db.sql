@@ -2,6 +2,12 @@
 
 CREATE SCHEMA futbol;
 
+CREATE TYPE futbol.modalidad AS ENUM
+('ESTANDAR', 'SOLIDARIA', 'CONDICIONAL');
+
+CREATE TYPE futbol.equipo AS ENUM
+('NINGUNO', 'A', 'B');
+
 CREATE TABLE futbol.PERSONA (
   id  	      serial NOT NULL,
   nombre      varchar(50) NOT NULL,
@@ -118,9 +124,9 @@ CREATE TABLE futbol.INSCRIPCION (
   jugador_id           integer NOT NULL,
   activa               boolean NOT NULL DEFAULT true,
   partido_id           integer NOT NULL,
-  modalidad            integer NOT NULL DEFAULT 1,
+  modalidad            futbol.modalidad NOT NULL DEFAULT 'ESTANDAR',
   jugador_reemplazo_id  integer,
-  equipo		integer NOT NULL DEFAULT 0,
+  equipo          futbol.equipo NOT NULL DEFAULT 'NINGUNO',
   /* Keys */
   CONSTRAINT INSCRIPCION_pkey
     PRIMARY KEY (id),
@@ -226,16 +232,16 @@ INSERT INTO futbol.PARTIDO (administrador_id, cupo, fecha_hora, lugar, confirmad
   (1, 10, '2014-10-12 00:00:00', 'Flores', false),
   (1, 10, '2015-08-15 00:00:00', 'Palermo', false);
 INSERT INTO futbol.INSCRIPCION (jugador_id, activa, partido_id, jugador_reemplazo_id, equipo, modalidad) VALUES
-  (1, true, 1, null, 1, 0),
-  (2, true, 1, null, 1, 0),
-  (3, true, 1, null, 1, 0),
-  (4, true, 1, null, 1, 0),
-  (5, true, 1, null, 1, 0),
-  (6, true, 1, null, 2, 0),
-  (7, true, 1, null, 2, 0),
-  (8, true, 1, null, 2, 2),
-  (9, true, 1, null, 2, 2),
-  (10, true, 1, null, 2, 1);
+  (1, true, 1, null, 'A', 'ESTANDAR'),
+  (2, true, 1, null, 'A', 'ESTANDAR'),
+  (3, true, 1, null, 'A', 'ESTANDAR'),
+  (4, true, 1, null, 'A', 'ESTANDAR'),
+  (5, true, 1, null, 'A', 'ESTANDAR'),
+  (6, true, 1, null, 'B', 'ESTANDAR'),
+  (7, true, 1, null, 'B', 'ESTANDAR'),
+  (8, true, 1, null, 'B', 'SOLIDARIA'),
+  (9, true, 1, null, 'B', 'CONDICIONAL'),
+  (10, true, 1, null, 'B', 'ESTANDAR');
 
 INSERT INTO futbol.CALIFICACION (jugador_calificado_id, partido_id, jugador_califica_id, critica, nota) VALUES
   (2, 1, 1, 'mal', 3),

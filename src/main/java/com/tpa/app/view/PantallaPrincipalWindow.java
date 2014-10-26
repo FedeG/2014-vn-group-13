@@ -10,10 +10,10 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
-
 import com.tpa.app.model.Administrador;
 import com.tpa.app.viewModel.PantallaPrincipal;
 
+@SuppressWarnings("serial")
 public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 
 	public PantallaPrincipalWindow(WindowOwner parent) {
@@ -34,7 +34,7 @@ public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 		new Label(mainPanel).setText("- Operaciones -").setWidth(430);
 		Panel panelSelectAdm = new Panel(mainPanel);
 		panelSelectAdm.setLayout(new HorizontalLayout());
-		new Label(panelSelectAdm).setText("Administrador:").setWidth(200);
+		new Label(panelSelectAdm).setText("Seleccione Administrador:").setWidth(200);
 		Selector<Administrador> selector = new Selector<Administrador>(panelSelectAdm) //
 				.allowNull(false);
 		selector.setWidth(230);

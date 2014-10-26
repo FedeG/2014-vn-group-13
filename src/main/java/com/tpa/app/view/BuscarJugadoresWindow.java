@@ -6,7 +6,6 @@ import java.util.Arrays;
 
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.bindings.NotNullObservable;
-import org.uqbar.arena.bindings.Transformer;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -23,6 +22,7 @@ import org.uqbar.arena.widgets.tables.Table;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.viewModel.BuscadorJugadores;
 
+@SuppressWarnings("serial")
 public class BuscarJugadoresWindow extends  SimpleWindow<BuscadorJugadores> {
 
 	public BuscarJugadoresWindow(WindowOwner parent) {

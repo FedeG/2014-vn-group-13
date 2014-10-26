@@ -2,7 +2,6 @@ package com.tpa.app.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 public class ByIndex extends Divisor {
 	private ArrayList<Integer> indicesEquipoA;

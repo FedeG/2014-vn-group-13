@@ -19,6 +19,7 @@ import com.tpa.app.model.Divisor;
 import com.tpa.app.model.Partido;
 import com.tpa.app.viewModel.GeneradorEquipos;
 
+@SuppressWarnings("serial")
 public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 
 	public GenerarEquiposWindow(WindowOwner parent, Administrador admin) {
@@ -93,7 +94,7 @@ public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 		Table<Partido> table = new Table<Partido>(mainPanel, Partido.class);
 		table.setHeigth(100);
 		table.setWidth(380);
-
+//TODO: ver si se van a mostrar los pendientes. Si es así, habria que agregar un check o algo de mandera que traiga los partidos que no se ven, para visualizar las formaciones.
 		table.bindItemsToProperty("administrador.partidos");
 		table.bindValueToProperty("partidoSeleccionado");
 

@@ -1,13 +1,10 @@
 package com.tpa.app.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,19 +12,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-
-import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Inscripcion.Equipo;
 import com.tpa.app.model.NoEstaInscriptoExcepcion;
 import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 
+@SuppressWarnings("serial")
 @Observable
 @Entity
 @Table(name = "partido")
-public class Partido extends PersistentEntity implements Serializable {
+public class Partido extends PersistentEntity {
 
 	@OneToOne
 	@JoinColumn(name = "administrador_id")
