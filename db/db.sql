@@ -124,9 +124,13 @@ CREATE TABLE futbol.INSCRIPCION (
   partido_id           integer NOT NULL,
   modalidad            futbol.modalidad NOT NULL DEFAULT 'ESTANDAR',
   jugador_remplazo_id  integer,
+  equipo          integer NOT NULL,
   /* Keys */
   CONSTRAINT INSCRIPCION_pkey
     PRIMARY KEY (id),
+    /* Checks */
+  CONSTRAINT Check01
+    CHECK (equipo = ANY (ARRAY[0, 1, 2])),
   /* Foreign keys */
   CONSTRAINT Foreign_key01
     FOREIGN KEY (jugador_id)
@@ -137,25 +141,6 @@ CREATE TABLE futbol.INSCRIPCION (
   CONSTRAINT Foreign_key03
     FOREIGN KEY (jugador_remplazo_id)
     REFERENCES futbol.JUGADOR(id)
-);
-
-CREATE TABLE futbol.INSCRIPCION_X_PARTIDO (
-  inscripcion_id  integer NOT NULL,
-  partido_id      integer NOT NULL,
-  equipo          integer NOT NULL,
-  /* Keys */
-  CONSTRAINT INSCRIPCION_X_PARTIDO_pkey
-    PRIMARY KEY (inscripcion_id, partido_id),
-  /* Checks */
-  CONSTRAINT Check01
-    CHECK (equipo = ANY (ARRAY[0, 1, 2])),
-  /* Foreign keys */
-  CONSTRAINT Foreign_key01
-    FOREIGN KEY (inscripcion_id)
-    REFERENCES futbol.INSCRIPCION(id), 
-  CONSTRAINT Foreign_key02
-    FOREIGN KEY (partido_id)
-    REFERENCES futbol.PARTIDO(id)
 );
 
 /* CARGA DE DATOS */
@@ -247,29 +232,18 @@ INSERT INTO futbol.PARTIDO (administrador_id, cupo, fecha_hora, lugar, confirmad
   (1, 10, '2014-12-28 00:00:00', 'Adrogué', false),
   (1, 10, '2014-10-12 00:00:00', 'Flores', false),
   (1, 10, '2015-08-15 00:00:00', 'Palermo', false);
-INSERT INTO futbol.INSCRIPCION (jugador_id, activa, partido_id, jugador_remplazo_id) VALUES
-  (1, true, 1, null),
-  (2, true, 1, null),
-  (3, true, 1, null),
-  (4, true, 1, null),
-  (5, true, 1, null),
-  (6, true, 1, null),
-  (7, true, 1, null),
-  (8, true, 1, null),
-  (9, true, 1, null),
-  (10, true, 1, null);
+INSERT INTO futbol.INSCRIPCION (jugador_id, activa, partido_id, jugador_remplazo_id, equipo) VALUES
+  (1, true, 1, null, 1),
+  (2, true, 1, null, 1),
+  (3, true, 1, null, 1),
+  (4, true, 1, null, 1),
+  (5, true, 1, null, 1),
+  (6, true, 1, null, 2),
+  (7, true, 1, null, 2),
+  (8, true, 1, null, 2),
+  (9, true, 1, null, 2),
+  (10, true, 1, null, 2);
 
-INSERT INTO futbol.INSCRIPCION_X_PARTIDO (inscripcion_id, partido_id, equipo) VALUES
-  (1, 1, 1),
-  (2, 1, 1),
-  (3, 1, 1),
-  (4, 1, 1),
-  (5, 1, 1),
-  (6, 1, 2),
-  (7, 1, 2),
-  (8, 1, 2),
-  (9, 1, 2),
-  (10, 1, 2);
 INSERT INTO futbol.CALIFICACION (jugador_calificado_id, partido_id, jugador_califica_id, critica, nota) VALUES
   (2, 1, 1, 'mal', 3),
   (3, 1, 1, 'mal', 1),

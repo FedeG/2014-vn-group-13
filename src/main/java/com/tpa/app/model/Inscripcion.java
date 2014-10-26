@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,6 +35,7 @@ public class Inscripcion extends PersistentEntity implements Serializable {
 		},
 		;
 	}
+	
 	@OneToOne
 	@JoinColumn(name = "jugador_id")
 	private Jugador jugador;
@@ -41,9 +44,13 @@ public class Inscripcion extends PersistentEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "partido_id")
 	private Partido partido;
+	
+	@Enumerated(EnumType.STRING)
 	private PrioridadesInscripciones modalidad;
+	
 	@Transient
 	private Predicate<Partido> condicion;
+	
 	@OneToOne
 	@JoinColumn(name = "jugador_reemplazo_id")
 	private Jugador jugadorReemplazo;
@@ -79,6 +86,7 @@ public class Inscripcion extends PersistentEntity implements Serializable {
 		this.condicion = condicion;
 	}
 
+ 	
 	public PrioridadesInscripciones getModalidad() {
 		return modalidad;
 	}
