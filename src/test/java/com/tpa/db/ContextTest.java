@@ -31,14 +31,19 @@ public class ContextTest {
 		assertTrue(!jugadoresPersistidos.isEmpty());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
-	public void LevantarElAdmin() {
+	public void LevantarLosAdmins() {
 		
-		Administrador admin = (Administrador)getEntityManager()
+		List<Administrador> administradores = getEntityManager()
 				.createQuery("from Administrador")
-				.getResultList().get(0);
+				.getResultList();
 		
-		assertTrue(admin != null);
+		if (administradores == null)
+			try { throw new Exception("Debe haber un admin en la BD para realizar este test");
+			} catch (Exception e) {	e.printStackTrace(); }
+		
+		assertTrue(!administradores.isEmpty());
 	}
 	
 	@Test
@@ -56,13 +61,15 @@ public class ContextTest {
 	@SuppressWarnings("unchecked")
 	public void LevantarLosPartidosPendientesDeConfirmarDeUnAdmin() {
 		
-		Administrador admin = (Administrador)getEntityManager()
+		List<Administrador> administradores = getEntityManager()
 				.createQuery("from Administrador")
-				.getResultList().get(0);
+				.getResultList();
 		
-		if (admin == null)
-			try { throw new Exception("Debe haber un admin en la base de datos");
+		if (administradores == null)
+			try { throw new Exception("Debe haber un admin en la BD para realizar este test");
 			} catch (Exception e) {	e.printStackTrace(); }
+		
+		Administrador admin = administradores.get(0);
 		
 		List<Partido> partidosPersistidos = 
 				EntityManagerHelper
@@ -88,7 +95,6 @@ public class ContextTest {
 		Infraccion infraccion = infracciones.get(0);
 		
 		assertTrue(!infraccion.getJugador().getInfracciones().isEmpty());
-		
 	}
 	
 	@Test
