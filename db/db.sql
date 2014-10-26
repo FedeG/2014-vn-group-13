@@ -261,8 +261,19 @@ INSERT INTO futbol.INSCRIPCION (jugador_id, activa, partido_id, jugador_reemplaz
   (7, true, 1, null, 'B', 'ESTANDAR'),
   (8, true, 1, null, 'B', 'SOLIDARIA'),
   (9, true, 1, null, 'B', 'CONDICIONAL'),
-  (10, true, 1, null, 'B', 'ESTANDAR');
+  (10, true, 1, null, 'B', 'ESTANDAR'),
 
+  (1, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (2, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (3, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (4, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (5, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (6, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (7, true, 2, null, 'NINGUNO', 'ESTANDAR'),
+  (8, true, 2, null, 'NINGUNO', 'SOLIDARIA'),
+  (9, true, 2, null, 'NINGUNO', 'CONDICIONAL'),
+  (10, true, 2, null, 'NINGUNO', 'ESTANDAR');
+  
 INSERT INTO futbol.CALIFICACION (jugador_calificado_id, partido_id, jugador_califica_id, critica, nota) VALUES
   (2, 1, 1, 'mal', 3),
   (3, 1, 1, 'mal', 1),
