@@ -3,14 +3,17 @@ package com.tpa.app.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.uqbar.commons.utils.Observable;
 
 
+@SuppressWarnings("serial")
 @Observable
 @Entity
 @Table(name = "infraccion")

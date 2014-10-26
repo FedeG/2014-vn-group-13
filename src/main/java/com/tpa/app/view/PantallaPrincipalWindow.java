@@ -11,6 +11,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import com.tpa.app.viewModel.PantallaPrincipal;
 
 
+@SuppressWarnings("serial")
 public class PantallaPrincipalWindow extends SimpleWindow<PantallaPrincipal> {
 
 	public PantallaPrincipalWindow(WindowOwner parent) {

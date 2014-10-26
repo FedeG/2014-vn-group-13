@@ -10,6 +10,7 @@ import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Persona;
 import com.tpa.app.view.PromedioTransformer;
 
+@SuppressWarnings("serial")
 @Observable
 public class JugadorSelecionado implements Serializable {
 

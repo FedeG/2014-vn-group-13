@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+
 import com.tpa.app.model.Administrador;
 import com.tpa.app.model.Criterio;
 import com.tpa.app.model.Divisor;
@@ -14,6 +16,7 @@ import com.tpa.app.model.Inscripcion;
 import com.tpa.app.model.Partido;
 import com.tpa.app.repo.RepositorioPartidos;
 
+@SuppressWarnings("serial")
 @Observable
 public class GeneradorEquipos implements Serializable {
 

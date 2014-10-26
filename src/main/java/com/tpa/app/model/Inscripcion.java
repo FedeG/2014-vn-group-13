@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "inscripcion")
 public class Inscripcion extends PersistentEntity implements Serializable {

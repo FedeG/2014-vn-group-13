@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 import org.uqbar.commons.utils.Observable;
 
+@SuppressWarnings("serial")
 @Observable
 @Entity
 @Table(name = "persona")

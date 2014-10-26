@@ -8,6 +8,7 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import com.tpa.app.viewModel.PantallaPrincipal;
 
+@SuppressWarnings("serial")
 public class ConfirmacionExitosaWindow extends SimpleWindow<PantallaPrincipal> {
 
 	public ConfirmacionExitosaWindow(WindowOwner parent) {

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,6 +16,7 @@ import javax.persistence.Transient;
 
 import org.uqbar.commons.utils.Observable;
 
+@SuppressWarnings("serial")
 @Observable
 @Entity
 @Table(name = "administrador")
@@ -48,7 +48,6 @@ public class Administrador extends PersistentEntity implements Serializable {
 	@Transient
 	private List<Divisor> divisores;
 	
-	@SuppressWarnings("serial")
 	public Administrador()
 	{
 		this.partidos = new ArrayList<Partido>();

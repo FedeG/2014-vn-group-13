@@ -16,6 +16,7 @@ import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Persona;
 import com.tpa.app.viewModel.JugadorSelecionado;
 
+@SuppressWarnings("serial")
 @Observable
 public class VerJugadorSeleccionadoWindow extends TransactionalDialog<JugadorSelecionado> {
 	

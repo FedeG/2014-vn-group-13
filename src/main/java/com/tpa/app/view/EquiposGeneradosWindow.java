@@ -14,6 +14,7 @@ import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
 import com.tpa.app.viewModel.SelectorJugadores;
 
+@SuppressWarnings("serial")
 public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 
 	public EquiposGeneradosWindow(WindowOwner parent, Partido partido) {

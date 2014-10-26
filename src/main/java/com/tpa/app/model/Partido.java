@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,11 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+
 import com.tpa.app.model.NoEstaInscriptoExcepcion;
 import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 
+@SuppressWarnings("serial")
 @Observable
 @Entity
 @Table(name = "partido")

@@ -18,6 +18,7 @@ import com.tpa.app.model.Divisor;
 import com.tpa.app.model.Partido;
 import com.tpa.app.viewModel.GeneradorEquipos;
 
+@SuppressWarnings("serial")
 public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 
 	public GenerarEquiposWindow(WindowOwner parent) {

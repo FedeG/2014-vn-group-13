@@ -10,6 +10,7 @@ import com.tpa.app.model.Inscripcion;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
 
+@SuppressWarnings("serial")
 @Observable
 public class SelectorJugadores implements Serializable {
 

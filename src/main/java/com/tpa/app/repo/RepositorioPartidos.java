@@ -14,14 +14,10 @@ import org.uqbar.commons.utils.Observable;
 
 import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Administrador;
-import com.tpa.app.model.ByIndex;
 import com.tpa.app.model.Inscripcion;
-import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
 import com.tpa.app.model.PartidoMailSender;
 import com.tpa.app.model.Persona;
-import com.tpa.app.model.PorHandicap;
-import com.tpa.app.model.PorPromedio;
 
 @SuppressWarnings("serial")
 @Observable
