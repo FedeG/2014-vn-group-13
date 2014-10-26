@@ -102,13 +102,23 @@ public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 
 		new Column<Partido>(table)
 			.setTitle("Fecha y Hora")
-			.setFixedSize(200)
+			.setFixedSize(150)
 			.bindContentsToTransformer(new FechaTransfomer());
 
 		new Column<Partido>(table)
 			.setTitle("Lugar")
-			.setFixedSize(180)
+			.setFixedSize(130)
 			.bindContentsToProperty("lugar");
+		
+		new Column<Partido>(table)
+			.setTitle("Jug")
+			.setFixedSize(40)
+			.bindContentsToProperty("cantJugadores");
+		
+		new Column<Partido>(table)
+			.setTitle("Conf?")
+			.setFixedSize(60)
+			.bindContentsToProperty("confirmado");
 	}
 
 	@Override

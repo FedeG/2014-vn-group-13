@@ -64,6 +64,16 @@ public class Partido extends PersistentEntity {
 		this.calificaciones = new ArrayList<Calificacion>();
 		this.confirmado = false;
 	}
+	
+	public int getCantJugadores()
+	{
+		return this.inscripciones.size();
+	}
+	
+	public void setCantJugadores()
+	{
+	
+	}
 
 	public MailSender getMailSender() {
 		return mailSender;
