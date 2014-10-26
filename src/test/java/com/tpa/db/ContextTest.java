@@ -17,6 +17,7 @@ import com.tpa.app.model.Infraccion;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
 
+@SuppressWarnings("unchecked")
 public class ContextTest {
 
 	@Test
@@ -35,7 +36,6 @@ public class ContextTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void ListaJugadoresNoVacia() {
 		
 		List<Jugador> jugadoresPersistidos = getEntityManager()
@@ -45,23 +45,20 @@ public class ContextTest {
 		assertTrue(!jugadoresPersistidos.isEmpty());
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
-	public void LevantarLosAdmins() {
+	public void LevantarLosAdmins() throws Exception{
 		
 		List<Administrador> administradores = getEntityManager()
 				.createQuery("from Administrador")
 				.getResultList();
 		
 		if (administradores == null)
-			try { throw new Exception("Debe haber un admin en la BD para realizar este test");
-			} catch (Exception e) {	e.printStackTrace(); }
+			throw new Exception("Debe haber un admin en la BD para realizar este test");
 		
 		assertTrue(!administradores.isEmpty());
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void LevantarLosPartidos() {
 		
 		List<Partido> partidosPersistidos = getEntityManager()
@@ -72,16 +69,14 @@ public class ContextTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
-	public void LevantarLosPartidosPendientesDeConfirmarDeUnAdmin() {
+	public void LevantarLosPartidosPendientesDeConfirmarDeUnAdmin() throws Exception {
 		
 		List<Administrador> administradores = getEntityManager()
 				.createQuery("from Administrador")
 				.getResultList();
 		
 		if (administradores == null || administradores.isEmpty())
-			try { throw new Exception("Debe haber un admin en la BD para realizar este test");
-			} catch (Exception e) {	e.printStackTrace(); }
+			throw new Exception("Debe haber un admin en la BD para realizar este test");
 		
 		Administrador admin = administradores.get(0);
 		
@@ -95,16 +90,14 @@ public class ContextTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
-	public void LevantarJugadorConInfracciones() {
+	public void LevantarJugadorConInfracciones() throws Exception {
 		
 		List<Infraccion> infracciones = getEntityManager()
 				.createQuery(" from Infraccion")
 				.getResultList();
 		
-		if (infracciones == null)
-			try { throw new Exception("Debe haber una infraccion en la BD para realizar este test");
-			} catch (Exception e) {	e.printStackTrace(); }
+		if (infracciones == null || infracciones.isEmpty())
+			throw new Exception("Debe haber una infraccion en la BD para realizar este test");
 		
 		Infraccion infraccion = infracciones.get(0);
 		
@@ -112,7 +105,6 @@ public class ContextTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void LevantarLasInscripciones()
 	{
 		List<Partido> partidos = getEntityManager()
@@ -122,33 +114,5 @@ public class ContextTest {
 		List<Partido> conInscripciones = partidos.stream()
 				.filter(p -> p.getInscripciones().size() > 0)
 				.collect(Collectors.toList());
-	}
-	
-	@Test
-	@SuppressWarnings("unchecked")
-	public void PersistirEquiposAlConfirmarUnPartido()
-	{
-		List<Administrador> administradores = getEntityManager()
-				.createQuery("from Administrador")
-				.getResultList();
-		
-		if (administradores == null || administradores.isEmpty())
-			try { throw new Exception("Debe haber un admin en la BD para realizar este test");
-			} catch (Exception e) {	e.printStackTrace(); }
-		
-		Predicate<Administrador> tienenPendientes = new Predicate<Administrador> (){
-			public boolean apply(Administrador a) {
-	            return a.getPartidosPendientes().size() > 0;
-	        }
-		};
-		
-		Administrador admin = Iterables.find(administradores, tienenPendientes, null);
-		
-		if (admin == null)
-			try { throw new Exception("No hay admins con posibilidad de confirmar un partido");
-			} catch (Exception e) {	e.printStackTrace(); }
-		
-		
-	
 	}
 }
