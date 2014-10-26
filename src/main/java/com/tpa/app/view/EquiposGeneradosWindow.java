@@ -73,8 +73,9 @@ public class EquiposGeneradosWindow extends SimpleWindow<SelectorJugadores> {
 	}
 
 	public void confirmar() {
-		EntityManagerHelper.commit();
+		EntityManagerHelper.beginTransaction();
 		this.getModelObject().getPartido().confirmar();
+		EntityManagerHelper.commit();
 		new ConfirmacionExitosaWindow(this).open();
 		this.close();
 	}

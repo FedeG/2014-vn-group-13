@@ -5,8 +5,28 @@ CREATE SCHEMA futbol;
 CREATE TYPE futbol.modalidad AS ENUM
 ('ESTANDAR', 'SOLIDARIA', 'CONDICIONAL');
 
+CREATE FUNCTION futbol.casteoEnumModalidad(varchar) RETURNS futbol.modalidad AS $$
+    SELECT CASE $1
+        WHEN 'ESTANDAR' THEN 'ESTANDAR'::futbol.modalidad
+        WHEN 'SOLIDARIA' THEN 'SOLIDARIA'::futbol.modalidad
+        WHEN 'CONDICIONAL' THEN 'CONDICIONAL'::futbol.modalidad
+    END;
+$$ LANGUAGE SQL;
+
+CREATE CAST (varchar AS futbol.modalidad) WITH FUNCTION futbol.casteoEnumModalidad(varchar) AS ASSIGNMENT;
+
 CREATE TYPE futbol.equipo AS ENUM
 ('NINGUNO', 'A', 'B');
+
+CREATE FUNCTION futbol.casteoEnumEquipo(varchar) RETURNS futbol.equipo AS $$
+    SELECT CASE $1
+        WHEN 'NINGUNO' THEN 'NINGUNO'::futbol.equipo
+        WHEN 'A' THEN 'A'::futbol.equipo
+        WHEN 'B' THEN 'B'::futbol.equipo
+    END;
+$$ LANGUAGE SQL;
+
+CREATE CAST (varchar AS futbol.equipo) WITH FUNCTION futbol.casteoEnumEquipo(varchar) AS ASSIGNMENT;
 
 CREATE TABLE futbol.PERSONA (
   id  	      serial NOT NULL,

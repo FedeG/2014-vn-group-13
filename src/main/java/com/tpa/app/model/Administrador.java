@@ -83,7 +83,7 @@ public class Administrador extends PersistentEntity {
 
 	public List<Partido> getPartidosPendientes() {
 		List<Partido> pendientes = this.partidos.stream()
-				.filter(partido -> !partido.getConfirmado() && partido.verificarCupoCompleto())
+				.filter(partido -> !partido.getConfirmado())
 				.collect(Collectors.toList());
 		return pendientes;
 	}

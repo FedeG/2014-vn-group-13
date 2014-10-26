@@ -3,6 +3,7 @@ package com.tpa.app.model;
 import java.io.Serializable;
 import java.util.function.Predicate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,6 +18,8 @@ import javax.persistence.Transient;
 public class Inscripcion extends PersistentEntity implements Serializable {
 	public Inscripcion()
 	{}
+	
+	
 	public enum Equipo {
 		NINGUNO,
 		A,
