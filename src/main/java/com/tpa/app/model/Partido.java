@@ -22,33 +22,35 @@ import com.tpa.app.model.Inscripcion.PrioridadesInscripciones;
 @Entity
 @Table(name = "partido")
 public class Partido extends PersistentEntity implements Serializable {
-
-	public Partido()
-	{}
 	
 	@OneToOne
 	@JoinColumn(name = "administrador_id")
 	private Administrador administrador;
-	private int cupo;
-	@Column(name = "fecha_hora")
-	private Timestamp fechaHora;
-	private String lugar;
-	
-	@OneToMany
-	@JoinColumn(name = "partido_id")
-	private List<Inscripcion> inscripciones;
-	@Transient
-	private List<Inscripcion> equipoA;
-	@Transient
-	private List<Inscripcion> equipoB;
-	@Transient
-	private MailSender mailSender;
 	
 	@OneToMany
 	@JoinColumn(name = "partido_id")
 	private List<Calificacion> calificaciones;
-	private Boolean confirmado;
+	
+	@OneToMany
+	@JoinColumn(name = "partido_id")
+	private List<Inscripcion> inscripciones;
+	
+	@Column(name = "fecha_hora")
+	private Timestamp fechaHora;
 
+	@Transient
+	private List<Inscripcion> equipoA;
+	
+	@Transient
+	private List<Inscripcion> equipoB;
+	
+	@Transient
+	private MailSender mailSender;
+	
+	private Boolean confirmado;
+	private int cupo;
+	private String lugar;
+	
 /*	private static Comparator<Inscripcion> comparator = new Comparator<Inscripcion>() {
 		@Override
 		public int compare(Inscripcion i1, Inscripcion i2) {
@@ -62,6 +64,11 @@ public class Partido extends PersistentEntity implements Serializable {
 				this.getLugar(), this.getFechaHora());
 	}
 
+	public Partido()
+	{
+		
+	}
+	
 	public Partido(Timestamp fecha_y_hora, String lugar, int cupo, MailSender sender) {
 		this.mailSender = sender;
 		this.fechaHora = fecha_y_hora;
@@ -212,7 +219,6 @@ public class Partido extends PersistentEntity implements Serializable {
 	public void setInscripciones(List<Inscripcion> inscripciones) {
 		this.inscripciones = inscripciones;
 	}
-
 
 	public Boolean getConfirmado() {
 		return confirmado;

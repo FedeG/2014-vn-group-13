@@ -85,7 +85,7 @@ public class GenerarEquiposWindow extends SimpleWindow<GeneradorEquipos> {
 		table.setHeigth(100);
 		table.setWidth(380);
 
-		table.bindItemsToProperty("administrador.partidos");
+		table.bindItemsToProperty("administrador.partidosPendientes");
 		table.bindValueToProperty("partidoSeleccionado");
 
 		/* Grid Description */

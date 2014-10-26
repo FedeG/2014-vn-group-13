@@ -59,7 +59,15 @@ public class RepositorioPartidos implements Serializable{
 		
 	@SuppressWarnings("unchecked")
 	public List<Partido> getData(){
-		return EntityManagerHelper.createQuery(String.format("from Partido where administrador.id = 1")).getResultList();
+		
+		if (this.administrador == null)
+			try { throw new Exception("Administrador no seteado");
+			} catch (Exception e) {	e.printStackTrace(); }
+		
+		return EntityManagerHelper
+				.createQuery(String.format("from Partido where administrador.id = :idAdmin and confirmado = false"))
+				.setParameter("idAdmin", this.administrador.getId())
+				.getResultList();
 	}
 	
 	public Administrador getAdministrador(){

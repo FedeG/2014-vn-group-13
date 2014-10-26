@@ -29,14 +29,22 @@ public class Administrador extends PersistentEntity implements Serializable {
 	@OneToMany
 	@JoinColumn(name = "administrador_id")
 	private Collection<Partido> partidos;
+	
+	@Transient
+	private List<Partido> partidosPendientes;
+
 	@Transient
 	private MailSender mailSender;
+	
 	@Transient
 	private List<Propuesta> propuestas;
+	
 	@Transient
 	private GeneradorDeEquipos generadorDeEquipos;
+	
 	@Transient
 	private List<Criterio> criterios;
+	
 	@Transient
 	private List<Divisor> divisores;
 	
@@ -70,6 +78,17 @@ public class Administrador extends PersistentEntity implements Serializable {
 
 	public Collection<Partido> getPartidos() {
 		return this.partidos;
+	}
+
+	public List<Partido> getPartidosPendientes() {
+		List<Partido> pendientes = this.partidos.stream()
+				.filter(partido -> !partido.getConfirmado() && partido.verificarCupoCompleto())
+				.collect(Collectors.toList());
+		return pendientes;
+	}
+
+	public void setPartidosPendientes(List<Partido> partidosPendientes) {
+		this.partidosPendientes = partidosPendientes;
 	}
 
 	public Partido crearPartido(Timestamp fecha_y_hora, String lugar, int cupo) {
