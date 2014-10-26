@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.tpa.app.db.EntityManagerHelper;
 import com.tpa.app.model.Administrador;
+import com.tpa.app.model.Infraccion;
 import com.tpa.app.model.Jugador;
 import com.tpa.app.model.Partido;
 
@@ -70,6 +71,24 @@ public class ContextTest {
 				.getResultList();
 		
 		assertTrue(!partidosPersistidos.isEmpty());
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void LevantarJugadorConInfracciones() {
+		
+		List<Infraccion> infracciones = getEntityManager()
+				.createQuery(" from Infraccion")
+				.getResultList();
+		
+		if (infracciones == null)
+			try { throw new Exception("Debe haber una infraccion en la BD para realizar este test");
+			} catch (Exception e) {	e.printStackTrace(); }
+		
+		Infraccion infraccion = infracciones.get(0);
+		
+		assertTrue(!infraccion.getJugador().getInfracciones().isEmpty());
+		
 	}
 	
 	@Test

@@ -22,11 +22,14 @@ public class Infraccion extends PersistentEntity implements Serializable {
 	{}
 	
 	private String motivo;
+	
 	@Column(name = "momento")
 	private Timestamp momento;
+	
 	@OneToOne
 	@JoinColumn(name = "jugador_id")
 	private Jugador jugador;
+	
 	@OneToOne
 	@JoinColumn(name = "partido_id")
 	private Partido partido;

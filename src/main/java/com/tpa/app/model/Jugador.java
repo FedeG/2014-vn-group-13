@@ -21,14 +21,14 @@ public class Jugador extends PersistentEntity implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "persona_id")
-//	@Transient
 	private Persona persona;
+	
 	private Double handicap;
 	
-	@Transient
 	@OneToMany
 	@JoinColumn(name = "jugador_id")
 	private List<Infraccion> infracciones = new ArrayList<Infraccion>();
+	
 	@Transient
 	private List<Partido> partidosJugados = new ArrayList<Partido>();
 	
