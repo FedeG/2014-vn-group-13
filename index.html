@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="2014-vn-group-13 :  Repositorio de TPs de DDS en UTN-FRBA del grupo 13 ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>2014-vn-group-13</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/FedeG/2014-vn-group-13">View on GitHub</a>
+
+          <h1 id="project_title">2014-vn-group-13</h1>
+          <h2 id="project_tagline"> Repositorio de TPs de DDS en UTN-FRBA del grupo 13 </h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/FedeG/2014-vn-group-13/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/FedeG/2014-vn-group-13/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="grupo-13-de-los-viernes-noche-viernes-13" class="anchor" href="#grupo-13-de-los-viernes-noche-viernes-13" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grupo 13 de los viernes-noche (VIERNES 13)</h2>
+
+<p>Integrantes actuales:</p>
+
+<ul>
+<li>Federico Gonzalez</li>
+<li>Cecilia Rodriguez</li>
+<li>Pablo Pereyra Molina</li>
+<li>Ezequiel Ayzenberg</li>
+</ul>
+
+<p>Docentes de cursada:</p>
+
+<ul>
+<li>Franco Bulgarelli</li>
+<li>Juan Zaffarony</li>
+</ul>
+
+<h2>
+<a id="der" class="anchor" href="#der" aria-hidden="true"><span class="octicon octicon-link"></span></a>DER:</h2>
+
+<p><img src="http://www.gliffy.com/go/publish/image/6258940/L.png" alt="DER" title="DER"></p>
+
+<h2>
+<a id="diagrama-de-clases-en-construcción" class="anchor" href="#diagrama-de-clases-en-construcci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Diagrama de clases (en construcción):</h2>
+
+<p><img src="https://github.com/dds-utn/2014-vn-group-13/blob/master/DiagramaDeClases.jpg" alt="Diagrama" title="Diagrama"></p>
+
+<h2>
+<a id="casos-de-uso" class="anchor" href="#casos-de-uso" aria-hidden="true"><span class="octicon octicon-link"></span></a>Casos de uso:</h2>
+
+<p>Caso de Uso : Inscribirse a un partido </p>
+
+<p>Prueba 1 : Inscribirme Condicionalmente
+PRECONDICIONES: un partido y un jugador que se quiere anotar. 
+El jugador tiene que tener asociada esa condición.
+PASOS: unPartido inscribimeCondicionalmente(unJugador)
+POSTCONDICIONES: El jugador se agregó a la lista de condicionales para ese partido</p>
+
+<p>Prueba 2 : Inscribirme De Forma Estándar
+PRECONDICIONES: un partido y un jugador que se quiere anotar. 
+PASOS: unPartido inscribimeEstandar(unJugador)
+POSTCONDICIONES: El jugador se agregó a la lista de estándar para ese partido</p>
+
+<p>Prueba 3 : Inscribirme De Forma Solidaria
+PRECONDICIONES: un partido y un jugador que se quiere anotar. 
+PASOS: unPartido inscribimeSolidario(unJugador)
+POSTCONDICIONES: El jugador se agregó a la lista de solidarios para ese partido</p>
+
+<p>Caso de Uso : Organizar nuevo partido</p>
+
+<p>Prueba 1 : crear un partido de cupo 10 jugadores para el jueves 8 de Mayo a las 21:00 hs en "Panamá 933"
+PRECONDICIONES : un Administrador
+PASOS: unAdministrador crearPartido(jueves 8 de Mayo a las 21:00 hs, Panamá 933, 10)
+POSTCONDCIONES: se creó un partido para el jueves 8 de Mayo en Panamá 933 con cupo de 10 jugadores</p>
+
+<h2>
+<a id="comandos-útiles" class="anchor" href="#comandos-%C3%BAtiles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comandos útiles:</h2>
+
+<p>Crear un proyecto maven (estar parado en el workspace del eclipse).<br>
+<code>$ mvn archetype:create -DgroupId=ar.edu.utn.frba.dds.demo -DartifactId=demo</code></p>
+
+<p>Construir archivos para eclipse.<br>
+<code>$ mvn eclipse:eclipse -DdownloadSources=true -DdownloadJavadocs=true</code></p>
+
+<p>Clonar este repo de git (estar parado en el lugar donde se desea descargar)<br>
+<code>$ git clone https://github.com/dds-utn/2014-vn-group-13.git</code></p>
+
+<p>Clonar este repo de git pero de un brach determinado(estar parado en el lugar donde se desea descargar)<br>
+<code>$ git clone https://github.com/dds-utn/2014-vn-group-13.git -b nombre_branch</code><br>
+Ejemplo para descargar branch fedeG:<br>
+<code>$ git clone https://github.com/dds-utn/2014-vn-group-13.git -b fedeG</code>   </p>
+
+<p>Establecer el usuario git en tu repo local (muy util)<br>
+<code>$ git config user.name "Billy Everyteen"</code><br>
+[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>Para el uso mas amigable y copado de agregar y commitear pueden usar gitg (con graficos en linux)<br>
+<code>$ gitg --all</code><br>
+(Es genial)[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>Agregar un cambio local<br>
+<code>$ git add carpeta/archivo.java</code><br>
+[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>Commitear un cambio local (luego de hacer git add)<br>
+<code>$ git commit -m "Descripción del commit.... lalala"</code><br>
+[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>Pushear cambios (subirlos a internet)<br>
+<code>$ git push</code><br>
+[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>Pushear cambios a un branch(subirlos a internet)(modo seguro)<br>
+<code>$ git push -u origin nombre_branch</code><br>
+[Tenes que estar parado en la raiz de tu repo local]
+Aunque si esta bien configurado pueden usar directamente:<br>
+<code>$ git push</code>   </p>
+
+<p>Ver el brach actual<br>
+<code>$ git branch</code><br>
+[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>Cambiar de brach<br>
+<code>$ git checkout nombre_branch</code><br>
+[Tenes que estar parado en la raiz de tu repo local]
+Cambiar al brach fedeG por ejemplo<br>
+<code>$ git checkout fedeG</code><br>
+[Tenes que estar parado en la raiz de tu repo local]</p>
+
+<p>EXTRA: Si alguno quiere que git no este pidiendo todo el tiempo usuario y contraseña me dice y el viernes le configuro el ssh para no tener que escribirlo mas</p>
+
+<h2>
+<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests:</h2>
+
+<p><a href="https://drone.io/github.com/dds-utn/2014-vn-group-13/latest"><img src="https://drone.io/github.com/dds-utn/2014-vn-group-13/status.png" alt="Build Status"></a></p>
+
+<p><em>.md por Ezequiel Ayzenberg y Federico Gonzalez</em></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">2014-vn-group-13 maintained by <a href="https://github.com/FedeG">FedeG</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
